@@ -215,7 +215,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         }
         //-------------------------------------------------------------
 
-        if(Input.GetKey(KeyCode.P)) GiveaAllSkills();
+        if(Input.GetKey(KeyCode.P)) GiveAllSkills();
         HorizontalVelocity = myrigidbody.velocity.x;
         if(isGrounded()) coyoteTimeCounter = coyoteTime;
         else coyoteTimeCounter -= Time.deltaTime;
@@ -582,7 +582,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     #endregion
 
     #region Testing Functionality
-    private void GiveaAllSkills()
+    private void GiveAllSkills()
     {
         hasDash = true;
         hasDoubleJump = true;
