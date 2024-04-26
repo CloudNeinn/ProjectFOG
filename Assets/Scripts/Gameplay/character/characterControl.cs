@@ -115,15 +115,20 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public DistanceJoint2D distanceJoint;
     public Vector3 mousePos;
     public RaycastHit2D hookHit;
+    public RaycastHit2D hookHitMovingTarget;
+    public bool hookHitStatic;
+    public bool hookHitMoving;
     public RaycastHit2D displayWhereHit;
     public float hookMaxDistance;
     public float hookCurrentDistance;
     public LayerMask hookableLayers;
+    public LayerMask hookableMovingLayers;
     public Vector3 playerToMouseDirection;
     public LineRenderer lineRenderer;
     public GameObject displayHitSpriteObject;
     public SpriteRenderer displayHitSprite;
     public float hookMoveSpeed;
+    public float actualHookDistance;
     #endregion
 
     public float LastOnWallTime;
@@ -427,23 +432,49 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public void Hook()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        playerToMouseDirection = (mousePos - transform.position).normalized;
-        
+        playerToMouseDirection = (mousePos - transform.position).normalized;        
         if(Input.GetKeyDown(KeyCode.R))
         {
             distanceJoint.enabled = false;
             hookHit = Physics2D.Raycast(transform.position, playerToMouseDirection, hookMaxDistance, hookableLayers);
-            if(hookHit.collider != null)
-            {   
+            hookHitMovingTarget = Physics2D.Raycast(transform.position, playerToMouseDirection, hookMaxDistance, hookableMovingLayers);
+            if(hookHitMovingTarget.collider != null)
+            {  
+                Debug.Log("Hooked to moving target"); 
                 hookCurrentDistance = hookHit.distance;
                 distanceJoint.enabled = true;
+                distanceJoint.connectedBody = hookHit.rigidbody;
+                distanceJoint.connectedAnchor = Vector2.zero;
+                doubleJumpIndex = constDJI + 1;
+            }
+            else if(hookHit.collider != null)
+            {   
+                Debug.Log("Hooked to static target"); 
+                hookCurrentDistance = hookHit.distance;
+                distanceJoint.enabled = true;
+                distanceJoint.connectedBody = null;
                 distanceJoint.connectedAnchor = hookHit.point;
-                lineRenderer.SetPosition(1, hookHit.point);
                 doubleJumpIndex = constDJI + 1;
             }
         }
         if((Input.GetKeyDown(KeyCode.Space) || _isDashing || Input.GetKeyDown(KeyCode.LeftControl) || pHM.playerDead) && distanceJoint.enabled) distanceJoint.enabled = false;
-        if(distanceJoint.enabled) lineRenderer.SetPosition(0, transform.position);
+        if(distanceJoint.enabled) 
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            if(hookHitMovingTarget.collider != null) 
+            {
+                lineRenderer.SetPosition(1, hookHit.rigidbody.transform.position);
+                if(hookCurrentDistance >= 6.95f) actualHookDistance = Vector2.Distance(transform.position, hookHit.rigidbody.transform.position);
+                else actualHookDistance = hookCurrentDistance;
+            }
+            else if(hookHit.collider != null) 
+            {
+                lineRenderer.SetPosition(1, hookHit.point);
+                if(hookCurrentDistance >= 6.95f) actualHookDistance = Vector2.Distance(transform.position, hookHit.point);
+                else actualHookDistance = hookCurrentDistance;
+            }
+            if(actualHookDistance >= 7.1f) distanceJoint.enabled = false;
+        }
         else 
         {
             lineRenderer.SetPosition(0, Vector3.zero);
