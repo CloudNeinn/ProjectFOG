@@ -101,7 +101,7 @@ public class gameplayUI : MonoBehaviour
         camFade.doFade();
         dataPerMan.LoadGame();
         pHM.playerDead = false;
-        spawnMan.Spawn();
+        if(spawnMan != null) spawnMan.Spawn();
         if(eneBehs != null)
         {
             foreach(enemyBehaviour eneBeh in eneBehs)

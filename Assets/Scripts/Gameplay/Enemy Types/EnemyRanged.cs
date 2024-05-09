@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class EnemyRanged : EnemyCharge
 {
-    public characterControl charCon;
+    //public characterControl charCon;
     [field: SerializeField] public GameObject projectile;
     [field: SerializeField] public Animator ani;
+    public bool _isBehind;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class EnemyRanged : EnemyCharge
         if(!isAlert) Rotate();
         if(!isAlert) Patrol();
         Attack();
+        _isBehind = isBehind();
     }
 
     public void Attack()
@@ -28,6 +30,11 @@ public class EnemyRanged : EnemyCharge
         {
             isAlert = true;
             forgetCooldown = forgetTime;
+        }
+        else if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) 
+        {
+            isAlert = true;
+            ChangeDirection((int)(-transform.localScale.x));
         }
 
         if(isAlert)
@@ -38,7 +45,7 @@ public class EnemyRanged : EnemyCharge
                 attackCooldown = attackTime;
                 Stand();
             }
-            else
+            else 
             {
                 if(attackCooldown < 0) canAttack = true;
                 else attackCooldown -= Time.deltaTime;
@@ -54,6 +61,7 @@ public class EnemyRanged : EnemyCharge
             if(forgetCooldown < 0) isAlert = false;
             else forgetCooldown -= Time.deltaTime;
         }
+        
     }
 
     public bool playerInSight()

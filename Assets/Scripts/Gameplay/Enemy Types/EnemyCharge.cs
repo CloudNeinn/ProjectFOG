@@ -104,12 +104,13 @@ public class EnemyCharge : EnemyBase, ISeeable, IAttackable
             {
                 moveSpeed = attackSpeed;
             }
-        }
+        }else if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) ChangeDirection((int)(-transform.localScale.x));
         else
         {
             noticeStandingCooldown = noticeStandingTime;
             moveSpeed = patrolSpeed;
         } 
+        
     }
 
     void OnDrawGizmos()

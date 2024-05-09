@@ -9,12 +9,12 @@ public class fpsCounter : MonoBehaviour
  
     private Dictionary<int, string> CachedNumberStrings = new();
     private int[] _frameRateSamples;
-    private int _cacheNumbersAmount = 1000;
+    private int _cacheNumbersAmount = 10000;
     private int _averageFromAmount = 30;
     private int _averageCounter = 0;
     private int _currentAveraged;
 
-    public int lowestFps = 1000;
+    public int lowestFps = 10000;
     private float waitForLowestTimer = 5f;
     private float waitForLowestTimerCooldown;
     public int highestFps = -1;
