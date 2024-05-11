@@ -93,6 +93,7 @@ public class EnemyCharge : EnemyBase, ISeeable, IAttackable
 
     public void Attack()
     {
+        if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) ChangeDirection(-transform.localScale.x);
         if(inSight())
         {
             if(noticeStandingCooldown > 0) 
@@ -104,7 +105,7 @@ public class EnemyCharge : EnemyBase, ISeeable, IAttackable
             {
                 moveSpeed = attackSpeed;
             }
-        }else if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) ChangeDirection((int)(-transform.localScale.x));
+        }
         else
         {
             noticeStandingCooldown = noticeStandingTime;

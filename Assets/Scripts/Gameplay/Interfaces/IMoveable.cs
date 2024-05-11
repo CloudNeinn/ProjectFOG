@@ -12,5 +12,5 @@ public interface IMoveable
     void Move(int direction);
     void Stand();
     void Rotate();
-    void ChangeDirection(int direction);
+    void ChangeDirection(float direction);
 }

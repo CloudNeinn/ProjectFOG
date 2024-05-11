@@ -46,8 +46,9 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
         directionX = (int) Mathf.Sign(transform.localScale.x);
     }
 
-    public void ChangeDirection(int direction)
+    public void ChangeDirection(float direction)
     {
+        direction = direction / Mathf.Abs(direction);
         transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * direction, transform.localScale.y);
     }
 
