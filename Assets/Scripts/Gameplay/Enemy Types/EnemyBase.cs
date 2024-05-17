@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
 
     [field: Header ("Conditions")]
     [field: SerializeField] public bool isMoving;
+    [field: SerializeField] public bool isPatroling = true;
 
     [field: Header ("References")]
     [field: SerializeField] protected Rigidbody2D _enemyrb;
@@ -86,7 +87,11 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
 
     void Update()
     {
-        Rotate();
-        Patrol();
+       Rotate();
+    }
+
+    void FixedUpdate()
+    {
+        if(isPatroling) Patrol();
     }
 }

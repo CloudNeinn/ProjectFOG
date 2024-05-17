@@ -87,7 +87,7 @@ public class EnemyCharge : EnemyBase, ISeeable, IAttackable
     {
         _isGrounded = isGrounded();
         Rotate();
-        Patrol();
+        //Patrol();
         Attack();
     }
 

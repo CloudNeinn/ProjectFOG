@@ -19,7 +19,6 @@ public class EnemyRanged : EnemyCharge
     void Update()
     {
         if(!isAlert) Rotate();
-        if(!isAlert) Patrol();
         Attack();
         _isBehind = isBehind();
     }
@@ -39,6 +38,7 @@ public class EnemyRanged : EnemyCharge
 
         if(isAlert)
         {
+            isPatroling = false;
             if(canAttack)
             {
                 ani.SetTrigger("AttackBehavior");
@@ -56,6 +56,7 @@ public class EnemyRanged : EnemyCharge
                 }
             }
         }
+        else isPatroling = true;
         if(!playerInSight() && isAlert)
         {
             if(forgetCooldown < 0) isAlert = false;

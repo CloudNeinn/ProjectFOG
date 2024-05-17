@@ -27,7 +27,6 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
     [field: SerializeField] public float jumpTimer { get; set; }
     public Vector2 force;
     public Vector2 direction;
-
     void Start()
     {
         enemyStartingPosition = transform.position;
@@ -49,21 +48,26 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
             forgetCooldown = forgetTime;
         }
 
-        if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) ChangeDirection((int)(-transform.localScale.x));
+        if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) {
+            ChangeDirection(-transform.localScale.x);
+            isAlert = true;
+        }
 
         if(!isAlert && 
         (LeftPoint.transform.position.x >= transform.position.x || 
         RightPoint.transform.position.x <= transform.position.x) && 
-        LeftPoint.transform.position.y + 1.5f >= transform.position.y && 
-        RightPoint.transform.position.y - 1.5f <= transform.position.y) 
+        (LeftPoint.transform.position.y + 1.5f <= transform.position.y || 
+        RightPoint.transform.position.y - 1.5f >= transform.position.y))
         {
             target = enemyStartingPosition;
+            isPatroling = false;
             PathFollow();
         }
-        else if(!isAlert) Patrol();
+        else if(!isAlert) isPatroling = true; //Patrol();
 
         if(isAlert) 
         {
+            isPatroling = false;
             target = playerPosition.position;
             PathFollow();
         }
