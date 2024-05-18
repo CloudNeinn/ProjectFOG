@@ -29,6 +29,7 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
     public Vector2 direction;
     void Start()
     {
+        directionX = (int) transform.localScale.x;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
@@ -54,8 +55,8 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
         }
 
         if(!isAlert && 
-        (LeftPoint.transform.position.x >= transform.position.x || 
-        RightPoint.transform.position.x <= transform.position.x) && 
+        (LeftPoint.transform.position.x - 0.5f >= transform.position.x || 
+        RightPoint.transform.position.x + 0.5f <= transform.position.x) && 
         (LeftPoint.transform.position.y + 1.5f <= transform.position.y || 
         RightPoint.transform.position.y - 1.5f >= transform.position.y))
         {
