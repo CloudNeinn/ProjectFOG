@@ -67,10 +67,12 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
 
         if(isAlert) 
         {
+            moveSpeed = attackSpeed;
             isPatroling = false;
             target = playerPosition.position;
             PathFollow();
         }
+        else moveSpeed = patrolSpeed;
 
         if(isAlert)
         {/*
@@ -112,7 +114,7 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
         }  
 
         direction = ((Vector2)path.vectorPath[currentWaypoint] - _enemyrb.position).normalized;
-        force = direction * speed * Time.deltaTime;
+        force = direction * (moveSpeed * 24200) * Time.deltaTime;
 
         // Jump
         if (jumpEnabled && isGrounded() && target.y > transform.position.y 
