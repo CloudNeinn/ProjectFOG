@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IFlyable
 {
     float moveSpeedX { get; set; }
-    int directionX { get; set; }
+    int flyDirection { get; set; }
 
     void Move(float speed, int direction);    
 }

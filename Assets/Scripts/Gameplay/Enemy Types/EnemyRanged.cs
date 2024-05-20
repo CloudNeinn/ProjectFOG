@@ -25,7 +25,7 @@ public class EnemyRanged : EnemyCharge
 
     public void Attack()
     {
-        if(playerInSight()) 
+        if(inSight()) 
         {
             isAlert = true;
             forgetCooldown = forgetTime;
@@ -57,7 +57,7 @@ public class EnemyRanged : EnemyCharge
             }
         }
         else isPatroling = true;
-        if(!playerInSight() && isAlert)
+        if(!inSight() && isAlert)
         {
             if(forgetCooldown < 0) isAlert = false;
             else forgetCooldown -= Time.deltaTime;
@@ -65,9 +65,9 @@ public class EnemyRanged : EnemyCharge
         
     }
 
-    public bool playerInSight()
+    public bool inSight()
     {        
-        if(playerInRange()) 
+        if(inRange()) 
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, getVector(), 100.0f, raycastLayer);
             Debug.DrawRay(transform.position, getVector() * hit.distance, Color.red, 0f);
@@ -83,7 +83,7 @@ public class EnemyRanged : EnemyCharge
          transform.position.y, transform.position.z), Quaternion.identity);
     }
 
-    public bool playerInRange()
+    public bool inRange()
     {
         if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
         transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, radius, playerLayer);

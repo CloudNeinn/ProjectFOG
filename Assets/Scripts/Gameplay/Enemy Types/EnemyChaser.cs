@@ -25,8 +25,8 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
 
     [field: SerializeField] public float jumpCooldown { get; set; }
     [field: SerializeField] public float jumpTimer { get; set; }
-    public Vector2 force;
-    public Vector2 direction;
+    [field: SerializeField] public Vector2 force { get; set; }
+    [field: SerializeField] public Vector2 direction { get; set; }
     void Start()
     {
         directionX = (int) transform.localScale.x;
@@ -71,29 +71,23 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
             moveSpeed = attackSpeed;
             isPatroling = false;
             target = playerPosition.position;
-            PathFollow();
-        }
-        else moveSpeed = patrolSpeed;
-
-        if(isAlert)
-        {/*
-            if(canAttack)
+            if(!inRange()) PathFollow();
+            else Stand();
+            
+            if(canAttack && inRange())
             {
                 //ani.SetTrigger("AttackBehavior");
                 attackCooldown = attackTime;
-                Stand();
+                canAttack = false;
             }
-            else
+            if(!canAttack)
             {
                 if(attackCooldown < 0) canAttack = true;
                 else attackCooldown -= Time.deltaTime;
-                if(!checkIfWall() && checkIfGround()) 
-                {
-                    //Move(getDirectionAwayFromPlayer());
-                    //ChangeDirection(-getDirectionAwayFromPlayer());
-                }
-            }*/
+            }
         }
+        else moveSpeed = patrolSpeed;
+
         if(!inSight() && isAlert)
         {
             if(forgetCooldown < 0) isAlert = false;

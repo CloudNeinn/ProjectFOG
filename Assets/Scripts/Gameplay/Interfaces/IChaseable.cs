@@ -21,6 +21,8 @@ public interface IChaseable
     float jumpNodeHeightRequirement { get; set; } //0.8f
     float nextWaypointDistance { get; set; } //3f
     float speed { get; set; } //200f
+    Vector2 force { get; set; }
+    Vector2 direction { get; set; }
 
     void PathFollow();
     void UpdatePath();
