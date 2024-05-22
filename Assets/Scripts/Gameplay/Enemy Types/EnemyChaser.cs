@@ -29,7 +29,6 @@ public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
     [field: SerializeField] public Vector2 direction { get; set; }
     void Start()
     {
-        directionX = (int) transform.localScale.x;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }

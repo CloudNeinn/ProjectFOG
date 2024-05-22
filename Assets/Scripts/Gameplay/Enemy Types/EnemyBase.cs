@@ -5,8 +5,6 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
 {
     [field: Header ("Movement Options")]
-    [field: SerializeField] public float standingTime { get; set; }
-    [field: SerializeField] public float standingCooldown { get; set; }
     [field: SerializeField] public float moveSpeed { get; set; }
     [field: SerializeField] public int directionX { get; set; }
 
@@ -16,6 +14,8 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
     [field: SerializeField] public GameObject[] PatrolPoints { get; set; }
     [field: SerializeField] public int currentPatrolPoint { get; set; }
     [field: SerializeField] public int numberOfPatrolPoints { get; set; }
+    [field: SerializeField] public float standingTime { get; set; }
+    [field: SerializeField] public float standingCooldown { get; set; }
 
     [field: Header ("Conditions")]
     [field: SerializeField] public bool isMoving;
@@ -46,8 +46,8 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
         else if (_enemyrb.velocity.x < 0)
         {
             transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        } 
-        directionX = (int) Mathf.Sign(transform.localScale.x);
+        }
+        directionX = (int)Mathf.Sign(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized.x));
     }
 
     public void ChangeDirection(float direction)
@@ -62,31 +62,43 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
 
     public void Patrol()
     {
-        if(transform.position.x <= LeftPoint.transform.position.x) moveAfterStanding(1);
-        else if(transform.position.x >= RightPoint.transform.position.x) moveAfterStanding(-1);
+        if(Vector2.Distance(transform.position, PatrolPoints[currentPatrolPoint].transform.position) <= 0.5f){
+            moveAfterStanding(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized));
+            if(standingCooldown <= 0){
+                if(currentPatrolPoint == numberOfPatrolPoints - 1) currentPatrolPoint = 0;
+                else currentPatrolPoint++;
+            }
+            
+        }
         else
         {
+            
             standingCooldown = standingTime;
             Move(directionX);          
         }
     }
     
-    void moveAfterStanding(int dir)
+    public void moveAfterStanding(Vector2 dir)
     {
-        if(standingCooldown <= 0) Move(dir);
+        if(standingCooldown <= 0) {
+            Move((int)Mathf.Sign(dir.x));
+        }
         else 
         {
+            Debug.Log("Standing");
             standingCooldown -= Time.deltaTime;
             Stand();
         }
     }
     
     #endregion
-    
-    void Start()
+    void Awake()
     {
-        directionX = (int) transform.localScale.x;
+        //directionX = (int) transform.localScale.x;
         numberOfPatrolPoints = PatrolPoints.Length;
+        currentPatrolPoint = 0;
+        standingCooldown = standingTime;
+        directionX = (int)Mathf.Sign(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized.x));
     }
 
     void Update()

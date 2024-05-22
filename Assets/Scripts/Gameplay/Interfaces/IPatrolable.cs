@@ -9,5 +9,8 @@ public interface IPatrolable
     GameObject[] PatrolPoints { get; set; }
     int currentPatrolPoint { get; set; }
     int numberOfPatrolPoints { get; set; }
+    float standingTime { get; set; }
+    float standingCooldown { get; set; }
     void Patrol();
+    void moveAfterStanding(Vector2 dir);
 }

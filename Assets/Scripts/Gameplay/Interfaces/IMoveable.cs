@@ -4,8 +4,6 @@ using UnityEngine;
 
 public interface IMoveable
 {
-    float standingTime { get; set; }
-    float standingCooldown { get; set; }
     float moveSpeed { get; set; }
     int directionX { get; set; }
 

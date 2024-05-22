@@ -11,7 +11,6 @@ public class EnemyRanged : EnemyCharge
 
     void Start()
     {
-        directionX = (int) transform.localScale.x;
         charCon = GameObject.FindObjectOfType<characterControl>();
     }
 
