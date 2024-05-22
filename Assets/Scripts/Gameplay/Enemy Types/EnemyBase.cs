@@ -13,6 +13,9 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
     [field: Header ("Patrol Options")]
     [field: SerializeField] public GameObject LeftPoint { get; set; }
     [field: SerializeField] public GameObject RightPoint { get; set; }
+    [field: SerializeField] public GameObject[] PatrolPoints { get; set; }
+    [field: SerializeField] public int currentPatrolPoint { get; set; }
+    [field: SerializeField] public int numberOfPatrolPoints { get; set; }
 
     [field: Header ("Conditions")]
     [field: SerializeField] public bool isMoving;
@@ -83,6 +86,7 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
     void Start()
     {
         directionX = (int) transform.localScale.x;
+        numberOfPatrolPoints = PatrolPoints.Length;
     }
 
     void Update()

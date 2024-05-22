@@ -4,8 +4,7 @@ using UnityEngine;
 
 public interface IFlyable
 {
-    float moveSpeedX { get; set; }
-    int flyDirection { get; set; }
-
-    void Move(float speed, int direction);    
+    float flySpeed { get; set; }
+    Vector2 flyDirection { get; set; }
+    void Fly(float speed, Vector2 direction);    
 }
