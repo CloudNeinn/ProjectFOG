@@ -94,11 +94,11 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
     #endregion
     void Awake()
     {
-        //directionX = (int) transform.localScale.x;
         numberOfPatrolPoints = PatrolPoints.Length;
         currentPatrolPoint = 0;
         standingCooldown = standingTime;
         directionX = (int)Mathf.Sign(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized.x));
+        //directionX = (int) transform.localScale.x;
     }
 
     void Update()
