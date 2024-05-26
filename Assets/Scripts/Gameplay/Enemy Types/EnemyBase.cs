@@ -68,11 +68,9 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
                 if(currentPatrolPoint == numberOfPatrolPoints - 1) currentPatrolPoint = 0;
                 else currentPatrolPoint++;
             }
-            
         }
         else
         {
-            
             standingCooldown = standingTime;
             Move(directionX);          
         }
