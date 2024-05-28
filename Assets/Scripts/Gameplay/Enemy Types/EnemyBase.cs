@@ -108,4 +108,12 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
     {
         if(isPatroling) Patrol();
     }
+/*
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+
+        }
+    }*/
 }
