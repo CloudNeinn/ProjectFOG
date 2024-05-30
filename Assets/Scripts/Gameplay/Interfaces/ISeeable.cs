@@ -4,11 +4,6 @@ using UnityEngine;
 
 public interface ISeeable
 {
-    float attackTime { get; set; }
-    float attackCooldown { get; set; }
-    float forgetTime { get; set; }
-    float forgetCooldown { get; set; }
-
     float noticeStandingTime { get; set; }
     float noticeStandingCooldown { get; set; }
 
