@@ -40,7 +40,7 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
         if(Vector2.Distance(transform.position, PatrolPoints[currentPatrolPoint].transform.position) <= 0.5f){
             moveAfterStanding(flyDirection);
             if(standingCooldown <= 0){
-                if(currentPatrolPoint == numberOfPatrolPoints - 1) currentPatrolPoint = 0;
+                if(currentPatrolPoint >= numberOfPatrolPoints - 1) currentPatrolPoint = 0;
                 else currentPatrolPoint++;
             }
         }
@@ -84,6 +84,15 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
     void Update()
     {
         Rotate();
+    }
+
+    void Start()
+    {
+        _enemyrb = GetComponent<Rigidbody2D>();
+        _enemycol = GetComponent<CircleCollider2D>();
+        currentPatrolPoint = 0;
+        numberOfPatrolPoints = PatrolPoints.Length;
+        flyDirection = ((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized);
     }
 
     void FixedUpdate()

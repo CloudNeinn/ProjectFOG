@@ -73,11 +73,6 @@ public class EnemyFlyingAttacker : EnemyFlyingBase, IRadSeeable, IAttackable
         return false;
     }
 
-    void Update()
-    {
-
-    }
-
     public void Attack()
     {
 
