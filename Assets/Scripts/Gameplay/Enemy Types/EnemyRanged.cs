@@ -2,11 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRanged : EnemyCharge
+public class EnemyRanged : EnemyBase, IRadSeeable, IAttackable
 {
-    //public characterControl charCon;
+    [field: Header ("Attack Options")]
+    [field: SerializeField] public float attackTime { get; set; }
+    [field: SerializeField] public float attackCooldown { get; set; }
+    [field: SerializeField] public float forgetTime { get; set; }
+    [field: SerializeField] public float forgetCooldown { get; set; }
+    [field: SerializeField] public float damage { get; set; }
+    [field: SerializeField] public float knockStrengthX { get; set; }
+    [field: SerializeField] public float knockStrengthY { get; set; }
+    [field: SerializeField] public float blockKnockStrengthX { get; set; }
+    [field: SerializeField] public float blockKnockStrengthY { get; set; }    
+    [field: SerializeField] public bool canAttack { get; set; }
+    [field: SerializeField] public bool isAlert { get; set; }
+
+
+    [field: Header ("Check Box Options")]
+    [field: SerializeField] public Vector3 behindBoxSize { get; set; }
+    [field: SerializeField] public float behindDistance { get; set; }
+    [field: SerializeField] public float sightRadius { get; set; }
+    [field: SerializeField] public Vector3 checkGroundBoxSize { get; set; }
+    [field: SerializeField] public float checkGroundDistance { get; set; }
+    [field: SerializeField] public Vector3 checkWallBoxSize { get; set; }
+    [field: SerializeField] public float checkWallDistance { get; set; }
+    [field: SerializeField] public Vector3 isGroundedBox { get; set; }
+    [field: SerializeField] public float isGroundedDistance { get; set; }
+    
+
+    [field: Header ("Additional Movement Options")]
+    [field: SerializeField] public float patrolSpeed { get; set; }
+    [field: SerializeField] public float attackSpeed { get; set; }
+    [field: SerializeField] public float noticeStandingTime { get; set; }
+    [field: SerializeField] public float noticeStandingCooldown { get; set; }
+
+    [field: Header ("Layer Masks")]
+    [field: SerializeField] public LayerMask playerLayer { get; set; }
+    [field: SerializeField] public LayerMask raycastLayer { get; set; }
+    [field: SerializeField] public LayerMask checkGroundLayer { get; set; }
+    [field: SerializeField] public LayerMask checkWallLayer { get; set; }
+
+    [field: Header ("Character References")]
     [field: SerializeField] public GameObject projectile;
     [field: SerializeField] public Animator ani;
+    [field: SerializeField] public characterControl charCon { get; set; }
     public bool _isBehind;
 
     void Start()
@@ -50,7 +89,7 @@ public class EnemyRanged : EnemyCharge
                 else attackCooldown -= Time.deltaTime;
                 if(!checkIfWall() && checkIfGround()) 
                 {
-                    Move(getDirectionAwayFromPlayer());
+                    Walk(getDirectionAwayFromPlayer());
                     ChangeDirection(-getDirectionAwayFromPlayer());
                 }
             }
@@ -85,7 +124,7 @@ public class EnemyRanged : EnemyCharge
     public bool inRange()
     {
         if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
-        transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, radius, playerLayer);
+        transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
         else return false;
     }
 
@@ -106,5 +145,28 @@ public class EnemyRanged : EnemyCharge
     public void setCanAttack()
     {
         canAttack = false;
+    }
+
+    public bool isBehind()
+    {
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x + behindDistance * -transform.localScale.x,
+         _enemycol.bounds.center.y), behindBoxSize, 0, playerLayer);
+    }
+
+    public bool checkIfGround()
+    {
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x + checkGroundDistance * -transform.localScale.x,
+         _enemycol.bounds.center.y), checkGroundBoxSize, 0, checkGroundLayer);
+    }
+
+    public bool checkIfWall()
+    {
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x + checkWallDistance * -transform.localScale.x,
+         _enemycol.bounds.center.y), checkWallBoxSize, 0, checkWallLayer);
+    }
+
+    public bool isGrounded()
+    {
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x, _enemycol.bounds.center.y - isGroundedDistance), isGroundedBox, 0, checkGroundLayer);
     }
 }

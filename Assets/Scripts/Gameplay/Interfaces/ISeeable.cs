@@ -6,14 +6,9 @@ public interface ISeeable
 {
     float noticeStandingTime { get; set; }
     float noticeStandingCooldown { get; set; }
-
-    Vector3 attackBoxSize { get; set; }
-    float attackDistance { get; set; }
-    Vector3 sightBoxSize { get; set; }
-    float sightDistance { get; set; }
+    
     Vector3 behindBoxSize { get; set; }
     float behindDistance { get; set; }
-    float radius { get; set; }
     Vector3 isGroundedBox { get; set; }
     float isGroundedDistance { get; set; }
 

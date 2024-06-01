@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class DrawPatrolPoints : MonoBehaviour
 {
-    public EnemyBase childScript;
+    public EnemyBase baseChildScript;
+    public EnemyFlyingBase flyingBaseChildScript;
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        for(int i = 0; i < childScript.PatrolPoints.Length; i++)
+        if(baseChildScript == null && flyingBaseChildScript == null)
         {
-            Gizmos.DrawWireSphere(childScript.PatrolPoints[i].transform.position, 0.5f);
-            if(i+1 < childScript.PatrolPoints.Length) Gizmos.DrawLine(childScript.PatrolPoints[i].transform.position, childScript.PatrolPoints[i+1].transform.position);
-            else Gizmos.DrawLine(childScript.PatrolPoints[i].transform.position, childScript.PatrolPoints[0].transform.position);
-        }     
+            baseChildScript = GetComponentInChildren<EnemyBase>(true);
+            flyingBaseChildScript = GetComponentInChildren<EnemyFlyingBase>(true);
+        }
+        if(baseChildScript != null) {
+            for(int i = 0; i < baseChildScript.PatrolPoints.Length; i++)
+            {
+                Gizmos.DrawWireSphere(baseChildScript.PatrolPoints[i].transform.position, 0.5f);
+                if(i+1 < baseChildScript.PatrolPoints.Length) Gizmos.DrawLine(baseChildScript.PatrolPoints[i].transform.position, baseChildScript.PatrolPoints[i+1].transform.position);
+                else Gizmos.DrawLine(baseChildScript.PatrolPoints[i].transform.position, baseChildScript.PatrolPoints[0].transform.position);
+            }    
+        }
+        else if(flyingBaseChildScript != null) {
+            for(int i = 0; i < flyingBaseChildScript.PatrolPoints.Length; i++)
+            {
+                Gizmos.DrawWireSphere(flyingBaseChildScript.PatrolPoints[i].transform.position, 0.5f);
+                if(i+1 < flyingBaseChildScript.PatrolPoints.Length) Gizmos.DrawLine(flyingBaseChildScript.PatrolPoints[i].transform.position, flyingBaseChildScript.PatrolPoints[i+1].transform.position);
+                else Gizmos.DrawLine(flyingBaseChildScript.PatrolPoints[i].transform.position, flyingBaseChildScript.PatrolPoints[0].transform.position);
+            }    
+        }
     }
 }

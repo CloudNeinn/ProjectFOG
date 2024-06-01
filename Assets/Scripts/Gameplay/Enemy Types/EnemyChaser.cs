@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class EnemyChaser : EnemyCharge, IJumpable, IChaseable
+public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
 {
     [field: Header ("Pathfinding")]
     [field: SerializeField] public Path path { get; set; }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
+public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
 {
     [field: Header ("Movement Options")]
     [field: SerializeField] public float moveSpeed { get; set; }
@@ -27,7 +27,7 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
 
     #region Movement
 
-    public void Move(int direction)
+    public void Walk(int direction)
     {
         _enemyrb.velocity = new Vector2(moveSpeed * direction, _enemyrb.velocity.y);
     }
@@ -72,14 +72,14 @@ public class EnemyBase : MonoBehaviour, IMoveable, IPatrolable
         else
         {
             standingCooldown = standingTime;
-            Move(directionX);          
+            Walk(directionX);          
         }
     }
     
     public void moveAfterStanding(Vector2 dir)
     {
         if(standingCooldown <= 0) {
-            Move((int)Mathf.Sign(dir.x));
+            Walk((int)Mathf.Sign(dir.x));
         }
         else 
         {
