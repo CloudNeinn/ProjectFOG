@@ -59,8 +59,8 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
         {
             spawnProjectile();
         }
-
         else isPatroling = true;
+        
         if(!inSight() && isAlert)
         {
             if(forgetCooldown < 0) isAlert = false;
