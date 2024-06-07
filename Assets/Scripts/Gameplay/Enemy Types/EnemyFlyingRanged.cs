@@ -57,7 +57,13 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
         }
         if(isAlert)
         {
-            spawnProjectile();
+            attackCooldown -= Time.deltaTime;
+            if(attackCooldown <= 0)
+            {
+                spawnProjectile();
+                attackCooldown = attackTime;
+            }
+
         }
         else isPatroling = true;
         
