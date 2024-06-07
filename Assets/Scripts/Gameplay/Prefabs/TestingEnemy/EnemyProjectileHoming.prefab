@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 30
-  speed: 20
+  speed: 10
   pHM: {fileID: 0}
   canDamagePlayer: 0
   rigid: {fileID: 1035740275872128597}
@@ -144,6 +144,7 @@ MonoBehaviour:
   canBeBlocked: 1
   canBeRedirected: 1
   projectileVector: {x: 0, y: 0}
+  timeUntilHoming: 1
 --- !u!50 &1035740275872128597
 Rigidbody2D:
   serializedVersion: 4

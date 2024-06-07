@@ -19,8 +19,23 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
 
     public void spawnProjectile()
     {
-        Instantiate(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
-         transform.position.y, transform.position.z), Quaternion.identity);
+        // Very stupid implementation
+        // TODO: Make it better
+        GameObject shotInstance1 = Instantiate(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
+         transform.position.y + 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
+        shotInstance1.GetComponent<Rigidbody2D>().velocity = new Vector2(1, 1);
+
+        GameObject shotInstance2 = Instantiate(projectile, new Vector3(transform.position.x - 0.9f * transform.localScale.x,
+         transform.position.y + 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
+        shotInstance2.GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 1);
+
+        GameObject shotInstance3 = Instantiate(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
+         transform.position.y - 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
+        shotInstance3.GetComponent<Rigidbody2D>().velocity = new Vector2(1, -1);
+
+        GameObject shotInstance4 = Instantiate(projectile, new Vector3(transform.position.x - 0.9f * transform.localScale.x,
+         transform.position.y - 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
+        shotInstance4.GetComponent<Rigidbody2D>().velocity = new Vector2(-1, -1);
     }
 
     public bool inRange()
