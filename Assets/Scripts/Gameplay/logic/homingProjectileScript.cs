@@ -5,6 +5,8 @@ using UnityEngine;
 public class homingProjectileScript : projectileScript
 {
     public float timeUntilHoming;
+    public float homingDelayTime;
+    public float homingDelayCooldown;
 
     void Start()
     {
@@ -19,8 +21,13 @@ public class homingProjectileScript : projectileScript
     {
         if(timeUntilHoming <= 0)
         {
-            rigid.velocity = getVector() * speed;
-            movementVector = getVector();
+            if(homingDelayCooldown <= 0)
+            {
+                rigid.velocity = getVector() * speed;
+                movementVector = getVector();
+                homingDelayCooldown = homingDelayTime;
+            }
+            else homingDelayCooldown -= Time.deltaTime;
         }
         else timeUntilHoming -= Time.deltaTime;
     }

@@ -144,7 +144,9 @@ MonoBehaviour:
   canBeBlocked: 1
   canBeRedirected: 1
   projectileVector: {x: 0, y: 0}
-  timeUntilHoming: 1
+  timeUntilHoming: 0.5
+  homingDelayTime: 0.5
+  homingDelayCooldown: 0
 --- !u!50 &1035740275872128597
 Rigidbody2D:
   serializedVersion: 4

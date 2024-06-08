@@ -36,6 +36,11 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
         GameObject shotInstance4 = Instantiate(projectile, new Vector3(transform.position.x - 0.9f * transform.localScale.x,
          transform.position.y - 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
         shotInstance4.GetComponent<Rigidbody2D>().velocity = new Vector2(-1, -1);
+
+        for(int i = 0; i < 4; i++)
+        {
+            // some smart code here
+        }
     }
 
     public bool inRange()
