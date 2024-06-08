@@ -19,28 +19,37 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
 
     public void spawnProjectile()
     {
-        // Very stupid implementation
-        // TODO: Make it better
-        GameObject shotInstance1 = Instantiate(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
-         transform.position.y + 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
-        shotInstance1.GetComponent<Rigidbody2D>().velocity = new Vector2(1, 1);
-
-        GameObject shotInstance2 = Instantiate(projectile, new Vector3(transform.position.x - 0.9f * transform.localScale.x,
-         transform.position.y + 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
-        shotInstance2.GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 1);
-
-        GameObject shotInstance3 = Instantiate(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
-         transform.position.y - 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
-        shotInstance3.GetComponent<Rigidbody2D>().velocity = new Vector2(1, -1);
-
-        GameObject shotInstance4 = Instantiate(projectile, new Vector3(transform.position.x - 0.9f * transform.localScale.x,
-         transform.position.y - 0.9f * transform.localScale.x, transform.position.z), Quaternion.identity);
-        shotInstance4.GetComponent<Rigidbody2D>().velocity = new Vector2(-1, -1);
-
+        int x = 0, y = 0;
         for(int i = 0; i < 4; i++)
         {
-            // some smart code here
+            switch (i) 
+            {
+                case 0:
+                    x = 1;
+                    y = 1;
+                    break;
+                case 1:
+                    x = -1;
+                    y = 1;
+                    break;
+                case 2:
+                    x = 1;
+                    y = -1;
+                    break;
+                case 3:
+                    x = -1;
+                    y = -1;
+                    break;
+            }
+            Spawn(x, y);
         }
+    }
+
+    void Spawn(int x, int y)
+    {
+        GameObject shotInstance1 = Instantiate(projectile, new Vector3(transform.position.x + 0.9f * x * Mathf.Abs(transform.localScale.x),
+         transform.position.y + 0.9f * y * Mathf.Abs(transform.localScale.x), transform.position.z), Quaternion.identity);
+        shotInstance1.GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
     }
 
     public bool inRange()
