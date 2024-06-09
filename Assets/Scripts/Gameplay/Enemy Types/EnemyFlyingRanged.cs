@@ -54,9 +54,10 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
 
     public bool inRange()
     {
-        if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
-        transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
-        else return false;
+        //if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
+        //transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) 
+        return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
+        //else return false;
     }  
 
     public bool isBehind()

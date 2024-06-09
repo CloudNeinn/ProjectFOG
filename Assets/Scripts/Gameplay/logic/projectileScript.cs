@@ -8,6 +8,7 @@ public class projectileScript : MonoBehaviour
     public float speed;
     public playerHealthManager pHM;
     public bool canDamagePlayer;
+    public bool canDamageEnemy;
     public Rigidbody2D rigid;
     public Vector2 movementVector;
     public enemyRanged eneRan;

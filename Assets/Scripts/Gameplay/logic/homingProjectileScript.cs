@@ -11,6 +11,7 @@ public class homingProjectileScript : projectileScript
     void Start()
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("enemy"), true);
+        if(!canDamageEnemy) Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemyProjectile"), LayerMask.NameToLayer("enemy"), true);
         canDamagePlayer = true;
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
         charCon = GameObject.FindObjectOfType<characterControl>();

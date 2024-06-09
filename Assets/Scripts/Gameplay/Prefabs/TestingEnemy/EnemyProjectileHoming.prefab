@@ -136,6 +136,7 @@ MonoBehaviour:
   speed: 10
   pHM: {fileID: 0}
   canDamagePlayer: 0
+  canDamageEnemy: 0
   rigid: {fileID: 1035740275872128597}
   movementVector: {x: 0, y: 0}
   eneRan: {fileID: 0}
