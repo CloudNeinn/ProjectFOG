@@ -6,8 +6,9 @@ using Pathfinding;
 public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
 {
     [field: Header ("Pathfinding")]
-    [field: SerializeField] public Path path { get; set; }
+
     [field: SerializeField] public Seeker seeker { get; set; }
+    [field: SerializeField] public Path path { get; set; }
     [field: SerializeField] public int currentWaypoint { get; set; } 
     [field: SerializeField] public Vector3 target { get; set; } 
 
@@ -29,8 +30,7 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
     [field: SerializeField] public Vector2 direction { get; set; }
     void Start()
     {
-        enemyStartingPosition = transform.position;
-        InvokeRepeating("UpdatePath", 0f, 0.5f);
+
     }
 
     void Update()
@@ -40,7 +40,7 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
         Attack();
     }
 
-    public void Attack()
+    public new void Attack()
     {
         if(inSight()) 
         {

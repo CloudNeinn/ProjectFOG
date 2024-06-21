@@ -44,18 +44,35 @@ public class EnemyFlyingAttacker : EnemyFlyingBase, IRadSeeable, IAttackable
     [field: SerializeField] public characterControl charCon { get; set; }
 
     public bool inSight()
-    {
-        return false;
+    {        
+        if(inRange()) 
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, getVector(), 100.0f, raycastLayer);
+            Debug.DrawRay(transform.position, getVector() * hit.distance, Color.red, 0f);
+            if(hit.collider.name == "Charachter") return true;
+            else return false;
+        }
+        else return false;
     }
 
     public bool inRange()
     {
-        return false;
+        if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
+        transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
+        else return false;
     }
 
     public bool isBehind()
     {
-        return false;
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x + behindDistance * -transform.localScale.x,
+         _enemycol.bounds.center.y), behindBoxSize, 0, playerLayer);
+    }
+    public Vector2 getVector()
+    {
+        if(!charCon) charCon = GameObject.FindObjectOfType<characterControl>();
+        Vector3 playerPosition = charCon.transform.position;
+        Vector3 enemyPosition = transform.position;
+        return new Vector2(playerPosition.x - enemyPosition.x, playerPosition.y - enemyPosition.y).normalized;
     }
 
     public bool checkIfGround()

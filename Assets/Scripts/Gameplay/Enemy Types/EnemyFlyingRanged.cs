@@ -5,17 +5,6 @@ using UnityEngine;
 public class EnemyFlyingRanged : EnemyFlyingAttacker
 {
     [field: SerializeField] public GameObject projectile;
-    public bool inSight()
-    {        
-        if(inRange()) 
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, getVector(), 100.0f, raycastLayer);
-            Debug.DrawRay(transform.position, getVector() * hit.distance, Color.red, 0f);
-            if(hit.collider.name == "Charachter") return true;
-            else return false;
-        }
-        else return false;
-    }
 
     public void spawnProjectile()
     {
@@ -51,8 +40,8 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
          transform.position.y + 0.9f * y * Mathf.Abs(transform.localScale.x), transform.position.z), Quaternion.identity);
         shotInstance1.GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
     }
-
-    public bool inRange()
+    
+    public new bool inRange()
     {
         //if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
         //transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) 
@@ -60,20 +49,7 @@ public class EnemyFlyingRanged : EnemyFlyingAttacker
         //else return false;
     }  
 
-    public bool isBehind()
-    {
-        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x + behindDistance * -transform.localScale.x,
-         _enemycol.bounds.center.y), behindBoxSize, 0, playerLayer);
-    }
-    public Vector2 getVector()
-    {
-        if(!charCon) charCon = GameObject.FindObjectOfType<characterControl>();
-        Vector3 playerPosition = charCon.transform.position;
-        Vector3 enemyPosition = transform.position;
-        return new Vector2(playerPosition.x - enemyPosition.x, playerPosition.y - enemyPosition.y).normalized;
-    }
-
-    public void Attack()
+    public new void Attack()
     { 
         if(inSight()) 
         {

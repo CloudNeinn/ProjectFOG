@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IRadSeeable : ISeeable
 {
     float sightRadius { get; set; }
+    Vector2 getVector();
 }

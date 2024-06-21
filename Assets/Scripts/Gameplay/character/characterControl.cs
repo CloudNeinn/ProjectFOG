@@ -531,7 +531,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     public bool isUnderTerrain()
     {
-        return Physics2D.BoxCast(collCrouch.bounds.center, boxSize - new Vector3(0.99f,0,0), 0f, transform.up, 0.8f, Ground);
+        return Physics2D.OverlapBox(collCrouch.bounds.center + Vector3.up * 0.75f, boxSize, 0, Ground);
     }
     public bool isMoving()
     {

@@ -16,9 +16,6 @@ public interface IChaseable
     float pathUpdateSeconds { get; set; } //0.5f
 
     bool followEnabled { get; set; } 
-    bool jumpEnabled { get; set; } 
-    float jumpModifier { get; set; } // 0.3f
-    float jumpNodeHeightRequirement { get; set; } //0.8f
     float nextWaypointDistance { get; set; } //3f
     float speed { get; set; } //200f
     Vector2 force { get; set; }

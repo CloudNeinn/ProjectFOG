@@ -13,7 +13,7 @@ public class EnemyCharge : EnemyAttacker
         Attack();
     }
 
-    public void Attack()
+    public new void Attack()
     {
         if(isBehind() && charCon.moveSpeed != charCon.crouchSpeed) ChangeDirection(-transform.localScale.x);
         if(inSight())

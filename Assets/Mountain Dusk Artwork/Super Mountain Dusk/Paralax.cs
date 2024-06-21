@@ -5,7 +5,7 @@ using UnityEngine;
 public class Paralax : MonoBehaviour
 {
     private float length, startPosition;
-    public GameObject camera;
+    public new GameObject camera;
     public float effectStrength;
 
     void Start()
