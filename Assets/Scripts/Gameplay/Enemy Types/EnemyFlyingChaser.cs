@@ -26,7 +26,7 @@ public class EnemyFlyingChaser : EnemyFlyingAttacker, IChaseable
     void Awake()
     {
         enemyStartingPosition = transform.position;
-        InvokeRepeating("UpdatePath", 0f, 0.5f);
+        InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
     
     // Start is called before the first frame update
