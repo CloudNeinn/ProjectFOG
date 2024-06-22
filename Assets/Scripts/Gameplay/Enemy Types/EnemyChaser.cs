@@ -30,7 +30,8 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
     [field: SerializeField] public Vector2 direction { get; set; }
     void Start()
     {
-
+        enemyStartingPosition = transform.position;
+        InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 
     void Update()
@@ -138,8 +139,10 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
 
     public void OnPathComplete(Path p) 
     {
+        Debug.Log("Path Complete837475610896518734658713645876134785618346578136459861348756134785613987561873465871364598");
         if (!p.error)
         {
+            Debug.Log("Path CompleteqwiufoiwuaQEFQAEPO9RUIHQAERGQAEWOLIRUHQAWERGQEPIRUGNQERGQEPR9OUIQENRGQERP;GIUQEHRGQERGQEPIRUGHQ");
             path = p;
             currentWaypoint = 0;
         }
