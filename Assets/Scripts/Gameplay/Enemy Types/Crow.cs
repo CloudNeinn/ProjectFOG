@@ -7,51 +7,107 @@ public class Crow : EnemyFlyingChaser
 {
     [Header ("Crow Options")]
     public float heightAbovePlayer;
-    public float radius;
+    public float nestRadius;
     public float flySway;
-    public bool start;
     public Vector2 lastPlayerPos;
+    public Vector2 destination;
     public bool isAttacking;
+    public bool returnHome;
     public int numberOfCircles;
-    public int x;
+    public LayerMask crowNestLayer;
+    public LayerMask ceilingLayer;
+    public float maxHeight;
+    
     // Start is called before the first frame update
     void Start()
     {
-        x = 1;
-        //enemyStartingPosition = transform.position;
-        //InvokeRepeating("UpdatePath", 0f, 0.5f);
-        numberOfCircles = 0;
-        isAttacking = false;
+        CheckCeiling();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //destination = target;
         Rotate();
-        if(inSight()) {
-            CircleAroundPlayer();
-            lastPlayerPos = charCon.transform.position;
-            isAlert = true;
+        if(inNestRange())
+        {
+            if(inSight()) lastPlayerPos = charCon.transform.position;
+            if(inSight() && !isAlert)
+            {
+                isAlert = true;
+                InitialDirectionDetermination();
+            }
+            if(isAlert && !isAttacking) ChangeDestination();
+            if(isAttacking) Attack();
+            CheckCeiling();
+        }
+        else 
+        {
+            isAlert = false;
+            returnHome = true;
+            target = enemyStartingPosition;
         }
 
-        if(isAttacking) {
-            target = lastPlayerPos;
-            numberOfCircles = 0;
+        if(returnHome && Vector2.Distance(target, transform.position) <= 1.5f) 
+        {
+            returnHome = false;
+            _enemyrb.velocity = Vector2.zero;
         }
-
     }
 
     void FixedUpdate()
     {
-        if(isAlert) {
-            PathFollow();
+        if(isAlert || returnHome) PathFollow();
+    }
+
+    void Attack()
+    {
+        target = lastPlayerPos;
+        if(Vector2.Distance(target, transform.position) <= 5f) isAttacking = false;
+    }
+
+    void DestinationDetermination()
+    {
+        target = new Vector2(lastPlayerPos.x + flySway, ReturnUpToMax(maxHeight,lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f)));
+    }
+
+    void InitialDirectionDetermination()
+    {
+        if(transform.position.x > lastPlayerPos.x) flySway *= -1;
+        DestinationDetermination();
+    }
+
+    void ChangeDestination()
+    {
+        if(Vector2.Distance(target, transform.position) <= 2.5f) 
+        {
+            flySway = -flySway;
+            numberOfCircles++;
+            if(numberOfCircles >= 5) 
+            {
+                isAttacking = true;
+                numberOfCircles = 0;
+            }
+            DestinationDetermination();
         }
     }
 
-    void CircleAroundPlayer()
+    bool inNestRange()
     {
-        if(transform.position.x < lastPlayerPos.x && !isAttacking)  target = new Vector2(lastPlayerPos.x + flySway, lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f));
-        else if(!isAttacking) target = new Vector2(lastPlayerPos.x - flySway, lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f));
+        return Physics2D.OverlapCircle(transform.position, nestRadius, crowNestLayer);
+    }
+
+    void CheckCeiling()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(0,1f), 100.0f, ceilingLayer);
+        Debug.DrawRay(transform.position, new Vector2(0,1f), Color.red, 0f);
+        maxHeight = hit.point.y - 3f;
+    }
+
+    public float ReturnUpToMax(float max, float value)
+    {
+        if(value < max) return value;
+        else return max;
     }
 
     public new void PathFollow() 
@@ -64,7 +120,6 @@ public class Crow : EnemyFlyingChaser
         // Reached end of path
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            CircleAroundPlayer();
             return;
         }  
 
@@ -89,18 +144,10 @@ public class Crow : EnemyFlyingChaser
 
     public new void OnPathComplete(Path p) 
     {
-
         if (!p.error)
         {
-            if(isAttacking) isAttacking = false;
             path = p;
             currentWaypoint = 0;
-            numberOfCircles++;
-            if(numberOfCircles >= 12) {
-                CircleAroundPlayer();
-                isAttacking = true;
-            }
         }
-
     }
 }
