@@ -226,8 +226,8 @@ public class characterControl: MonoBehaviour, IDataPersistance
         else coyoteTimeCounter -= Time.deltaTime;
 
         //---TODO: figure out if this works or not, if i even need this
-        if(myrigidbody.velocity.x != 0) Rotate();
-        else if(_moveInput.x != 0) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * _moveInput.x, transform.localScale.y);
+        if(_moveInput.x != 0) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * _moveInput.x, transform.localScale.y);
+        else if(myrigidbody.velocity.x != 0) Rotate();
         //-------------------------------------------------------------
 
         wallMovement();

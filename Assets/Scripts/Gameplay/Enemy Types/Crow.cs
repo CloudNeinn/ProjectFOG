@@ -28,6 +28,7 @@ public class Crow : EnemyFlyingChaser
     void Update()
     {
         //destination = target;
+        //if is grounded standing animation
         Rotate();
         if(inNestRange())
         {
@@ -109,7 +110,7 @@ public class Crow : EnemyFlyingChaser
         if(value < max) return value;
         else return max;
     }
-
+/*
     public new void PathFollow() 
     {
         if (path == null)
@@ -149,5 +150,5 @@ public class Crow : EnemyFlyingChaser
             path = p;
             currentWaypoint = 0;
         }
-    }
+    }*/
 }
