@@ -15,6 +15,11 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float bufferTime;
     public float bufferTimeCounter;
     public float waitToUnlockMovement = 0.2f;
+    public float wallJumpTime;
+    public float wallJumpCooldown;
+    public bool wallJumpWait;
+    public float _wallJumpModifierX;
+    public float _wallJumpModifierY;
 
     [Header ("Movement Parameters")]
     public Vector2 _moveInput;
@@ -185,6 +190,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         camFade = GameObject.FindObjectOfType<cameraFade>();
         checkpManage = GameObject.FindObjectOfType<checkpointManagement>();
         displayHitSprite = displayHitSpriteObject.GetComponent<SpriteRenderer>();
+        wallJumpCooldown = wallJumpTime;
     }
 
     void Update()
@@ -226,7 +232,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         else coyoteTimeCounter -= Time.deltaTime;
 
         //---TODO: figure out if this works or not, if i even need this
-        if(_moveInput.x != 0) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * _moveInput.x, transform.localScale.y);
+        if(_moveInput.x != 0 && !isWalled() && pHM.canMove) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * _moveInput.x, transform.localScale.y);
         else if(myrigidbody.velocity.x != 0) Rotate();
         //-------------------------------------------------------------
 
@@ -256,7 +262,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         _isJumping = isJumping();
         if(movingWithoutInput()) myrigidbody.velocity = Vector3.zero; 
         vertical = Input.GetAxisRaw("Vertical");
-        if(CanSlide() && Mathf.Abs(_moveInput.x) > 0 && isWalled() || _isDashing) myrigidbody.gravityScale = 0f;
+        if(CanSlide() && Mathf.Abs(_moveInput.x) > 0 && isWalled() && _isSliding || _isDashing) myrigidbody.gravityScale = 0f;
         else myrigidbody.gravityScale = 7f;
         Jump();
         LastOnWallTime -= Time.deltaTime;
@@ -293,7 +299,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         force = jumpForce;
         if (myrigidbody.velocity.y < 0)
             force -= myrigidbody.velocity.y;
-        
+    
         if(Input.GetKeyDown(KeyCode.Space) && !isGrounded()) 
             bufferTimeCounter = bufferTime;
 
@@ -305,11 +311,11 @@ public class characterControl: MonoBehaviour, IDataPersistance
             myrigidbody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
         }
         if(bufferTimeCounter > 0) bufferTimeCounter -= Time.deltaTime;
-
+        
         if ((Input.GetKeyDown(KeyCode.Space) && isGrounded() 
         || Input.GetKeyDown(KeyCode.Space) && doubleJumpIndex > 0 
         || Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0) 
-        && !_isSliding && !movementLocked)
+        && !_isSliding && pHM.canMove)
         {
             if (myrigidbody.velocity.y > 0)
                 force -= myrigidbody.velocity.y;
@@ -319,22 +325,32 @@ public class characterControl: MonoBehaviour, IDataPersistance
             if(!isGrounded() && coyoteTimeCounter < 0 && !distanceJoint.enabled) 
                 --doubleJumpIndex;
         }
-        else if(Input.GetKeyDown(KeyCode.Space) && isWalled() && Mathf.Abs(_moveInput.x) > 0) 
+        else if(Input.GetKeyDown(KeyCode.Space) && isWalled() && _isSliding && Mathf.Abs(_moveInput.x) > 0) // wall jump 
         {
-            Vector2 wallJumpForce = new Vector2(jumpForce/3 * -Mathf.Sign(transform.localScale.x), jumpForce);
+            //isWallJumping = true;
+            //Vector2 wallJumpForce = new Vector2(jumpForce/3 * -Mathf.Sign(transform.localScale.x)/* * 30*/, jumpForce * 1.2f /** 50*/);
+            //Vector2 wallJumpForce = new Vector2(jumpForce/3 * -Mathf.Sign(transform.localScale.x)/* * 30*/ * 1f, jumpForce * 1.2f/* * 50*/);
+            Vector2 wallJumpForce = new Vector2(jumpForce * _wallJumpModifierX * -Mathf.Sign(transform.localScale.x), jumpForce * _wallJumpModifierY);
+            //Vector2 wallJumpForce = new Vector2(0, jumpForce * 2);
             pHM.canMove = false;
 
-            if (Mathf.Sign(myrigidbody.velocity.x) != Mathf.Sign(wallJumpForce.x))
-                wallJumpForce.x -= myrigidbody.velocity.x;
+            //if (Mathf.Sign(myrigidbody.velocity.x) != Mathf.Sign(wallJumpForce.x))
+            //    wallJumpForce.x -= myrigidbody.velocity.x;
 
             if (myrigidbody.velocity.y < 0) //checks whether player is falling, if so we subtract the velocity.y (counteracting force of gravity). This ensures the player always reaches our desired jump force or greater
                 wallJumpForce.y -= myrigidbody.velocity.y;
-
-            myrigidbody.AddForce(wallJumpForce + new Vector2(0, Time.deltaTime * 320), ForceMode2D.Impulse);
-            //myrigidbody.velocity = new Vector2(jumpForce * Mathf.Sign(transform.localScale.x) * -0.3f, jumpForce + Time.deltaTime * 400);
+            //myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, 0);
+            //myrigidbody.velocity = Vector2.zero;
+            //myrigidbody.AddForce(wallJumpForce + new Vector2(0, Time.deltaTime * 320), ForceMode2D.Impulse);
+            myrigidbody.AddForce(wallJumpForce, ForceMode2D.Impulse);
+            //myrigidbody.AddForce(wallJumpForce, ForceMode2D.Force);
+            //myrigidbody.velocity = new Vector2(8 * -Mathf.Sign(transform.localScale.x), 32);
+            //myrigidbody.velocity = new Vector2(wallJumpForce.x, wallJumpForce.y + Time.deltaTime * 400);
             movementLocked = true;
-            StartCoroutine(wallJumpWait());
+            wallJumpWait = true;
+            //pHM.canMove = true;
         }
+
         if(Input.GetKeyUp(KeyCode.Space)) coyoteTimeCounter = 0;
 
         if ((isGrounded() || isWalled() && _isSliding) && !distanceJoint.enabled)
@@ -343,11 +359,13 @@ public class characterControl: MonoBehaviour, IDataPersistance
         }
 
         //---Variable height part of the jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded() && !isWalled())
+        
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded() && !_isSliding)
             myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, jumpForce);
 
-        if (Input.GetKeyUp(KeyCode.Space) && myrigidbody.velocity.y > 0 && doubleJumpIndex == constDJI && !movementLocked)
+        if (Input.GetKeyUp(KeyCode.Space) && myrigidbody.velocity.y > 0 && doubleJumpIndex == constDJI && !movementLocked && !_isSliding)
             myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, myrigidbody.velocity.y / 4);
+            
         //-----------------------------------
 
         if(movementLocked)
@@ -358,6 +376,17 @@ public class characterControl: MonoBehaviour, IDataPersistance
                 pHM.canMove = true;
                 waitToUnlockMovement = 0.3f;
                 movementLocked = false;
+            }
+        }
+
+        if(wallJumpWait)
+        {
+            wallJumpCooldown -= Time.deltaTime;
+            if(wallJumpCooldown < 0) 
+            {
+                pHM.canMove = true;
+                wallJumpCooldown = wallJumpTime;
+                wallJumpWait = false;
             }
         }
     } 
@@ -495,7 +524,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         float speedDif = slideSpeed - myrigidbody.velocity.y;	
 		float movement = speedDif * slideAccel;
 		movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
-		myrigidbody.AddForce(movement * Vector2.up);
+		if(pHM.canMove) myrigidbody.AddForce(movement * Vector2.up);
     }
     public void Glide()
     {
@@ -594,12 +623,6 @@ public class characterControl: MonoBehaviour, IDataPersistance
     {
         yield return new WaitForSeconds(0.3f);
         if(doubleJumpIndex != constDJI && !distanceJoint.enabled) doubleJumpIndex = constDJI;
-    }
-
-    IEnumerator wallJumpWait()
-    {
-        yield return new WaitForSeconds(0.05f);
-        pHM.canMove = true;
     }
     #endregion
     #region Gizmos

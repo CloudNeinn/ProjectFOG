@@ -49,7 +49,7 @@ public class SunBeam : EnemyFlyingBase
         playerHit = false;
         for (int i = 0; i < numberOfRays; i++)
         {
-            rayVector = new Vector2(-(float)Mathf.Cos(startRadians + additionRadians * i), (float)Mathf.Sin(startRadians + additionRadians * i)) * 10;
+            rayVector = new Vector2(-(float)Mathf.Cos(startRadians + additionRadians * i), (float)Mathf.Sin(startRadians + additionRadians * i));
             hits[i] = Physics2D.Raycast(transform.position, rayVector, 100.0f, raycastLayer);
             Debug.DrawRay(transform.position, rayVector * hits[i].distance, Color.red, 0f);
             if(hits[i].collider.name == "Charachter") playerHit = true;
