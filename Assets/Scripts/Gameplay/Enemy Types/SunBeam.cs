@@ -7,25 +7,32 @@ public class SunBeam : EnemyFlyingBase
     public int numberOfRays;
     public float beamWidth;
     public float rotationAngle;
+    public bool isHit;
+    public RaycastHit2D[] hits;
+    public LayerMask raycastLayer;
+    
+    private bool playerHit;
     private float startRadians;
     private float additionRadians;
     private Vector2 rayVector;
-    public LayerMask raycastLayer;
-    public bool isHit;
-    public RaycastHit2D[] hits;
-    private bool playerHit;
 
 
     // Start is called before the first frame update
     void Start()
     {
         hits = new RaycastHit2D[numberOfRays];
+        _enemyrb = GetComponent<Rigidbody2D>();
+        _enemycol = GetComponent<CircleCollider2D>();
+        currentPatrolPoint = 0;
+        numberOfPatrolPoints = PatrolPoints.Length;
+        flyDirection = ((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized);
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckIfHits();
+        Rotate();
         //if is hit then death or damage
         //or instead is hit death or damage
     }
