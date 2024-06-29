@@ -16,6 +16,7 @@ public class EnemyFlyingAttacker : EnemyFlyingBase, IRadSeeable, IAttackable
     [field: SerializeField] public float blockKnockStrengthY { get; set; }    
     [field: SerializeField] public bool canAttack { get; set; }
     [field: SerializeField] public bool isAlert { get; set; }
+    [field: SerializeField] public bool isSensing { get; set; }
 
     [field: Header ("Additional Movement Options")]
     [field: SerializeField] public float patrolSpeed { get; set; }
@@ -57,8 +58,9 @@ public class EnemyFlyingAttacker : EnemyFlyingBase, IRadSeeable, IAttackable
 
     public bool inRange()
     {
-        if(transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
-        transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
+        if((transform.localScale.x > 0 && transform.position.x < charCon.transform.position.x || 
+        transform.localScale.x < 0 && transform.position.x > charCon.transform.position.x) && !isSensing) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
+        else if (isSensing) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
         else return false;
     }
 

@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
     [field: SerializeField] public int numberOfPatrolPoints { get; set; }
     [field: SerializeField] public float standingTime { get; set; }
     [field: SerializeField] public float standingCooldown { get; set; }
+    [field: SerializeField] public bool canPatrol { get; set; }
 
     [field: Header ("Conditions")]
     [field: SerializeField] public bool isMoving;

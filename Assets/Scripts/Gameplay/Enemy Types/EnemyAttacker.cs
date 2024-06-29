@@ -16,6 +16,7 @@ public class EnemyAttacker : EnemyBase, IBoxSeeable, IAttackable
     [field: SerializeField] public float blockKnockStrengthY { get; set; }    
     [field: SerializeField] public bool canAttack { get; set; }
     [field: SerializeField] public bool isAlert { get; set; }
+    [field: SerializeField] public bool isSensing { get; set; }
 
     [field: Header ("Additional Movement Options")]
     [field: SerializeField] public float patrolSpeed { get; set; }

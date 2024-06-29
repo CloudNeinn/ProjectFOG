@@ -11,6 +11,7 @@ public interface IPatrolable
     int numberOfPatrolPoints { get; set; }
     float standingTime { get; set; }
     float standingCooldown { get; set; }
+    bool canPatrol { get; set; }
     void Patrol();
     void moveAfterStanding(Vector2 dir);
 }

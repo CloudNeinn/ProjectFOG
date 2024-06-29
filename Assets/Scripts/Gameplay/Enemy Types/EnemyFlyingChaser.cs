@@ -39,6 +39,25 @@ public class EnemyFlyingChaser : EnemyFlyingAttacker, IChaseable
     void Update()
     {
         Rotate();
+        if(inSight()) 
+        {
+            target = playerPosition.position;
+            isAlert = true;
+            followEnabled = true;
+        }
+        else 
+        {
+            target = enemyStartingPosition;
+            isAlert = false;
+        }
+
+        if(Vector2.Distance(transform.position, enemyStartingPosition) <= 1.5f && followEnabled && !isAlert) 
+        {
+            _enemyrb.velocity = Vector2.zero;
+            followEnabled = false;
+        }
+        
+        if(followEnabled) PathFollow();
     }
 
     public void PathFollow() 

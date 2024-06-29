@@ -16,6 +16,7 @@ public class EnemyRanged : EnemyBase, IRadSeeable, IAttackable
     [field: SerializeField] public float blockKnockStrengthY { get; set; }    
     [field: SerializeField] public bool canAttack { get; set; }
     [field: SerializeField] public bool isAlert { get; set; }
+    [field: SerializeField] public bool isSensing { get; set; }
 
 
     [field: Header ("Check Box Options")]

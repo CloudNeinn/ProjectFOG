@@ -18,6 +18,7 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
     [field: SerializeField] public int numberOfPatrolPoints { get; set; }
     [field: SerializeField] public float standingTime { get; set; }
     [field: SerializeField] public float standingCooldown { get; set; }
+    [field: SerializeField] public bool canPatrol { get; set; }
 
     [field: Header ("Conditions")]
     [field: SerializeField] public bool isMoving;
@@ -73,7 +74,7 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
         {
             transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        flyDirection = ((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized);
+        if(canPatrol) flyDirection = ((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized);
     }
     public void ChangeDirection(float direction)
     {

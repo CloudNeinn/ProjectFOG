@@ -26,6 +26,7 @@ public interface ISeeable
     float attackSpeed { get; set; }
 
     bool isAlert { get; set; }
+    bool isSensing { get; set; }
 
     characterControl charCon { get; set; }
 
