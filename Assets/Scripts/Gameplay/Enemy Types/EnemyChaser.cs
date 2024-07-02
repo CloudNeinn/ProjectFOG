@@ -39,6 +39,7 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
         _isGrounded = isGrounded();
         Rotate();
         Attack();
+        if(followEnabled) PathFollow();
     }
 
     public new void Attack()
@@ -54,25 +55,35 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
             isAlert = true;
         }
 
-        if(!isAlert && 
+    
+        /*if(!isAlert && (( canPatrol &&
         (LeftPoint.transform.position.x - 0.5f >= transform.position.x || 
         RightPoint.transform.position.x + 0.5f <= transform.position.x) && 
         (LeftPoint.transform.position.y + 1.5f <= transform.position.y || 
-        RightPoint.transform.position.y - 1.5f >= transform.position.y))
+        RightPoint.transform.position.y - 1.5f >= transform.position.y)) || */// ) 
+        if(!isAlert && !canPatrol && Vector2.Distance(transform.position, enemyStartingPosition) >= 3f)
         {
             target = enemyStartingPosition;
             isPatroling = false;
-            PathFollow();
+            followEnabled = true;//PathFollow();
         }
-        else if(!isAlert) isPatroling = true; //Patrol();
+        else if(!isAlert) 
+        {
+            followEnabled = false;
+            isPatroling = true; //Patrol();
+        }
 
         if(isAlert) 
         {
             moveSpeed = attackSpeed;
             isPatroling = false;
             target = playerPosition.position;
-            if(!inRange()) PathFollow();
-            else Stand();
+            if(!inRange()) followEnabled = true;// PathFollow();
+            else 
+            {
+                Stand();
+                followEnabled = false;
+            }
             
             if(canAttack && inRange())
             {
@@ -139,10 +150,8 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
 
     public void OnPathComplete(Path p) 
     {
-        Debug.Log("Path Complete837475610896518734658713645876134785618346578136459861348756134785613987561873465871364598");
         if (!p.error)
         {
-            Debug.Log("Path CompleteqwiufoiwuaQEFQAEPO9RUIHQAERGQAEWOLIRUHQAWERGQEPIRUGNQERGQEPR9OUIQENRGQERP;GIUQEHRGQERGQEPIRUGHQ");
             path = p;
             currentWaypoint = 0;
         }

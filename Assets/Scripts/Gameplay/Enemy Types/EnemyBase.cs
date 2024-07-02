@@ -107,7 +107,7 @@ public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
 
     void FixedUpdate()
     {
-        if(isPatroling) Patrol();
+        if(isPatroling && canPatrol) Patrol();
     }
 /*
     void OnCollisionStay2D(Collision2D collision)
