@@ -78,7 +78,7 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
             moveSpeed = attackSpeed;
             isPatroling = false;
             target = playerPosition.position;
-            if(!inRange()) followEnabled = true;// PathFollow();
+            if(!inRange() && !canAttack) followEnabled = true;// PathFollow();
             else 
             {
                 Stand();

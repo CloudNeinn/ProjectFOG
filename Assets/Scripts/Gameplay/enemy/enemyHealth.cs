@@ -25,14 +25,16 @@ public class enemyHealth : MonoBehaviour
 
     [Header ("References")]
     public Rigidbody2D enemyRigidBody;
-    private characterControl charCon;
-    private enemyPatrol enePat;
-    private enemyVision eneVis;
-    private enemyBehaviour eneBeh;
-    private playerHealthManager pHM;
+    public characterControl charCon;
+    public enemyPatrol enePat;
+    public enemyVision eneVis;
+    public enemyBehaviour eneBeh;
+    public playerHealthManager pHM;
 
     public float knockbackStrengthX;
     public float knockbackStrengthY;
+    public Vector2 knockbackForce;
+    public float attackedTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,15 +56,15 @@ public class enemyHealth : MonoBehaviour
         //else knockbackStrength = 3;
     }
    
-    public void Damage(int amount)
+    public virtual void Damage(int amount)
     {
         if(currentHealth > 0 && vulnerable)
         {
             vulnerable = false;
             currentHealth -= amount;
             attacked = true;
-            Vector2 force = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
-            enemyRigidBody.AddForce(force);
+            knockbackForce = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
+            enemyRigidBody.AddForce(knockbackForce);
             //enemyRigidBody.velocity = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
             //enemyRigidBody.AddForce(new Vector2(200 * attackDirection(), 150), ForceMode2D.Impulse);    
             if (currentHealth <= 0)
@@ -89,9 +91,9 @@ public class enemyHealth : MonoBehaviour
         else return -1;
     }
 
-    IEnumerator attackedCooldown()
+    public IEnumerator attackedCooldown()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(attackedTime);
         attacked = false;
     }
 
