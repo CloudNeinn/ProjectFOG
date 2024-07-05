@@ -40,14 +40,20 @@ public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
 
     public void Rotate()
     {
-        if (_enemyrb.velocity.x > 0)
+        /*if (_enemyrb.velocity.x == 0f)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+        else */
+        if (_enemyrb.velocity.x >= 0.25f)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        else if (_enemyrb.velocity.x < 0)
+        else if (_enemyrb.velocity.x < -0.25f)
         {
             transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
+         
         directionX = (int)Mathf.Sign(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized.x));
     }
 

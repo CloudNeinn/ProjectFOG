@@ -39,6 +39,10 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
         _isGrounded = isGrounded();
         Rotate();
         Attack();
+    }
+
+    void FixedUpdate()
+    {
         if(followEnabled) PathFollow();
     }
 
@@ -133,7 +137,9 @@ public class EnemyChaser : EnemyAttacker, IJumpable, IChaseable
         }
 
         // Movement
-        _enemyrb.AddForce(force);
+        //_enemyrb.AddForce(force);
+        //force is inconsistent and with some enemies its OK with others its not
+        _enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(transform.localScale.x), 0);
 
         // Next Waypoint
         float distance = Vector2.Distance(_enemyrb.position, path.vectorPath[currentWaypoint]);
