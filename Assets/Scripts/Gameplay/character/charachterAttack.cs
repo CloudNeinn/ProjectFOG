@@ -29,7 +29,7 @@ public class charachterAttack : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(Input.GetKey(KeyCode.LeftAlt))
+        if(Input.GetKey(KeyCode.S))
         {
             capsuleWidth = 1.25f;
             capsuleHeight = 2f;
@@ -45,7 +45,7 @@ public class charachterAttack : MonoBehaviour
         {
             capsuleWidth = 3.5f;
             capsuleHeight = 1.5f;
-            centerOffset = new Vector3(0.25f * charCon.direction,0,0);
+            centerOffset = new Vector3(0.25f * charCon.transform.localScale.x,0,0);
         }
         if (Input.GetMouseButtonDown(0) && !block.blockActive && timer >= 0.6f)
         {
