@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISeeable
+public interface ISeeable : IGroundable
 {
     float noticeStandingTime { get; set; }
     float noticeStandingCooldown { get; set; }
@@ -16,7 +16,6 @@ public interface ISeeable
     float checkGroundDistance { get; set; }
     Vector3 checkWallBoxSize { get; set; }
     float checkWallDistance { get; set; }
-    LayerMask checkGroundLayer { get; set; }
     LayerMask checkWallLayer { get; set; }
 
     LayerMask playerLayer { get; set; }
@@ -35,5 +34,4 @@ public interface ISeeable
     bool isBehind();
     bool checkIfWall();
     bool checkIfGround();
-    bool isGrounded();
 }

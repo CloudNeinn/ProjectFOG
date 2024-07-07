@@ -8,8 +8,6 @@ public interface IJumpable
     float jumpTimer { get; set; }
     bool jumpEnabled { get; set; } 
     float jumpModifier { get; set; } // 0.3f
-    float jumpNodeHeightRequirement { get; set; } //0.8f
 
-    float getJumpModifier();
     void Jump(float jumpStrength);
 }

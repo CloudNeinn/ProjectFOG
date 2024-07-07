@@ -76,11 +76,10 @@ public class EnemyAttacker : EnemyBase, IBoxSeeable, IAttackable
         return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x + checkWallDistance * -transform.localScale.x,
          _enemycol.bounds.center.y), checkWallBoxSize, 0, checkWallLayer);
     }
-
     public bool isGrounded()
     {
         return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x, _enemycol.bounds.center.y - isGroundedDistance), isGroundedBox, 0, checkGroundLayer);
-    }
+    }    
 
     public bool _isGrounded;
     void Update()

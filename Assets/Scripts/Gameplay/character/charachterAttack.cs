@@ -47,7 +47,7 @@ public class charachterAttack : MonoBehaviour
             capsuleHeight = 1.5f;
             centerOffset = new Vector3(0.25f * charCon.transform.localScale.x,0,0);
         }
-        if (Input.GetMouseButtonDown(0) && !block.blockActive && timer >= 0.6f)
+        if (Input.GetMouseButtonDown(0) && !block.blockActive && timer >= 0.3f)
         {
             anim.SetTrigger("isAttacking");
             StartCoroutine(hitEnemies());
@@ -71,7 +71,7 @@ public class charachterAttack : MonoBehaviour
             capsuleHeight = 1.5f;
             capsuleWidth = 6f;
         }
-        else yield return new WaitForSeconds(0.2f);
+        else yield return new WaitForSeconds(0.1f);
         Collider2D[] hitEnemies = Physics2D.OverlapCapsuleAll(
             transform.position + centerOffset, 
             new Vector2(capsuleWidth, capsuleHeight), 

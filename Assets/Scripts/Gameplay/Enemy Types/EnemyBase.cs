@@ -21,7 +21,7 @@ public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
     [field: Header ("Conditions")]
     [field: SerializeField] public bool isMoving;
     [field: SerializeField] public bool isPatroling = true;
-
+    
     [field: Header ("References")]
     [field: SerializeField] protected Rigidbody2D _enemyrb;
     [field: SerializeField] protected CircleCollider2D _enemycol;
