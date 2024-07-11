@@ -9,6 +9,7 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
     [field: SerializeField] public int directionX { get; set; }
     [field: SerializeField] public float flySpeed { get; set; }
     [field: SerializeField] public Vector2 flyDirection { get; set; }
+    [field: SerializeField] public bool isStanding { get; set; }
 
     [field: Header ("Patrol Options")]
     [field: SerializeField] public GameObject LeftPoint { get; set; }

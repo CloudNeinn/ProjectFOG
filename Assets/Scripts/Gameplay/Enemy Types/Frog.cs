@@ -9,8 +9,7 @@ public class Frog : EnemyBase, IJumpable, IGroundable
     [field: SerializeField] public float jumpTimer { get; set; }
     [field: SerializeField] public bool jumpEnabled { get; set; }
     [field: SerializeField] public float jumpModifier { get; set; }
-    [field: SerializeField] private float frogJumpStrength { get; set; }
-    [SerializeField] private float jumpHeight;
+    [SerializeField] public float jumpHeight;
 
     [field: Header ("Ground box options")]
     [field: SerializeField] public Vector3 isGroundedBox { get; set; }
@@ -29,13 +28,13 @@ public class Frog : EnemyBase, IJumpable, IGroundable
 
     public void Jump(float jumpStrength)
     {
-        _enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(transform.localScale.x), jumpStrength);
+        _enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(PatrolPoints[currentPatrolPoint].transform.position.x - transform.position.x), jumpStrength);
         jumpTimer = jumpCooldown;
         jumpEnabled = false;
     }
     public void Patrol()
     {
-        if(Vector2.Distance(transform.position, PatrolPoints[currentPatrolPoint].transform.position) <= 1.5f){
+        if(Vector2.Distance(transform.position, PatrolPoints[currentPatrolPoint].transform.position) <= 1.5f && isGrounded()){
             moveAfterStanding(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized));
             if(standingCooldown <= 0){
                 if(currentPatrolPoint == numberOfPatrolPoints - 1) currentPatrolPoint = 0;
