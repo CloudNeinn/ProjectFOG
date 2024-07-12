@@ -22,9 +22,9 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float _wallJumpModifierY;
 
     [Header ("Movement Parameters")]
-    public Vector2 _moveInput;
+    //public Vector2 _moveInput;
     public int direction = 1;
-    private float fallSpeedBeforeCTRL;   
+    public float fallSpeedBeforeCTRL;   
     public float moveSpeed;
     public float runSpeed;
     public float crouchSpeed;
@@ -145,6 +145,30 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float teleportTimerCooldown;
     
     private float vertical;
+
+    #region UserInput
+
+    [field: Header ("Inputs")]    
+    [field: SerializeField] public Vector2 _moveInput {get; private set;}
+    public bool _jumpInput {get; private set;}
+    public bool _dashInput {get; private set;}
+    public bool _hookInput {get; private set;}
+    public bool _crouchInput {get; private set;}
+    public bool _attackInput {get; private set;}
+    public bool _blockInput {get; private set;}
+    public bool _switchRealmsInput {get; private set;}
+    public bool _glideInput {get; private set;}
+    public bool _use1Input {get; private set;}
+    public bool _use2Input {get; private set;}
+    public bool _menuToggleInput {get; private set;}
+    #endregion
+    
+    //--------------------------------------------------------------------------------------//
+    //--------------------------------------------------------------------------------------//
+    //TODO: maybe redo how fall attack works, it's a bit clunky with the == 0 implementation//
+    //--------------------------------------------------------------------------------------//
+    //--------------------------------------------------------------------------------------//
+    
     #region Load/Save system
     public void LoadData(GameData data)
     {
@@ -177,6 +201,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     #endregion
 
+
     void Start()
     {
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
@@ -191,12 +216,15 @@ public class characterControl: MonoBehaviour, IDataPersistance
         checkpManage = GameObject.FindObjectOfType<checkpointManagement>();
         displayHitSprite = displayHitSpriteObject.GetComponent<SpriteRenderer>();
         wallJumpCooldown = wallJumpTime;
+
+
     }
 
     void Update()
     {
+        GetInput();
         //---Teleportation to other world
-        if(Input.GetKeyDown(KeyCode.H))
+        if(_switchRealmsInput)
         {
             distanceJoint.enabled = false;
             camMov.virtualCamera.enabled = false;
@@ -232,7 +260,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         else coyoteTimeCounter -= Time.deltaTime;
 
         //---TODO: figure out if this works or not, if i even need this
-        if(_moveInput.x != 0 && !isWalled() && pHM.canMove) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * _moveInput.x, transform.localScale.y);
+        if(_moveInput.x != 0 && !isWalled() && pHM.canMove) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * Mathf.Sign(_moveInput.x), transform.localScale.y);
         else if(myrigidbody.velocity.x != 0) Rotate();
         //-------------------------------------------------------------
 
@@ -246,7 +274,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
             jumpIndex = 0;
             constDJI = 1;
         }
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && hasDash && !isGliding && !isCrouching() && !isWalled())
+        if(_dashInput && canDash && hasDash && !isGliding && !isCrouching() && !isWalled())
         {
             StartCoroutine(Dash());
         }
@@ -280,8 +308,9 @@ public class characterControl: MonoBehaviour, IDataPersistance
     #region Abilities
     private void Move()
     {
-        _moveInput.x = Input.GetAxisRaw("Horizontal");
-		_moveInput.y = Input.GetAxisRaw("Vertical");
+        // _moveInput.x = Input.GetAxisRaw("Horizontal");
+		// _moveInput.y = Input.GetAxisRaw("Vertical");
+        _moveInput = UserInput.Instance.MoveInput;
         if(_isCrouching) moveSpeed = crouchSpeed;
         else moveSpeed = runSpeed;
         targetSpeed = _moveInput.x * moveSpeed;
@@ -300,7 +329,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         if (myrigidbody.velocity.y < 0)
             force -= myrigidbody.velocity.y;
     
-        if(Input.GetKeyDown(KeyCode.Space) && !isGrounded()) 
+        if(UserInput.Instance._jumpAction.WasPressedThisFrame() && !isGrounded()) 
             bufferTimeCounter = bufferTime;
 
         if(bufferTimeCounter > 0 && isGrounded()) 
@@ -312,9 +341,9 @@ public class characterControl: MonoBehaviour, IDataPersistance
         }
         if(bufferTimeCounter > 0) bufferTimeCounter -= Time.deltaTime;
         
-        if ((Input.GetKeyDown(KeyCode.Space) && isGrounded() 
-        || Input.GetKeyDown(KeyCode.Space) && doubleJumpIndex > 0 
-        || Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter > 0) 
+        if ((UserInput.Instance._jumpAction.WasPressedThisFrame() && isGrounded() 
+        || UserInput.Instance._jumpAction.WasPressedThisFrame() && doubleJumpIndex > 0 
+        || UserInput.Instance._jumpAction.WasPressedThisFrame() && coyoteTimeCounter > 0) 
         && !_isSliding && pHM.canMove)
         {
             if (myrigidbody.velocity.y > 0)
@@ -325,7 +354,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
             if(!isGrounded() && coyoteTimeCounter < 0 && !distanceJoint.enabled) 
                 --doubleJumpIndex;
         }
-        else if(Input.GetKeyDown(KeyCode.Space) && isWalled() && _isSliding && Mathf.Abs(_moveInput.x) > 0) // wall jump 
+        else if(UserInput.Instance._jumpAction.WasPressedThisFrame() && isWalled() && _isSliding && Mathf.Abs(_moveInput.x) > 0) // wall jump 
         {
             //isWallJumping = true;
             //Vector2 wallJumpForce = new Vector2(jumpForce/3 * -Mathf.Sign(transform.localScale.x)/* * 30*/, jumpForce * 1.2f /** 50*/);
@@ -351,7 +380,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
             //pHM.canMove = true;
         }
 
-        if(Input.GetKeyUp(KeyCode.Space)) coyoteTimeCounter = 0;
+        if(UserInput.Instance._jumpAction.WasPressedThisFrame()) coyoteTimeCounter = 0;
 
         if ((isGrounded() || isWalled() && _isSliding) && !distanceJoint.enabled)
         {
@@ -360,10 +389,10 @@ public class characterControl: MonoBehaviour, IDataPersistance
 
         //---Variable height part of the jump
         
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded() && !_isSliding)
+        if (UserInput.Instance._jumpAction.WasPressedThisFrame() && isGrounded() && !_isSliding)
             myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, jumpForce);
 
-        if (Input.GetKeyUp(KeyCode.Space) && myrigidbody.velocity.y > 0 && doubleJumpIndex == constDJI && !movementLocked && !_isSliding)
+        if (UserInput.Instance._jumpAction.WasReleasedThisFrame() && myrigidbody.velocity.y > 0 && doubleJumpIndex == constDJI && !movementLocked && !_isSliding)
             myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, myrigidbody.velocity.y / 4);
             
         //-----------------------------------
@@ -397,26 +426,27 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     private void Crouch()
     {
-        if(Input.GetKey(KeyCode.LeftControl) && isGrounded() || _isCrouching)
+        if(UserInput.Instance._crouchAction.IsPressed() && isGrounded() || _isCrouching)
         {
             anim.SetBool("isCrouching", true);
             collCrouch.enabled = true;
             coll.enabled = false;
 
         }
-        else if(Input.GetKeyDown(KeyCode.LeftControl))
+        else if(UserInput.Instance._crouchAction.IsPressed())
         {
             fallAttackActive = true;
             fallStartingHeight = transform.position.y;
-            fallSpeedBeforeCTRL = myrigidbody.velocity.y;
-            myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -15);
+            if(fallSpeedBeforeCTRL == 0) fallSpeedBeforeCTRL = myrigidbody.velocity.y;
+            //myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -15);
+            myrigidbody.AddForce(new Vector2(0, -15));
         }
-        if(Input.GetKeyUp(KeyCode.LeftControl) && !isGrounded())
+        if(UserInput.Instance._crouchAction.WasReleasedThisFrame() && !isGrounded())
         {
             fallAttackActive = false;
             myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, fallSpeedBeforeCTRL);
         }
-        if(!Input.GetKey(KeyCode.LeftControl) && !isUnderTerrain() || isJumping())
+        if(!UserInput.Instance._crouchAction.IsPressed() && !isUnderTerrain() || isJumping())
         {
             anim.SetBool("isCrouching", false);
             collCrouch.enabled = false;
@@ -424,6 +454,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         }
         if(isGrounded() && fallAttackActive)
         {
+            fallSpeedBeforeCTRL = 0;
             fallEndingHeight = transform.position.y;
             fallHeight = fallStartingHeight - fallEndingHeight;
         }
@@ -462,7 +493,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         playerToMouseDirection = (mousePos - transform.position).normalized;        
-        if(Input.GetKeyDown(KeyCode.R))
+        if(_hookInput)
         {
             distanceJoint.enabled = false;
             hookHit = Physics2D.Raycast(transform.position, playerToMouseDirection, hookMaxDistance, hookableLayers);
@@ -486,7 +517,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
                 doubleJumpIndex = constDJI + 1;
             }
         }
-        if((Input.GetKeyDown(KeyCode.Space) || _isDashing || Input.GetKeyDown(KeyCode.LeftControl) || pHM.playerDead) && distanceJoint.enabled) distanceJoint.enabled = false;
+        if((_jumpInput || _isDashing || Input.GetKeyDown(KeyCode.LeftControl) || pHM.playerDead) && distanceJoint.enabled) distanceJoint.enabled = false;
         if(distanceJoint.enabled) 
         {
             lineRenderer.SetPosition(0, transform.position);
@@ -528,7 +559,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     public void Glide()
     {
-        if(Input.GetKey(KeyCode.LeftAlt) && !distanceJoint.enabled) myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -3.5f);
+        if(UserInput.Instance._glideAction.IsPressed() && !distanceJoint.enabled) myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -3.5f);
     }
     #endregion
     #region Conditions
@@ -536,7 +567,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     {
         if(!isUnderTerrain())
         {
-            if (myrigidbody.velocity.y > 0.1 && Input.GetKeyDown(KeyCode.Space)) return true;
+            if (myrigidbody.velocity.y > 0.1 && _jumpInput) return true;
             else if (!isGrounded() && !isFalling()) return true;
             else return false;
         }
@@ -569,7 +600,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     public bool isCrouching()
     {
-        if(Input.GetKey(KeyCode.LeftControl) && isGrounded() || isUnderTerrain() && collCrouch.enabled == true) _isCrouching = true;
+        if(_crouchInput && isGrounded() || isUnderTerrain() && collCrouch.enabled == true) _isCrouching = true;
         else _isCrouching = false;
         return _isCrouching;
     }
@@ -634,7 +665,21 @@ public class characterControl: MonoBehaviour, IDataPersistance
         Gizmos.DrawWireCube(coll.bounds.center - transform.right * maxDistance * Mathf.Sign(transform.localScale.x) * -1, wallBoxSize);
     }
     #endregion
-
+    void GetInput()
+    {
+        _moveInput = UserInput.Instance.MoveInput;
+        _jumpInput = UserInput.Instance.JumpInput;
+        _dashInput = UserInput.Instance.DashInput;
+        _hookInput = UserInput.Instance.HookInput;
+        _crouchInput = UserInput.Instance.CrouchInput;
+        _attackInput = UserInput.Instance.AttackInput;
+        _blockInput = UserInput.Instance.BlockInput;
+        _switchRealmsInput = UserInput.Instance.SwitchRealmsInput;
+        _glideInput = UserInput.Instance.GlideInput;
+        _use1Input = UserInput.Instance.Use1Input;
+        _use2Input = UserInput.Instance.Use2Input;
+        _menuToggleInput = UserInput.Instance.MenuToggleInput; 
+    }
     #region Testing Functionality
     private void GiveAllSkills()
     {

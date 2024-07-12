@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "15b48d20-5442-4cda-afeb-95918da42a8e",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dive",
+                    "name": "Glide",
                     "type": "Button",
                     "id": "8799af43-19a5-4559-b4fb-8c348a13d8c8",
                     "expectedControlType": "Button",
@@ -118,7 +118,7 @@
                 {
                     "name": "WASD movement",
                     "id": "3a0b1b7b-22f9-4e9c-9a0b-8c5d695cdd64",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -132,7 +132,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -143,7 +143,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -154,7 +154,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -165,7 +165,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -176,7 +176,7 @@
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Hook",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -187,7 +187,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -198,7 +198,7 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -209,7 +209,7 @@
                     "path": "<Keyboard>/h",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "SwitchRealms",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -217,11 +217,11 @@
                 {
                     "name": "",
                     "id": "b901a4e4-19d2-42fd-a712-39f50ae423e6",
-                    "path": "<Keyboard>/leftAlt",
+                    "path": "<Keyboard>/alt",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Dive",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Glide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -231,7 +231,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Use1",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -242,7 +242,7 @@
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Use2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -253,7 +253,7 @@
                     "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -261,10 +261,10 @@
                 {
                     "name": "",
                     "id": "723049dd-a941-4d2e-a6f9-ee341fb487a1",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -275,7 +275,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -286,7 +286,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard&Mouse",
                     "action": "MenuToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -321,6 +321,22 @@
             "name": "Mouse",
             "bindingGroup": "Mouse",
             "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Keyboard&Mouse",
+            "bindingGroup": "Keyboard&Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
                 {
                     "devicePath": "<Mouse>",
                     "isOptional": true,

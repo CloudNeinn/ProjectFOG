@@ -33,7 +33,7 @@ public class abilityAltarScript : MonoBehaviour
         charCon.transform.position.y <= transform.position.y + 2 && 
         charCon.transform.position.y >= transform.position.y - 2 )
         {
-            if(Input.GetKeyDown(KeyCode.E) && !abilityObtained)
+            if(charCon._use1Input && !abilityObtained) // Input.GetKeyDown(KeyCode.E)
             {   
                 abilityObtained = true;
             }

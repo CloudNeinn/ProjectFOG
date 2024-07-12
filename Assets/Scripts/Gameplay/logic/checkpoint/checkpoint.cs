@@ -52,24 +52,24 @@ public class checkpoint : MonoBehaviour
         && charCon.transform.position.y <= transform.position.y + 4 
         && charCon.transform.position.y >= transform.position.y - 4)
         {
-            if(Input.GetKeyDown(KeyCode.F) && !menuOpen 
-            && isActivated && Time.timeScale != 0) 
+            if(charCon._use2Input && !menuOpen 
+            && isActivated && Time.timeScale != 0) // Input.GetKeyDown(KeyCode.F)
             {
                 menuOpen = true;
                 checkpMenu.SetActive(menuOpen);
             }
-            else if(Input.GetKeyDown(KeyCode.F) && menuOpen) 
+            else if(charCon._use2Input && menuOpen) // Input.GetKeyDown(KeyCode.F)
             {
                 menuOpen = false;
                 checkpMenu.SetActive(menuOpen);
             }
             //show e popup icon
-            if(checkpointIsSaved && Input.GetKeyDown(KeyCode.E) && !isHealed)
+            if(checkpointIsSaved && charCon._use1Input && !isHealed) // Input.GetKeyDown(KeyCode.E)
             {
                 gameUI.Respawn();
                 isHealed = true;
             }
-            else if(Input.GetKeyDown(KeyCode.E) && !checkpointIsSaved)
+            else if(charCon._use1Input && !checkpointIsSaved) // Input.GetKeyDown(KeyCode.E)
             {
                 //save checkpoint
                 checkpManage.updateCheckpoint();

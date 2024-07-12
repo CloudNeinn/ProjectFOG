@@ -29,13 +29,13 @@ public class charachterAttack : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(Input.GetKey(KeyCode.S))
+        if(charCon._moveInput.y <= -0.5f) // Input.GetKey(KeyCode.S)
         {
             capsuleWidth = 1.25f;
             capsuleHeight = 2f;
             centerOffset = new Vector3(0,-1.25f,0);
         }
-        else if(Input.GetKey(KeyCode.W))
+        else if(charCon._moveInput.y >= 0.5f) // Input.GetKey(KeyCode.W)
         {
             capsuleWidth = 1.25f;
             capsuleHeight = 2f;
@@ -47,15 +47,15 @@ public class charachterAttack : MonoBehaviour
             capsuleHeight = 1.5f;
             centerOffset = new Vector3(0.25f * charCon.transform.localScale.x,0,0);
         }
-        if (Input.GetMouseButtonDown(0) && !block.blockActive && timer >= 0.3f)
+        if (charCon._attackInput && !block.blockActive && timer >= 0.3f)
         {
             anim.SetTrigger("isAttacking");
             StartCoroutine(hitEnemies());
         }
-        if(Input.GetKeyDown(KeyCode.X) && !block.blockActive && specialAttackActive)
-        {
-            specialAttack();
-        }
+        // if(Input.GetKeyDown(KeyCode.X) && !block.blockActive && specialAttackActive)
+        // {
+        //     specialAttack();
+        // }
     }
 
     public void specialAttack()

@@ -43,7 +43,7 @@ public class leverScript : MonoBehaviour, IDataPersistance
         charCon.transform.position.y <= transform.position.y + 2 && 
         charCon.transform.position.y >= transform.position.y - 2)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(charCon._use1Input) //Input.GetKeyDown(KeyCode.E)
             {   //close
                 if(doorIsOpen && canClose) doorRB.velocity = new Vector2(0, openSpeed * direction * -1);
                 //open

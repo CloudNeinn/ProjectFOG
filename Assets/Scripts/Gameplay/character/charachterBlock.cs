@@ -17,13 +17,13 @@ public class charachterBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (charCon._blockInput) // Input.GetMouseButtonDown(1)
         {
             blockActive = true;
             blockCollider.enabled = true;
             anim.SetBool("isBlocking", true);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else // if (!charCon._blockInput) // Input.GetMouseButtonUp(1)
         {
             blockActive = false;
             blockCollider.enabled = false;
