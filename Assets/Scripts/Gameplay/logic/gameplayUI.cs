@@ -97,6 +97,7 @@ public class gameplayUI : MonoBehaviour
 
     public void Respawn()
     {
+        dataManager.Instance.hasToRespawn = true;
         eneBehs = GameObject.FindObjectsOfType<enemyBehaviour>();
         camFade.doFade();
         dataPerMan.LoadGame();

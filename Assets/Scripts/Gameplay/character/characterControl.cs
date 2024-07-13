@@ -172,32 +172,12 @@ public class characterControl: MonoBehaviour, IDataPersistance
     #region Load/Save system
     public void LoadData(GameData data)
     {
-        this.transform.position = data.playerPosition;
-        camMov.transform.position = data.playerPosition;
-        this.hasDeflectProjectile = data.hasDeflectProjectile;
-        this.hasSpecialAttack = data.hasSpecialAttack;
-        this.hasDoubleJump = data.hasDoubleJump;
-        this.hasHighJump = data.hasHighJump;
-        this.hasBarrier = data.hasBarrier;
-        this.hasDash = data.hasDash;
-        this.hasWallJump = data.hasWallJump;
-        this.constDJI = data.constDJI;
-        Debug.Log(data.playerPosition);
-        //Debug.Log(camMov.transform.position.x);
-        //Debug.Log(checkpManage.currentCheckpointPosition.x);
+        
     }
 
     public void SaveData(ref GameData data)
     {
-        data.playerPosition = this.transform.position;
-        data.hasDeflectProjectile = this.hasDeflectProjectile;
-        data.hasSpecialAttack = this.hasSpecialAttack;
-        data.hasDoubleJump = this.hasDoubleJump;
-        data.hasHighJump = this.hasHighJump;
-        data.hasBarrier = this.hasBarrier;
-        data.hasDash = this.hasDash;
-        data.hasWallJump = this.hasWallJump;
-        data.constDJI = this.constDJI;
+
     }
     #endregion
 

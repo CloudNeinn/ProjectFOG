@@ -3,8 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UILogic : MonoBehaviour
-{
+public class UILogic : MonoBehaviour, IDataPersistance
+{    
+    public int currentSceneID;
+    public void LoadData(GameData data)
+    {
+        this.currentSceneID = data.saveSceneID;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +36,7 @@ public class UILogic : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(currentSceneID);
         Time.timeScale = 1f;
     }
 
