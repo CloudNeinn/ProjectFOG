@@ -36,7 +36,8 @@ public class UILogic : MonoBehaviour, IDataPersistance
 
     public void StartGame()
     {
-        SceneManager.LoadScene(currentSceneID);
+        SceneManager.LoadScene("PersistentObjects");
+        SceneManager.LoadScene(currentSceneID, LoadSceneMode.Additive);
         Time.timeScale = 1f;
     }
 

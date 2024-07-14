@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: d9a9c30e15c16184fb8eb01efe3d6057
+  - enabled: 1
+    path: Assets/Scenes/PersistentObjects.unity
+    guid: 0a181b0156642944a8b87c228757b80d
+  - enabled: 1
+    path: Assets/Scenes/TestLevel1.unity
+    guid: 6f01abb9c3459d847bdfa7d46eaba2cd
   m_configObjects: {}
