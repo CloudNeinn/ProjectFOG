@@ -24,7 +24,9 @@ public class dataManager : MonoBehaviour, IDataPersistance
     {
         if(hasToRespawn) 
         {
-            SceneManager.LoadSceneAsync(data.saveSceneID);
+            SceneManager.LoadSceneAsync("PersistentObjects");
+            SceneManager.LoadSceneAsync(data.saveSceneID, LoadSceneMode.Additive);
+
             hasToRespawn = false;
         }
         charCon.transform.position = data.playerPosition;
