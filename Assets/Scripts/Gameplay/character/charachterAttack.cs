@@ -5,7 +5,6 @@ using UnityEngine;
 public class charachterAttack : MonoBehaviour
 {
     public Animator anim;
-    private characterControl charCon;
     public int damageAmount = 20;
     public CapsuleCollider2D capCol;
     public bool attBool;
@@ -19,35 +18,37 @@ public class charachterAttack : MonoBehaviour
     public bool fastFallAttack;
     public bool specialAttackActive;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        charCon = GameObject.FindObjectOfType<characterControl>();
-    }
+    #region Gizmos
+    private Vector3 center;
+    private Vector3 halfExtents;
+    private Vector3 startPoint;
+    private Vector3 endPoint;
+    private Vector2 direction2D;
+    #endregion
 
-    // Update is called once per frame
+
     void Update()
     {
         timer += Time.deltaTime;
-        if(charCon._moveInput.y <= -0.5f) // Input.GetKey(KeyCode.S)
+        if(characterControl.Instance._moveInput.y <= -0.5f) // Input.GetKey(KeyCode.S)
         {
             capsuleWidth = 1.25f;
             capsuleHeight = 2f;
-            centerOffset = new Vector3(0,-1.25f,0);
+            centerOffset.Set(0,-1.25f,0);
         }
-        else if(charCon._moveInput.y >= 0.5f) // Input.GetKey(KeyCode.W)
+        else if(characterControl.Instance._moveInput.y >= 0.5f) // Input.GetKey(KeyCode.W)
         {
             capsuleWidth = 1.25f;
             capsuleHeight = 2f;
-            centerOffset = new Vector3(0,1f,0);                
+            centerOffset.Set(0,1f,0);                
         }
         else
         {
             capsuleWidth = 3.5f;
             capsuleHeight = 1.5f;
-            centerOffset = new Vector3(0.25f * charCon.transform.localScale.x,0,0);
+            centerOffset.Set(0.25f * characterControl.Instance.transform.localScale.x,0,0);
         }
-        if (charCon._attackInput && !block.blockActive && timer >= 0.3f)
+        if (characterControl.Instance._attackInput && !block.blockActive && timer >= 0.3f)
         {
             anim.SetTrigger("isAttacking");
             StartCoroutine(hitEnemies());
@@ -67,7 +68,7 @@ public class charachterAttack : MonoBehaviour
     {
         if(fastFallAttack)
         {
-            centerOffset = new Vector3(0, -0.5f, 0);
+            centerOffset.Set(0, -0.5f, 0);
             capsuleHeight = 1.5f;
             capsuleWidth = 6f;
         }
@@ -92,18 +93,18 @@ public class charachterAttack : MonoBehaviour
         // Draw a wire rectangle to represent the area
         Gizmos.color = Color.red;
 
-        Vector3 center = transform.position + centerOffset;
-        Vector3 halfExtents = new Vector3(capsuleWidth / 2, capsuleHeight / 2, 0);
+        center = transform.position + centerOffset;
+        halfExtents.Set(capsuleWidth / 2, capsuleHeight / 2, 0);
 
         Gizmos.DrawWireCube(center, new Vector3(capsuleWidth, capsuleHeight, 0));
 
         // Convert CapsuleDirection2D to a Vector2
-        Vector2 direction2D = new Vector2(capCol.direction == CapsuleDirection2D.Vertical ? 0 : 1, capCol.direction == CapsuleDirection2D.Vertical ? 1 : 0);
+        direction2D.Set(capCol.direction == CapsuleDirection2D.Vertical ? 0 : 1, capCol.direction == CapsuleDirection2D.Vertical ? 1 : 0);
 
         // Draw a line representing the direction
         Gizmos.color = Color.blue;
-        Vector3 startPoint = center;
-        Vector3 endPoint = startPoint + new Vector3(direction2D.x, direction2D.y, 0) * (capsuleWidth / 2);
+        startPoint = center;
+        endPoint = startPoint + new Vector3(direction2D.x, direction2D.y, 0) * (capsuleWidth / 2);
         Gizmos.DrawLine(startPoint, endPoint);
     }
 }

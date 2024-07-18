@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class enemyRanged : MonoBehaviour
 {
-    public characterControl charCon;
     private enemyBehaviour eneBeh;
     private enemyAnimations eneAni;
     private enemyPatrol enePat;
@@ -38,7 +37,6 @@ public class enemyRanged : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!charCon) charCon = GameObject.FindObjectOfType<characterControl>();
         canShoot = false;
         shootTimer = shootCooldown;
         eneVis = GetComponent<enemyVision>();
@@ -85,11 +83,10 @@ public class enemyRanged : MonoBehaviour
 
     public Vector2 getVector()
     {
-        if(!charCon) charCon = GameObject.FindObjectOfType<characterControl>();
         float indX;
         float indY;
         float maxInd;
-        playerPosition = charCon.transform.position;
+        playerPosition = characterControl.Instance.transform.position;
         enemyPosition = transform.position;
         indX = playerPosition.x - enemyPosition.x;
         indY = playerPosition.y - enemyPosition.y;

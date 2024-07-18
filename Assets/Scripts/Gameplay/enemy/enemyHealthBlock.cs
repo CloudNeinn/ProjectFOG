@@ -20,12 +20,12 @@ public class enemyHealthBlock : enemyHealth
             attacked = true;
             if(isBlocked) 
             {
-                knockbackForce = new Vector2(blockedKnockbackStrengthX * attackDirection(), blockedKnockbackStrengthY);
+                knockbackForce.Set(blockedKnockbackStrengthX * attackDirection(), blockedKnockbackStrengthY); // used to be new Vector2
             }
             else 
             {
                 currentHealth -= amount;
-                knockbackForce = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
+                knockbackForce.Set(knockbackStrengthX * attackDirection(), knockbackStrengthY); // used to be new Vector2
             }
             enemyRigidBody.AddForce(knockbackForce);
             //enemyRigidBody.velocity = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);

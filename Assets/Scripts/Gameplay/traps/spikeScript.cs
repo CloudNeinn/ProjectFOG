@@ -6,7 +6,6 @@ public class spikeScript : MonoBehaviour
 {
 
     private playerHealthManager pHM;
-    private characterControl charCon;
     public Rigidbody2D charRigid;
     public float damage;
     public float knockbackX;
@@ -16,7 +15,6 @@ public class spikeScript : MonoBehaviour
     void Start()
     {
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
-        charCon = GameObject.FindObjectOfType<characterControl>();
     }
 
     // Update is called once per frame
@@ -31,12 +29,12 @@ public class spikeScript : MonoBehaviour
 
     public int knockbackDirectionX()
     {
-        if(charCon.transform.position.x < transform.position.x) return 1;
+        if(characterControl.Instance.transform.position.x < transform.position.x) return 1;
         else return -1;
     }
     public int knockbackDirectionY()
     {
-        if(charCon.transform.position.y < transform.position.y) return 1;
+        if(characterControl.Instance.transform.position.y < transform.position.y) return 1;
         else return -1;
     }
     void OnCollisionStay2D(Collision2D collision)

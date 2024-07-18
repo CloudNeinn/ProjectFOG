@@ -33,7 +33,6 @@ public class enemyVision : MonoBehaviour
     public BoxCollider2D boxCollider;
     public LayerMask playerLayer;
     public LayerMask raycastLayer;
-    private characterControl charCon;
     private enemyPatrol enePat;
     private enemyRanged eneRan;
     private enemyAttack eneAtt;
@@ -48,7 +47,6 @@ public class enemyVision : MonoBehaviour
         eneHea = GetComponent<enemyHealth>();
         eneBeh = GetComponent<enemyBehaviour>();
         eneAni = GetComponent<enemyAnimations>();
-        charCon = GameObject.FindObjectOfType<characterControl>();
         enePat = GetComponent<enemyPatrol>();
         eneRan = GetComponent<enemyRanged>();
         eneAtt = GetComponent<enemyAttack>();
@@ -75,7 +73,7 @@ public class enemyVision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerInSight() && !charCon.isUnderTerrain())
+        if(playerInSight() && !characterControl.Instance.isUnderTerrain())
         {
             enePat.moveSpeed = enePat.noticedSpeed;
             if(eneBeh != null) eneBeh.enabled = true;
@@ -97,7 +95,7 @@ public class enemyVision : MonoBehaviour
 
         if(playerIsBehind())
         {
-            if(charCon.moveSpeed >= charCon.crouchSpeed + 1  || eneHea.attacked)
+            if(characterControl.Instance.moveSpeed >= characterControl.Instance.crouchSpeed + 1  || eneHea.attacked)
             {
                 enePat.Rotate();
                 enePat.dir *= -1;
@@ -135,8 +133,8 @@ public class enemyVision : MonoBehaviour
         if(enemyTypeIndex == 0) return Physics2D.OverlapBox(new Vector2(boxCollider.bounds.center.x + attackDistance * -transform.localScale.x, boxCollider.bounds.center.y), attackBoxSize, 0, playerLayer);
         else if(enemyTypeIndex == 1)
         {
-            if(transform.localScale.x == 1 && transform.position.x < charCon.transform.position.x || 
-            transform.localScale.x == -1 && transform.position.x > charCon.transform.position.x) return Physics2D.OverlapCircle(transform.position, radius, playerLayer);
+            if(transform.localScale.x == 1 && transform.position.x < characterControl.Instance.transform.position.x || 
+            transform.localScale.x == -1 && transform.position.x > characterControl.Instance.transform.position.x) return Physics2D.OverlapCircle(transform.position, radius, playerLayer);
             else return false;
         }
         else return false;

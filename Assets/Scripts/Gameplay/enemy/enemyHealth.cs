@@ -25,7 +25,6 @@ public class enemyHealth : MonoBehaviour
 
     [Header ("References")]
     public Rigidbody2D enemyRigidBody;
-    public characterControl charCon;
     public enemyPatrol enePat;
     public enemyVision eneVis;
     public enemyBehaviour eneBeh;
@@ -35,10 +34,11 @@ public class enemyHealth : MonoBehaviour
     public float knockbackStrengthY;
     public Vector2 knockbackForce;
     public float attackedTime;
+    private int numberOfBloodPoints;
+    [SerializeField] private GameObject _blood;
     // Start is called before the first frame update
     void Start()
     {
-        charCon = GameObject.FindObjectOfType<characterControl>();
         enePat = gameObject.GetComponent<enemyPatrol>();
         eneVis = gameObject.GetComponent<enemyVision>();
         eneBeh = gameObject.GetComponent<enemyBehaviour>();
@@ -59,21 +59,29 @@ public class enemyHealth : MonoBehaviour
     public virtual void Damage(int amount)
     {
         if(currentHealth > 0 && vulnerable)
-        {
+        {   
+            numberOfBloodPoints = Random.Range(2, 4);
             vulnerable = false;
             currentHealth -= amount;
             attacked = true;
-            knockbackForce = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
+            knockbackForce.Set(knockbackStrengthX * attackDirection(), knockbackStrengthY); // used to be new Vector2
             enemyRigidBody.AddForce(knockbackForce);
             //enemyRigidBody.velocity = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
             //enemyRigidBody.AddForce(new Vector2(200 * attackDirection(), 150), ForceMode2D.Impulse);    
             if (currentHealth <= 0)
             {
+                numberOfBloodPoints = Random.Range(3, 6);
                 isAlive = false;
                 if(enePat != null) enePat.enemiesSpawnPoint.isAliveSpawner = false;
                 Debug.Log("EnemyDied");
                 Destroy(gameObject);
             }
+            
+            for(int i = 0; i < numberOfBloodPoints; i++)
+            {
+                Instantiate(_blood, transform.position, Quaternion.identity);
+            }
+            
             while(vulTimer <= invulnerabilityTime)
             {
                 vulTimer += Time.deltaTime;
@@ -81,13 +89,12 @@ public class enemyHealth : MonoBehaviour
             vulnerable = true;
             vulTimer = 0;
             StartCoroutine(attackedCooldown());
-
         }
     }
     
     public int attackDirection()
     {
-        if(charCon.transform.position.x < transform.position.x) return 1;
+        if(characterControl.Instance.transform.position.x < transform.position.x) return 1;
         else return -1;
     }
 

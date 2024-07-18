@@ -27,8 +27,6 @@ public interface ISeeable : IGroundable
     bool isAlert { get; set; }
     bool isSensing { get; set; }
 
-    characterControl charCon { get; set; }
-
     bool inSight();
     bool inRange();
     bool isBehind();

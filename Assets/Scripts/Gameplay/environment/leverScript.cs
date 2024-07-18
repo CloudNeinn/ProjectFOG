@@ -11,7 +11,6 @@ public class leverScript : MonoBehaviour, IDataPersistance
     {
         id = System.Guid.NewGuid().ToString();
     }
-    public characterControl charCon;
     public GameObject Door;
     public bool doorIsOpen = false;
     public float openSpeed;
@@ -26,7 +25,6 @@ public class leverScript : MonoBehaviour, IDataPersistance
     {
         startingPosition = Door.transform.position;
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("door"), LayerMask.NameToLayer("ground"), true);
-        charCon = GameObject.FindObjectOfType<characterControl>(); 
         doorRB = Door.GetComponent<Rigidbody2D>();      
     }
 
@@ -38,12 +36,12 @@ public class leverScript : MonoBehaviour, IDataPersistance
             //doorRB.velocity = new Vector2(0, openSpeed * direction);
             //isOpen = false;
         }
-        if(charCon.transform.position.x <= transform.position.x + 2 && 
-        charCon.transform.position.x >= transform.position.x - 2 && 
-        charCon.transform.position.y <= transform.position.y + 2 && 
-        charCon.transform.position.y >= transform.position.y - 2)
+        if(characterControl.Instance.transform.position.x <= transform.position.x + 2 && 
+        characterControl.Instance.transform.position.x >= transform.position.x - 2 && 
+        characterControl.Instance.transform.position.y <= transform.position.y + 2 && 
+        characterControl.Instance.transform.position.y >= transform.position.y - 2)
         {
-            if(charCon._use1Input) //Input.GetKeyDown(KeyCode.E)
+            if(characterControl.Instance._use1Input) //Input.GetKeyDown(KeyCode.E)
             {   //close
                 if(doorIsOpen && canClose) doorRB.velocity = new Vector2(0, openSpeed * direction * -1);
                 //open

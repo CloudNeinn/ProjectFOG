@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class characterControl: MonoBehaviour, IDataPersistance
 {
+    public static characterControl Instance;
+
     public float fallSpeed;
     [Header ("Jump Parameters")]
     public float jumpForce;
@@ -181,6 +183,13 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     #endregion
 
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
