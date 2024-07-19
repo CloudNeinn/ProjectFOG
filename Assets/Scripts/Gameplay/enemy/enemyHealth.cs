@@ -36,14 +36,12 @@ public class enemyHealth : MonoBehaviour
     public float attackedTime;
     private int numberOfBloodPoints;
     [SerializeField] private GameObject _blood;
-    private ObjectPooling objectPooling;
     // Start is called before the first frame update
     void Start()
     {
         enePat = gameObject.GetComponent<enemyPatrol>();
         eneVis = gameObject.GetComponent<enemyVision>();
         eneBeh = gameObject.GetComponent<enemyBehaviour>();
-        objectPooling = gameObject.GetComponent<ObjectPooling>();
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
         vulTimer = 0;
         vulnerable = true;
@@ -82,12 +80,6 @@ public class enemyHealth : MonoBehaviour
             for(int i = 0; i < numberOfBloodPoints; i++)
             {
                 ObjectPoolManager.SpawnObject(_blood, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.BloodCoinObjects);
-                // GameObject blood = objectPooling.GetPooledObject();
-                // if(blood != null)
-                // {
-                //     blood.transform.position = transform.position;
-                //     blood.SetActive(true);
-                // }
                 // Instantiate(_blood, transform.position, Quaternion.identity);
             }
             
