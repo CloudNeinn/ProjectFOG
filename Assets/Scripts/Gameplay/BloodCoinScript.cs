@@ -23,14 +23,15 @@ public class BloodCoinScript : MonoBehaviour
     {
         spawnPoint = transform.position;
         isActive = false;
-        cooldownToActivate = 0.75f;
+        cooldownToActivate = 0.25f;
         direction = Random.Range(0, 2) == 0 ? -1 : 1;
         Physics2D.IgnoreCollision(characterControl.Instance.collCrouch, collider, true);
         Physics2D.IgnoreCollision(characterControl.Instance.coll, collider, true);
         Physics2D.IgnoreLayerCollision(16, 16, true);
         Physics2D.IgnoreLayerCollision(16, 3, true);
         transform.localScale = transform.localScale * (0.5f + coinValue / 2f); 
-        startingPoint = new Vector2(Random.Range(-3f, 3f), Random.Range(-1f, 4.5f));
+        startingPoint = new Vector2(Random.Range(-1.5f, 2f), Random.Range(-1f, 2f));
+        coinValue = Random.Range(1, 4);
     }
 
     // Update is called once per frame
@@ -70,7 +71,9 @@ public class BloodCoinScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             CurrencyManager.Instance.addCurrency(coinValue);
-            Destroy(gameObject);
+            //gameObject.SetActive(false);
+            //Destroy(gameObject);
+            ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
     }
 }
