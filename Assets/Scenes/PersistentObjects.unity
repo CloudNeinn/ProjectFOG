@@ -8499,6 +8499,7 @@ MonoBehaviour:
       keys: []
       values: 
     saveSceneID: 1
+    totalCurrency: 0
   camMov: {fileID: 519420033}
   hasToRespawn: 0
 --- !u!4 &1209723844
@@ -11775,6 +11776,7 @@ MonoBehaviour:
       keys: []
       values: 
     saveSceneID: 2
+    totalCurrency: 0
   totalCurrency: 0
 --- !u!1001 &1839417230
 PrefabInstance:
@@ -14213,6 +14215,14 @@ PrefabInstance:
     - target: {fileID: 9097691864188614265, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: maxRunSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: accelerationSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614270, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_Enabled

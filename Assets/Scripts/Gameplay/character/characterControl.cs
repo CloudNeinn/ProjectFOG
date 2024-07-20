@@ -29,6 +29,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float fallSpeedBeforeCTRL;   
     public float moveSpeed;
     public float runSpeed;
+    public float maxRunSpeed;
     public float crouchSpeed;
     public bool noClipOn;
     public float slideSpeed;
@@ -36,7 +37,14 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float speedDif;
     public float targetSpeed;
     public float movement;
-    
+
+    #region Acceleration Variables
+    [Header ("Acceleration")]
+    public float accelerationSpeed;
+    public bool isAccelerating;
+    public int accelerationDirection;
+    #endregion
+
     #region Condition Checking Variables
     [Header ("Condition check")]
     public bool _isGrounded;
@@ -85,15 +93,6 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float dashCooldownTime;
     #endregion
 
-    #region Acceleration Variables
-    [Header ("Acceleration")]
-    public float timeUntilAcceleration;
-    public float accelerationSpeed;
-    public float speedWhileAccelerating;
-    public bool isAccelerating;
-    public bool startAcceleration; 
-    public float ladderSpeed;
-    #endregion
 
     #region Abilities
     [Header ("Abilities")]
@@ -196,17 +195,13 @@ public class characterControl: MonoBehaviour, IDataPersistance
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
         charAtt = gameObject.GetComponentInChildren<charachterAttack>();
         charBlo = gameObject.GetComponentInChildren<charachterBlock>();
-        accelerationSpeed = runSpeed * 1.6f;
         canDash = true;
         doubleJumpIndex = constDJI;
-        speedWhileAccelerating = runSpeed;
         camMov = GameObject.FindObjectOfType<cameraMovement>();
         camFade = GameObject.FindObjectOfType<cameraFade>();
         checkpManage = GameObject.FindObjectOfType<checkpointManagement>();
         displayHitSprite = displayHitSpriteObject.GetComponent<SpriteRenderer>();
         wallJumpCooldown = wallJumpTime;
-
-
     }
 
     void Update()
@@ -300,15 +295,37 @@ public class characterControl: MonoBehaviour, IDataPersistance
         // _moveInput.x = Input.GetAxisRaw("Horizontal");
 		// _moveInput.y = Input.GetAxisRaw("Vertical");
         _moveInput = UserInput.Instance.MoveInput;
-        if(_isCrouching) moveSpeed = crouchSpeed;
-        else moveSpeed = runSpeed;
-        targetSpeed = _moveInput.x * moveSpeed;
+
+        if (_isCrouching)
+        {
+            moveSpeed = crouchSpeed;
+            isAccelerating = false;
+        }
+        else
+        {
+            moveSpeed = runSpeed;
+            if (_moveInput.x != 0 && !distanceJoint.enabled)
+            {
+                if (Mathf.Sign(_moveInput.x) != Mathf.Sign(accelerationDirection)) isAccelerating = false;
+                else isAccelerating = true;
+            }
+            else isAccelerating = false;
+        }
+
+        accelerationDirection = (int)_moveInput.x;
+        if(isAccelerating) targetSpeed = Mathf.Clamp(Mathf.Abs(targetSpeed) + Time.fixedDeltaTime * accelerationSpeed, runSpeed, maxRunSpeed) * _moveInput.x;
+        else targetSpeed = _moveInput.x * moveSpeed;
+
         targetSpeed = Mathf.Lerp(myrigidbody.velocity.x, targetSpeed, 1/*lerpAmount*/);
+        
         if(!distanceJoint.enabled)speedDif = targetSpeed - myrigidbody.velocity.x;
         else speedDif = targetSpeed;
-		movement = speedDif * 5; 
+
+		movement = speedDif * 5;
+
         if(distanceJoint.enabled) myrigidbody.AddForce(movement / 3.2f * Vector2.right, ForceMode2D.Force);
         else myrigidbody.AddForce(movement * Vector2.right, ForceMode2D.Force);
+
         if(isGrounded() && _moveInput.x != 0) anim.SetBool("isMoving", true);
         else anim.SetBool("isMoving", false);
     }
@@ -589,7 +606,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     }
     public bool isCrouching()
     {
-        if(_crouchInput && isGrounded() || isUnderTerrain() && collCrouch.enabled == true) _isCrouching = true;
+        if(UserInput.Instance._crouchAction.IsPressed() && isGrounded() || isUnderTerrain() && collCrouch.enabled == true) _isCrouching = true;
         else _isCrouching = false;
         return _isCrouching;
     }
@@ -633,12 +650,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         yield return new WaitForSeconds(dashCooldownTime);
         canDash = true;
     }    
-    IEnumerator Acceleration()
-    {
-        startAcceleration = false;
-        yield return new WaitForSeconds(timeUntilAcceleration);
-        startAcceleration = true;
-    }
+
     IEnumerator CheckWallJump()
     {
         yield return new WaitForSeconds(0.3f);

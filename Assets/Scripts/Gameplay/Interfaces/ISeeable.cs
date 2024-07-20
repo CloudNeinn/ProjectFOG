@@ -9,15 +9,13 @@ public interface ISeeable : IGroundable
     
     Vector3 behindBoxSize { get; set; }
     float behindDistance { get; set; }
-    Vector3 isGroundedBox { get; set; }
-    float isGroundedDistance { get; set; }
 
     Vector3 checkGroundBoxSize { get; set; }
     float checkGroundDistance { get; set; }
     Vector3 checkWallBoxSize { get; set; }
     float checkWallDistance { get; set; }
+    
     LayerMask checkWallLayer { get; set; }
-
     LayerMask playerLayer { get; set; }
     LayerMask raycastLayer { get; set; }
 

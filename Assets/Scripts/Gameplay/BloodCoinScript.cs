@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class BloodCoinScript : MonoBehaviour
 {
-    [SerializeField] private int coinValue;
-    [SerializeField] private float flySpeed;
-    [SerializeField] private float flyRadius;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private int _coinValue;
+    [SerializeField] private float _flySpeed;
+    [SerializeField] private float _flyRadius;
+    [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private bool _inRadius;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private CircleCollider2D collider;
-    [SerializeField] private CircleCollider2D trigger;
-    private bool wasInRadius;
-    private bool isActive;
-    [SerializeField] private float cooldownToActivate;
+    [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private CircleCollider2D _collider;
+    [SerializeField] private CircleCollider2D _trigger;
+    private bool _wasInRadius;
+    private bool _isActive;
+    [SerializeField] private float _cooldownToActivate;
     public int direction;
     public Vector2 spawnPoint;
     public Vector2 startingPoint;
@@ -22,28 +22,33 @@ public class BloodCoinScript : MonoBehaviour
     void Start()
     {
         spawnPoint = transform.position;
-        isActive = false;
-        cooldownToActivate = 0.25f;
-        direction = Random.Range(0, 2) == 0 ? -1 : 1;
-        Physics2D.IgnoreCollision(characterControl.Instance.collCrouch, collider, true);
-        Physics2D.IgnoreCollision(characterControl.Instance.coll, collider, true);
+        Physics2D.IgnoreCollision(characterControl.Instance.collCrouch, _collider, true);
+        Physics2D.IgnoreCollision(characterControl.Instance.coll, _collider, true);
         Physics2D.IgnoreLayerCollision(16, 16, true);
         Physics2D.IgnoreLayerCollision(16, 3, true);
-        transform.localScale = transform.localScale * (0.5f + coinValue / 2f); 
+        
+    }
+
+    void OnEnable()
+    {
+        _isActive = false;
+        _cooldownToActivate = 0.25f;
+        _coinValue = Random.Range(1, 4);
         startingPoint = new Vector2(Random.Range(-1.5f, 2f), Random.Range(-1f, 2f));
-        coinValue = Random.Range(1, 4);
+        transform.localScale = transform.localScale.normalized * (0.5f + _coinValue / 2f); 
+        direction = Random.Range(0, 2) == 0 ? -1 : 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isActive) 
+        if(!_isActive) 
         {
-            transform.position = Vector2.MoveTowards(transform.position, spawnPoint + startingPoint, 2f * flySpeed * Time.deltaTime);
-            if((cooldownToActivate -= Time.deltaTime) <= 0) isActive = true;
+            transform.position = Vector2.MoveTowards(transform.position, spawnPoint + startingPoint, 2f * _flySpeed * Time.deltaTime);
+            if((_cooldownToActivate -= Time.deltaTime) <= 0) _isActive = true;
         }
-        if(_inRadius = InRadius() && isActive) transform.position = Vector2.MoveTowards(transform.position, characterControl.Instance.transform.position, flySpeed * Time.deltaTime);
-        else rb.velocity = new Vector2( Mathf.Cos(Time.time) * 0.1f, Mathf.Sin(Time.time) * Random.Range(0.1f, 0.2f) * direction);// rb.velocity * 0.5f;
+        if(_inRadius = InRadius() && _isActive) transform.position = Vector2.MoveTowards(transform.position, characterControl.Instance.transform.position, _flySpeed * Time.deltaTime);
+        else _rb.velocity = new Vector2( Mathf.Cos(Time.time) * 0.1f, Mathf.Sin(Time.time) * Random.Range(0.1f, 0.2f) * direction);// rb.velocity * 0.5f;
     }
 
     void FixedUpdate()
@@ -54,14 +59,14 @@ public class BloodCoinScript : MonoBehaviour
 
     bool InRadius()
     {
-        return Physics2D.OverlapCircle(transform.position, flyRadius, playerLayer);      
+        return Physics2D.OverlapCircle(transform.position, _flyRadius, _playerLayer);      
     }
 
     // void OnCollisionStay2D(Collision2D collision)
     // {
     //     if (collision.gameObject.tag == "Player")
     //     {
-    //         CurrencyManager.Instance.addCurrency(coinValue);
+    //         CurrencyManager.Instance.addCurrency(_coinValue);
     //         //Destroy(gameObject);
     //     }
     // }
@@ -70,7 +75,7 @@ public class BloodCoinScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            CurrencyManager.Instance.addCurrency(coinValue);
+            CurrencyManager.Instance.addCurrency(_coinValue);
             //gameObject.SetActive(false);
             //Destroy(gameObject);
             ObjectPoolManager.ReturnObjectToPool(gameObject);

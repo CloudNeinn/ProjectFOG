@@ -11,7 +11,6 @@ public class Crow : EnemyFlyingChaser
     public float flySway;
     public Vector2 lastPlayerPos;
     public Vector2 destination;
-    public Vector2 target;
     public bool isAttacking;
     public bool returnHome;
     public int numberOfCircles;
@@ -62,7 +61,7 @@ public class Crow : EnemyFlyingChaser
         if(isAlert || returnHome) PathFollow();
     }
 
-    void Attack()
+    new void Attack()
     {
         target = lastPlayerPos;
         if(Vector2.Distance(target, transform.position) <= 5f) isAttacking = false;
@@ -70,7 +69,7 @@ public class Crow : EnemyFlyingChaser
 
     void DestinationDetermination()
     {
-        target.Set(lastPlayerPos.x + flySway, ReturnUpToMax(maxHeight,lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f)));
+        target.Set(lastPlayerPos.x + flySway, ReturnUpToMax(maxHeight,lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f)), 0);
     }
 
     void InitialDirectionDetermination()

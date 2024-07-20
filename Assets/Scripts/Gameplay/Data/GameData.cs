@@ -16,6 +16,7 @@ public class GameData
     public Vector3 playerPosition;
     public SerializableDictionary<string, bool> doorCondition;
     public int saveSceneID;
+    public int totalCurrency;
 
     // values defined in the construcor will be the initial values for the game
     public GameData()
@@ -30,5 +31,6 @@ public class GameData
         hasDeflectProjectile = false;
         constDJI = 0;
         saveSceneID = 2;
+        totalCurrency = 0;
     }
 }

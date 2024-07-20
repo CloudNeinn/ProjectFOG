@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class dataManager : MonoBehaviour, IDataPersistance
+public class DataManager : MonoBehaviour, IDataPersistance
 {
-    public static dataManager Instance;
+    public static DataManager Instance;
 
     public GameData data;
     public cameraMovement camMov;
@@ -38,6 +38,7 @@ public class dataManager : MonoBehaviour, IDataPersistance
         characterControl.Instance.hasDash = data.hasDash;
         characterControl.Instance.hasWallJump = data.hasWallJump;
         characterControl.Instance.constDJI = data.constDJI;
+        CurrencyManager.Instance.totalCurrency = data.totalCurrency;
         Debug.Log(data.playerPosition);
         //Debug.Log(camMov.transform.position.x);
         //Debug.Log(checkpManage.currentCheckpointPosition.x);
@@ -56,5 +57,6 @@ public class dataManager : MonoBehaviour, IDataPersistance
         data.hasWallJump = characterControl.Instance.hasWallJump;
         data.constDJI = characterControl.Instance.constDJI;
         data.saveSceneID = SceneManager.GetActiveScene().buildIndex;
+        data.totalCurrency = CurrencyManager.Instance.totalCurrency;
     }
 }

@@ -17,7 +17,7 @@ public class Guard : EnemyChaser, IBlockable
     [field: SerializeField] public LayerMask blockingLayers { get; set;}
     [field: SerializeField] public float maxBlockForce { get; set;}
     [field: SerializeField] public enemyHealthBlock eneHeaBlo { get; set;}
-    public Vector3 speed;
+    public Vector3 checkSpeed;
 
     public void Start()
     {
@@ -28,7 +28,7 @@ public class Guard : EnemyChaser, IBlockable
 
     void Update()
     {
-        speed = _enemyrb.velocity;
+        checkSpeed = _enemyrb.velocity;
         _isGrounded = isGrounded();
         //if(!canAttack) 
         Rotate();

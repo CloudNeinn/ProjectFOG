@@ -20,7 +20,7 @@ public class simpleProjectileScript : projectileScript
         
     }
 
-    public Vector2 getVector()
+    public new Vector2 getVector()
     {
         if(transform.parent.position.x < transform.position.x) projectileVector = Vector2.right;
         else if(transform.parent.position.x > transform.position.x) projectileVector = Vector2.right * -1;

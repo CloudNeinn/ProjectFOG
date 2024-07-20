@@ -32,7 +32,7 @@ public class Frog : EnemyBase, IJumpable, IGroundable
         jumpTimer = jumpCooldown;
         jumpEnabled = false;
     }
-    public void Patrol()
+    public new void Patrol()
     {
         if(Vector2.Distance(transform.position, PatrolPoints[currentPatrolPoint].transform.position) <= 1.5f && isGrounded()){
             moveAfterStanding(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized));
@@ -49,7 +49,7 @@ public class Frog : EnemyBase, IJumpable, IGroundable
         }
     }
     
-    public void moveAfterStanding(Vector2 dir)
+    public new void moveAfterStanding(Vector2 dir)
     {
         if(standingCooldown <= 0) {
             if(jumpEnabled && isGrounded()) Jump(jumpHeight);

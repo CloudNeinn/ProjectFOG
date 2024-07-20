@@ -47,7 +47,7 @@ public class enemyHealthBlock : enemyHealth
 
         }
     }
-    public IEnumerator attackedCooldown()
+    public new IEnumerator attackedCooldown()
     {
         yield return new WaitForSeconds(attackedTime);
         attacked = false;
