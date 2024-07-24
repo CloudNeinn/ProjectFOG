@@ -91,7 +91,7 @@ public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
         }
         else 
         {
-            Debug.Log("Standing");
+            //Debug.Log("Standing");
             standingCooldown -= Time.deltaTime;
             Stand();
         }

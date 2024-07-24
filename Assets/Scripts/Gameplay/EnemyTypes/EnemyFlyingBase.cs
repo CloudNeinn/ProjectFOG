@@ -59,7 +59,7 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
         }
         else 
         {
-            Debug.Log("Standing");
+            //Debug.Log("Standing");
             standingCooldown -= Time.deltaTime;
             Stand();
         }

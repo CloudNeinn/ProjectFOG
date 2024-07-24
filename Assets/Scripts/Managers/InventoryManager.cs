@@ -8,6 +8,11 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private List<Item> inventoryItems = new List<Item>();
 
+    void Awake()
+    {
+        Instance = this;
+    }
+    
     public void AddItem(Item item)
     {
         inventoryItems.Add(item);

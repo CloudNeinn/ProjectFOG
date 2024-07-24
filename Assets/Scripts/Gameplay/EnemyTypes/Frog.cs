@@ -56,7 +56,7 @@ public class Frog : EnemyBase, IJumpable, IGroundable
         }
         else 
         {
-            Debug.Log("Standing");
+            //Debug.Log("Standing");
             standingCooldown -= Time.deltaTime;
             Stand();
         }
