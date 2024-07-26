@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrencyManager : MonoBehaviour, IDataPersistance
+public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager Instance;
 
@@ -16,17 +16,6 @@ public class CurrencyManager : MonoBehaviour, IDataPersistance
             Instance = this;
         }
     }
-
-    public void LoadData(GameData data)
-    {
-        //totalCurrency = data.totalCurrency;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        //data.totalCurrency = totalCurrency;
-    }
-
     public void addCurrency(int amount)
     {
         totalCurrency += amount;

@@ -13,8 +13,6 @@ public class TraderItemUI : MonoBehaviour
     private Image _image;
     private TextMeshProUGUI _description;
 
-
-    // Public property with getter and setter
     public Item item
     {
         get { return _item; }
@@ -25,15 +23,14 @@ public class TraderItemUI : MonoBehaviour
                 _item = value;
                 UnsetItemInfo();
             }
-            else if (_item != value) // Check if the value is actually changing
+            else if (_item != value)
             {
                 _item = value;
-                SetItemInfo(); // Call the method when the variable is set
+                SetItemInfo();
             }
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         _storeMenu = GameObject.Find("StoreMenu");
@@ -41,12 +38,6 @@ public class TraderItemUI : MonoBehaviour
         _image = _storeMenu.transform.GetChild(1).GetChild(1).gameObject.GetComponent<Image>();
         _description = _storeMenu.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
         _button = _storeMenu.transform.GetChild(1).GetChild(3).gameObject.GetComponent<Button>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void SetItemInfo()

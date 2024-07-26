@@ -17,17 +17,10 @@ public class StoreManager : MonoBehaviour
         Instance = this;
     }
     
-
-    // Start is called before the first frame update
     void Start()
     {
         checkIfStoreActive = FindObjectsOfType<StoreScript>();
         _storeMenu = GameObject.Find("StoreMenu");
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void updateStore()
