@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class charachterAttack : MonoBehaviour
+public class characterAttack : MonoBehaviour
 {
+    public static characterAttack Instance;
+
     public Animator anim;
     public int damageAmount = 20;
     public CapsuleCollider2D capCol;
@@ -16,7 +18,9 @@ public class charachterAttack : MonoBehaviour
     public float capsuleHeight = 1.0f;
     public Vector3 centerOffset;
     public bool fastFallAttack;
-    public bool specialAttackActive;
+    [SerializeField] public bool _isAttacking { get; private set; }
+    [SerializeField] private float _originalGravity;
+    [SerializeField] private float _newGravity;
 
     #region Gizmos
     private Vector3 center;
@@ -26,7 +30,11 @@ public class charachterAttack : MonoBehaviour
     private Vector2 direction2D;
     #endregion
 
-
+    void Awake()
+    {
+        Instance = this;
+    }
+    
     void Update()
     {
         timer += Time.deltaTime;
@@ -66,6 +74,7 @@ public class charachterAttack : MonoBehaviour
 
     public IEnumerator hitEnemies()
     {
+        _isAttacking = true;
         if(fastFallAttack)
         {
             centerOffset.Set(0, -0.5f, 0);
@@ -87,6 +96,16 @@ public class charachterAttack : MonoBehaviour
         }
         timer = 0;
         fastFallAttack = false;
+        if(!characterControl.Instance._isGrounded)
+        {
+            _originalGravity = characterControl.Instance.myrigidbody.gravityScale;
+            _newGravity = 0;//_originalGravity / 28;
+            characterControl.Instance.myrigidbody.velocity = Vector2.zero; //characterControl.Instance.myrigidbody.velocity / 100 ;
+            characterControl.Instance.myrigidbody.gravityScale = _newGravity;
+            yield return new WaitForSeconds(0.2f);
+            characterControl.Instance.myrigidbody.gravityScale = _originalGravity;
+        }
+        _isAttacking = false;
     }
     private void OnDrawGizmos()
     {

@@ -153,17 +153,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299a3e8976370d94e8b4550bd06e0df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinValue: 1
-  flySpeed: 3
-  flyRadius: 5
-  playerLayer:
+  _coinValue: 0
+  _flySpeed: 2
+  _flyRadius: 3
+  _playerLayer:
     serializedVersion: 2
     m_Bits: 128
   _inRadius: 0
-  rb: {fileID: 2431890677516129057}
-  collider: {fileID: 2431890677516129062}
-  trigger: {fileID: 2431890677516129050}
-  cooldownToActivate: 3
+  _rb: {fileID: 2431890677516129057}
+  _collider: {fileID: 2431890677516129062}
+  _trigger: {fileID: 2431890677516129050}
+  _cooldownToActivate: 0
   direction: 0
   spawnPoint: {x: 0, y: 0}
   startingPoint: {x: 0, y: 0}

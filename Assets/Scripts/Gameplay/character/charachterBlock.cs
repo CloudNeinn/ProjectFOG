@@ -10,7 +10,7 @@ public class charachterBlock : MonoBehaviour
 
     void Update()
     {
-        if (characterControl.Instance._blockInput) // Input.GetMouseButtonDown(1)
+        if (UserInput.Instance._blockAction.IsPressed()) // Input.GetMouseButtonDown(1) 
         {
             blockActive = true;
             blockCollider.enabled = true;

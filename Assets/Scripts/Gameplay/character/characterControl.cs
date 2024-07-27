@@ -76,7 +76,6 @@ public class characterControl: MonoBehaviour, IDataPersistance
     private cameraMovement camMov;
     private cameraFade camFade;
     public checkpointManagement checkpManage;
-    private charachterAttack charAtt;
     private charachterBlock charBlo;
     #endregion
 
@@ -146,6 +145,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
     public float teleportTimerCooldown;
     
     private float vertical;
+    [SerializeField] private Vector2 speed;
 
     #region UserInput
 
@@ -193,7 +193,6 @@ public class characterControl: MonoBehaviour, IDataPersistance
     void Start()
     {
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
-        charAtt = gameObject.GetComponentInChildren<charachterAttack>();
         charBlo = gameObject.GetComponentInChildren<charachterBlock>();
         canDash = true;
         doubleJumpIndex = constDJI;
@@ -206,6 +205,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
 
     void Update()
     {
+        speed = myrigidbody.velocity;
         GetInput();
         //---Teleportation to other world
         if(_switchRealmsInput)
@@ -275,7 +275,7 @@ public class characterControl: MonoBehaviour, IDataPersistance
         if(movingWithoutInput()) myrigidbody.velocity = Vector3.zero; 
         vertical = Input.GetAxisRaw("Vertical");
         if(CanSlide() && Mathf.Abs(_moveInput.x) > 0 && isWalled() && _isSliding || _isDashing) myrigidbody.gravityScale = 0f;
-        else myrigidbody.gravityScale = 7f;
+        else if(!characterAttack.Instance._isAttacking) myrigidbody.gravityScale = 7f;
         Jump();
         LastOnWallTime -= Time.deltaTime;
         if(!isJumping()) LastOnWallTime = coyoteTime;
@@ -447,11 +447,11 @@ public class characterControl: MonoBehaviour, IDataPersistance
             //myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -15);
             myrigidbody.AddForce(new Vector2(0, -15));
         }
-        if(UserInput.Instance._crouchAction.WasReleasedThisFrame() && !isGrounded())
-        {
-            fallAttackActive = false;
-            myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, fallSpeedBeforeCTRL);
-        }
+        // if(UserInput.Instance._crouchAction.WasReleasedThisFrame() && !isGrounded())
+        // {
+        //     fallAttackActive = false;
+        //     myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, fallSpeedBeforeCTRL);
+        // }
         if(!UserInput.Instance._crouchAction.IsPressed() && !isUnderTerrain() || isJumping())
         {
             anim.SetBool("isCrouching", false);
@@ -492,8 +492,8 @@ public class characterControl: MonoBehaviour, IDataPersistance
     {
         fallHeight = 0;
         fallAttackActive = false;
-        charAtt.fastFallAttack = true;
-        StartCoroutine(charAtt.hitEnemies());
+        characterAttack.Instance.fastFallAttack = true;
+        StartCoroutine(characterAttack.Instance.hitEnemies());
     }  
     public void Hook()
     {

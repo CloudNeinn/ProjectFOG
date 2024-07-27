@@ -226,6 +226,7 @@ MonoBehaviour:
   fallSpeedBeforeCTRL: 0
   moveSpeed: 10
   runSpeed: 10
+  maxRunSpeed: 0
   crouchSpeed: 3
   noClipOn: 0
   slideSpeed: -3
@@ -233,6 +234,9 @@ MonoBehaviour:
   speedDif: 0
   targetSpeed: 0
   movement: 0
+  accelerationSpeed: 0
+  isAccelerating: 0
+  accelerationDirection: 0
   _isGrounded: 0
   _isJumping: 0
   _isMoving: 0
@@ -265,12 +269,6 @@ MonoBehaviour:
   dashTime: 0.2
   canDash: 0
   dashCooldownTime: 3
-  timeUntilAcceleration: 2
-  accelerationSpeed: 0
-  speedWhileAccelerating: 0
-  isAccelerating: 0
-  startAcceleration: 0
-  ladderSpeed: 10
   hasDash: 0
   hasDoubleJump: 0
   hasHighJump: 0
@@ -307,6 +305,7 @@ MonoBehaviour:
   LastOnGroundTime: 0
   teleportTimer: 0.5
   teleportTimerCooldown: 0
+  speed: {x: 0, y: 0}
   <_moveInput>k__BackingField: {x: 0, y: 0}
 --- !u!114 &9097691864188614256
 MonoBehaviour:
@@ -322,7 +321,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentOneWayPlatform: {fileID: 0}
   colliderForEnemy: {fileID: 0}
-  charCon: {fileID: 0}
 --- !u!95 &9097691864188614269
 Animator:
   serializedVersion: 5
@@ -618,9 +616,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9097691865800889106}
-  - component: {fileID: 9097691865800889108}
   - component: {fileID: 9097691865800889107}
   - component: {fileID: 9097691865800889110}
+  - component: {fileID: 1335848242718669679}
   - component: {fileID: 9097691865800889109}
   m_Layer: 15
   m_Name: Attack
@@ -644,32 +642,6 @@ Transform:
   m_Father: {fileID: 9097691864188614265}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9097691865800889108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9097691865800889105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5436deaa443132c45b2bc11af85e38ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 9097691865800889107}
-  damageAmount: 20
-  capCol: {fileID: 9097691865800889110}
-  attBool: 0
-  block: {fileID: 9097691864785837232}
-  radius: 2.5
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  capsuleWidth: 3.5
-  capsuleHeight: 1.5
-  centerOffset: {x: 0.25, y: 0, z: 0}
-  fastFallAttack: 0
-  specialAttackActive: 0
 --- !u!95 &9097691865800889107
 Animator:
   serializedVersion: 5
@@ -706,6 +678,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0031511337, y: 0.026264995}
   m_Size: {x: 0.0001, y: 0.0001}
   m_Direction: 1
+--- !u!114 &1335848242718669679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097691865800889105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80905ec423443c4e96b6ba37a8759e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 9097691865800889107}
+  damageAmount: 20
+  capCol: {fileID: 9097691865800889110}
+  attBool: 0
+  block: {fileID: 9097691864785837232}
+  radius: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 4104
+  capsuleWidth: 2.5
+  capsuleHeight: 1
+  centerOffset: {x: 0, y: 0, z: 0}
+  fastFallAttack: 0
+  _originalGravity: 0
+  _newGravity: 0
 --- !u!212 &9097691865800889109
 SpriteRenderer:
   m_ObjectHideFlags: 0

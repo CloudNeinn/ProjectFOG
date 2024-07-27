@@ -21,6 +21,7 @@ public class StoreManager : MonoBehaviour
     {
         checkIfStoreActive = FindObjectsOfType<StoreScript>();
         _storeMenu = GameObject.Find("StoreMenu");
+        UnloadPickedItem();
     }
 
     public void updateStore()
@@ -44,5 +45,6 @@ public class StoreManager : MonoBehaviour
         _storeMenu.transform.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = null;
         _storeMenu.transform.GetChild(1).GetChild(1).gameObject.GetComponent<Image>().sprite = null;
         _storeMenu.transform.GetChild(1).GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = null;
+        _storeMenu.transform.GetChild(1).GetChild(3).gameObject.GetComponent<Button>().interactable = false;
     }
 }
