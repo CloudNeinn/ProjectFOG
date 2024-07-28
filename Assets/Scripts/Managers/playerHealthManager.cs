@@ -10,7 +10,6 @@ public class playerHealthManager : MonoBehaviour
     public float maxHealth;
     public GameObject player;
     public Rigidbody2D charRigid;
-    public charachterBlock charBlock;
     public enemyHealth enemy;
     public bool canMove;
     public float knockTimer;
@@ -32,7 +31,6 @@ public class playerHealthManager : MonoBehaviour
     {
         canMove = true;
         isDamageable = true;
-        charBlock = GameObject.FindObjectOfType<charachterBlock>();
         charRigid = characterControl.Instance.gameObject.GetComponent<Rigidbody2D>(); 
         healthAmount = maxHealth;
     }

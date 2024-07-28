@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class characterBlock : MonoBehaviour
+{
+    public static characterBlock Instance;
+    public BoxCollider2D blockCollider;
+    public bool blockActive;
+    public Animator anim;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+    
+    void Update()
+    {
+        if (UserInput.Instance._blockAction.IsPressed()) // Input.GetMouseButtonDown(1) 
+        {
+            blockActive = true;
+            blockCollider.enabled = true;
+            anim.SetBool("isBlocking", true);
+        }
+        else // if (!characterControl.Instance._blockInput) // Input.GetMouseButtonUp(1)
+        {
+            blockActive = false;
+            blockCollider.enabled = false;
+            anim.SetBool("isBlocking", false);
+        }
+    }
+}

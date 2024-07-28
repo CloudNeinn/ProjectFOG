@@ -9,7 +9,6 @@ public class checkpoint : MonoBehaviour
     public GameObject popUpMenu;
     public bool isActivated;
     public playerHealthManager pHM;
-    public checkpointManagement checkpManage;
     public DataPersistanceManager dataPerMan;
     private gameplayUI gameUI;
     public Vector3 checkPosition;
@@ -24,7 +23,6 @@ public class checkpoint : MonoBehaviour
         popUpMenu = transform.GetChild(1).gameObject;
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
         dataPerMan = GameObject.FindObjectOfType<DataPersistanceManager>();
-        checkpManage = GameObject.FindObjectOfType<checkpointManagement>();
         checkpMenu = GameObject.Find("CheckpointMenu");
         gameUI = GameObject.FindObjectOfType<gameplayUI>(); 
         if(characterControl.Instance.transform.position.x <= transform.position.x + 3 
@@ -32,8 +30,9 @@ public class checkpoint : MonoBehaviour
         && characterControl.Instance.transform.position.y <= transform.position.y + 3 
         && characterControl.Instance.transform.position.y >= transform.position.y - 3)
         {
-            checkpManage.updateCheckpoint();
-            checkpManage.currentCheckpointPosition = transform.position;
+            CheckpointManager.Instance.updateCheckpoint();
+            CheckpointManager.Instance.currentCheckpointPosition = transform.position;
+            CheckpointManager.Instance.currentCheckpoint = this;
             checkpointIsSaved = true;
             dataPerMan.SaveGame();
         }
@@ -70,8 +69,9 @@ public class checkpoint : MonoBehaviour
             else if(characterControl.Instance._use1Input && !checkpointIsSaved) // Input.GetKeyDown(KeyCode.E)
             {
                 //save checkpoint
-                checkpManage.updateCheckpoint();
-                checkpManage.currentCheckpointPosition = transform.position;
+                CheckpointManager.Instance.updateCheckpoint();
+                CheckpointManager.Instance.currentCheckpointPosition = transform.position;
+                CheckpointManager.Instance.currentCheckpoint = this;
                 checkpointIsSaved = true;
                 isActivated = true;
                 dataPerMan.SaveGame();

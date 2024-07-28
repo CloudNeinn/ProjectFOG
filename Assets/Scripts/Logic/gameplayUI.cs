@@ -11,7 +11,6 @@ public class gameplayUI : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject checkpointMenu;
     public GameObject CHB;
-    public checkpointManagement checkpManage;
     public Rigidbody2D charRigid;
     public DataPersistanceManager dataPerMan;
     public enemyBehaviour[] eneBehs;
@@ -21,7 +20,6 @@ public class gameplayUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkpManage = GameObject.FindObjectOfType<checkpointManagement>();
         pHM  = GameObject.FindObjectOfType<playerHealthManager>();
         charRigid = characterControl.Instance.gameObject.GetComponent<Rigidbody2D>();
         dataPerMan = GameObject.FindObjectOfType<DataPersistanceManager>();
@@ -98,7 +96,7 @@ public class gameplayUI : MonoBehaviour
         DataManager.Instance.hasToRespawn = true;
         eneBehs = GameObject.FindObjectsOfType<enemyBehaviour>();
         camFade.doFade();
-        dataPerMan.LoadGame();
+        DataPersistanceManager.Instance.LoadGame();
         pHM.playerDead = false;
         if(spawnMan != null) spawnMan.Spawn();
         if(eneBehs != null)

@@ -14,9 +14,9 @@ public class GameData
     public bool hasWallJump;
     public int constDJI;
     public Vector3 playerPosition;
-    public SerializableDictionary<string, bool> doorCondition;
-    public int saveSceneID;
+    public int[] saveSceneIDs;
     public int totalCurrency;
+    public SerializableDictionary<string, bool> doorCondition;
 
     // values defined in the construcor will be the initial values for the game
     public GameData()
@@ -30,7 +30,7 @@ public class GameData
         hasBarrier = false;
         hasDeflectProjectile = false;
         constDJI = 0;
-        saveSceneID = 2;
+        saveSceneIDs = new int[] { 2, 3};
         totalCurrency = 0;
     }
 }

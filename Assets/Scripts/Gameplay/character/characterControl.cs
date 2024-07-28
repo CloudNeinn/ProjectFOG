@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class characterControl: MonoBehaviour, IDataPersistance
+public class characterControl: MonoBehaviour
 {
     public static characterControl Instance;
 
@@ -75,8 +75,6 @@ public class characterControl: MonoBehaviour, IDataPersistance
     private playerHealthManager pHM;
     private cameraMovement camMov;
     private cameraFade camFade;
-    public checkpointManagement checkpManage;
-    private charachterBlock charBlo;
     #endregion
 
     [Header ("BoxCast Parameters")]
@@ -170,17 +168,6 @@ public class characterControl: MonoBehaviour, IDataPersistance
     //--------------------------------------------------------------------------------------//
     //--------------------------------------------------------------------------------------//
     
-    #region Load/Save system
-    public void LoadData(GameData data)
-    {
-        
-    }
-
-    public void SaveData(ref GameData data)
-    {
-
-    }
-    #endregion
 
     void Awake()
     {
@@ -193,12 +180,10 @@ public class characterControl: MonoBehaviour, IDataPersistance
     void Start()
     {
         pHM = GameObject.FindObjectOfType<playerHealthManager>();
-        charBlo = gameObject.GetComponentInChildren<charachterBlock>();
         canDash = true;
         doubleJumpIndex = constDJI;
         camMov = GameObject.FindObjectOfType<cameraMovement>();
         camFade = GameObject.FindObjectOfType<cameraFade>();
-        checkpManage = GameObject.FindObjectOfType<checkpointManagement>();
         displayHitSprite = displayHitSpriteObject.GetComponent<SpriteRenderer>();
         wallJumpCooldown = wallJumpTime;
     }

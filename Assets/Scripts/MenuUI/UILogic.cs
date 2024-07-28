@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class UILogic : MonoBehaviour, IDataPersistance
 {    
-    public int currentSceneID;
+    public int[] currentSceneIDs;
+    private Scene _sceneToLoad;
     public void LoadData(GameData data)
     {
-        this.currentSceneID = data.saveSceneID;
+        this.currentSceneIDs = data.saveSceneIDs;
     }
 
     public void SaveData(ref GameData data)
@@ -16,17 +17,6 @@ public class UILogic : MonoBehaviour, IDataPersistance
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Quit()
     {
@@ -36,18 +26,27 @@ public class UILogic : MonoBehaviour, IDataPersistance
 
     public void StartGame()
     {
-        SceneManager.LoadScene("PersistentObjects");
-        SceneManager.LoadScene(currentSceneID, LoadSceneMode.Additive);
+        DataPersistanceManager.Instance.LoadGame();
+        //SceneManager.LoadScene("PersistentObjects");
+        SceneLoading.Instance.LoadScene(2);
+        //SceneManager.UnloadSceneAsync("MainMenu");
+        for(int i = 0; i < currentSceneIDs.Length; i++)
+        {
+            //_sceneToLoad = SceneManager.GetSceneAt(currentSceneIDs[i]);
+            //Debug.Log(_sceneToLoad.name);
+            //if(_sceneToLoad.name != "PersistentObjects") 
+            if(currentSceneIDs[i] != 2) SceneLoading.Instance.LoadScene(currentSceneIDs[i], true);//SceneManager.LoadSceneAsync(currentSceneIDs[i], LoadSceneMode.Additive);
+        }
         Time.timeScale = 1f;
     }
 
     public void toSettings()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void toMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadSceneAsync(0);
     }
 }

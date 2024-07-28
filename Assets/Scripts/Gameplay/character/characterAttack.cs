@@ -11,7 +11,6 @@ public class characterAttack : MonoBehaviour
     public CapsuleCollider2D capCol;
     public bool attBool;
     private float timer;
-    public charachterBlock block;
     public float radius = 1.0f;
     public LayerMask enemyLayer;
     public float capsuleWidth = 2.5f;
@@ -56,12 +55,12 @@ public class characterAttack : MonoBehaviour
             capsuleHeight = 1.5f;
             centerOffset.Set(0.25f * characterControl.Instance.transform.localScale.x,0,0);
         }
-        if (characterControl.Instance._attackInput && !block.blockActive && timer >= 0.3f)
+        if (characterControl.Instance._attackInput && !characterBlock.Instance.blockActive && timer >= 0.3f)
         {
             anim.SetTrigger("isAttacking");
             StartCoroutine(hitEnemies());
         }
-        // if(Input.GetKeyDown(KeyCode.X) && !block.blockActive && specialAttackActive)
+        // if(Input.GetKeyDown(KeyCode.X) && !characterBlock.Instance.blockActive && specialAttackActive)
         // {
         //     specialAttack();
         // }

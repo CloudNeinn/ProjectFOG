@@ -12,7 +12,7 @@ public class DataPersistanceManager : MonoBehaviour
     private List<IDataPersistance> dataPersistenceObjects;
     
     private FileDataHandler dataHandler;
-    public static DataPersistanceManager instance {get; private set; }
+    public static DataPersistanceManager Instance {get; private set; }
 
     private void Start()
     {
@@ -22,11 +22,11 @@ public class DataPersistanceManager : MonoBehaviour
     }
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
-            Debug.LogError("Fount more than one Data Persistance Manager instance");
+            Debug.LogError("Found more than one Data Persistance Manager instance");
         }
-        instance = this;
+        Instance = this;
     }
 
     public void NewGame()

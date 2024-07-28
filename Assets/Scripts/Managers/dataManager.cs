@@ -10,6 +10,8 @@ public class DataManager : MonoBehaviour, IDataPersistance
     public GameData data;
     public cameraMovement camMov;
     public bool hasToRespawn;
+    private Scene _sceneToLoad;
+    private int[] _sceneIDs;
 
     void Awake()
     {
@@ -23,8 +25,15 @@ public class DataManager : MonoBehaviour, IDataPersistance
     {
         if(hasToRespawn) 
         {
-            SceneManager.LoadSceneAsync("PersistentObjects");
-            SceneManager.LoadSceneAsync(data.saveSceneID, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(2);
+            for(int i = 0; i < data.saveSceneIDs.Length; i++)
+            {
+                //_sceneToLoad = SceneManager.GetSceneAt(data.saveSceneIDs[i]);
+                //if(_sceneToLoad.name != "PersistentObjects") 
+                if(data.saveSceneIDs[i] != 2) SceneManager.LoadSceneAsync(data.saveSceneIDs[i], LoadSceneMode.Additive);
+            }
+            //SceneManager.LoadSceneAsync("PersistentObjects");
+            //SceneManager.LoadSceneAsync(data.saveSceneID, LoadSceneMode.Additive);
 
             hasToRespawn = false;
         }
@@ -56,7 +65,19 @@ public class DataManager : MonoBehaviour, IDataPersistance
         data.hasDash = characterControl.Instance.hasDash;
         data.hasWallJump = characterControl.Instance.hasWallJump;
         data.constDJI = characterControl.Instance.constDJI;
-        data.saveSceneID = SceneManager.GetActiveScene().buildIndex;
+        data.saveSceneIDs = GetLoadedSceneIDs();
         data.totalCurrency = CurrencyManager.Instance.totalCurrency;
+    }
+
+    int[] GetLoadedSceneIDs()
+    {
+        int countLoaded = SceneManager.sceneCount;
+        int[] loadedScenes = new int[countLoaded];
+
+        for (int i = 0; i < countLoaded; i++)
+        {
+            loadedScenes[i] = SceneManager.GetSceneAt(i).buildIndex;
+        }
+        return loadedScenes;
     }
 }
