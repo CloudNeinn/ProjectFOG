@@ -25,6 +25,7 @@ public class EnemyFlyingChaser : EnemyFlyingAttacker, IChaseable
 
     void Awake()
     {
+        playerPosition = characterControl.Instance.transform;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
@@ -74,7 +75,7 @@ public class EnemyFlyingChaser : EnemyFlyingAttacker, IChaseable
         }  
 
         direction = ((Vector2)path.vectorPath[currentWaypoint] - _enemyrb.position).normalized;
-        force = direction * (moveSpeed * forceMultiplier) * Time.deltaTime;
+        force = direction * (moveSpeed * forceMultiplier);
 
         // Movement
         _enemyrb.AddForce(force);

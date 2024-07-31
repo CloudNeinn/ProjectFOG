@@ -69,7 +69,7 @@ public class Crow : EnemyFlyingChaser
 
     void DestinationDetermination()
     {
-        target.Set(lastPlayerPos.x + flySway, ReturnUpToMax(maxHeight,lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f)), 0);
+        target = new Vector2(lastPlayerPos.x + flySway, ReturnUpToMax(maxHeight,lastPlayerPos.y + Random.Range(heightAbovePlayer * 0.8f,heightAbovePlayer * 1.5f)));
     }
 
     void InitialDirectionDetermination()
@@ -110,7 +110,7 @@ public class Crow : EnemyFlyingChaser
         if(value < max) return value;
         else return max;
     }
-/*
+
     public new void PathFollow() 
     {
         if (path == null)
@@ -125,7 +125,7 @@ public class Crow : EnemyFlyingChaser
         }  
 
         direction = ((Vector2)path.vectorPath[currentWaypoint] - _enemyrb.position).normalized;
-        force = direction * (moveSpeed * forceMultiplier) * Time.deltaTime;
+        force = direction * (moveSpeed * forceMultiplier); // * Time.deltaTime;
 
         // Movement
         _enemyrb.AddForce(force);
@@ -150,5 +150,5 @@ public class Crow : EnemyFlyingChaser
             path = p;
             currentWaypoint = 0;
         }
-    }*/
+    }
 }

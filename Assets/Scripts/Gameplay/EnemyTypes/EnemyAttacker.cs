@@ -79,6 +79,11 @@ public class EnemyAttacker : EnemyBase, IBoxSeeable, IAttackable
     }    
 
     public bool _isGrounded;
+    void Start()
+    {
+        noticeStandingCooldown = noticeStandingTime;
+    }
+
     void Update()
     {
 

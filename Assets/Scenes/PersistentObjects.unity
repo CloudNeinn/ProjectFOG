@@ -20957,6 +20957,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1522652456}
     m_Modifications:
+    - target: {fileID: 1335848242718669679, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _attackCooldown
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335848242718669679, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _fastComboTimer
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335848242718669679, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _slowComboTimer
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614245, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_Name
       value: Charachter

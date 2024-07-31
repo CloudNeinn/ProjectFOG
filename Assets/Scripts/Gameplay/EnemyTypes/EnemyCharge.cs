@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyCharge : EnemyAttacker
 {
 
+
     void Update()
     {
         _isGrounded = isGrounded();
@@ -21,6 +22,7 @@ public class EnemyCharge : EnemyAttacker
             if(noticeStandingCooldown > 0) 
             {
                 noticeStandingCooldown -= Time.deltaTime;
+                moveSpeed = 0;
                 Stand();
             }
             else 

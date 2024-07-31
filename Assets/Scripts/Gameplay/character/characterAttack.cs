@@ -28,6 +28,11 @@ public class characterAttack : MonoBehaviour
     private Vector3 endPoint;
     private Vector2 direction2D;
     #endregion
+    [SerializeField] private bool _comboSequence;
+    [SerializeField] private float _fastComboTimer;
+    [SerializeField] private float _fastComboCooldown;
+    [SerializeField] private float _slowComboTimer;
+    [SerializeField] private float _slowComboCooldown;
 
     void Awake()
     {
@@ -60,6 +65,14 @@ public class characterAttack : MonoBehaviour
             anim.SetTrigger("isAttacking");
             StartCoroutine(hitEnemies());
         }
+         /*
+        if(_comboSequence)
+        {
+            _fastComboCooldown -= Time.deltaTime;
+            _slowComboCooldown -= Time.deltaTime;
+        }
+        if(_slowComboCooldown <= 0) _comboSequence = false;
+        */
         // if(Input.GetKeyDown(KeyCode.X) && !characterBlock.Instance.blockActive && specialAttackActive)
         // {
         //     specialAttack();
@@ -73,6 +86,18 @@ public class characterAttack : MonoBehaviour
 
     public IEnumerator hitEnemies()
     {
+        /*
+        if(_fastComboCooldown > 0)
+        {
+            characterControl.Instance.myrigidbody.AddForce(new Vector2(2000 * Mathf.Sign(characterControl.Instance.transform.localScale.x), 200));
+        }
+        if(!_comboSequence)
+        {
+            _comboSequence = true;
+            _fastComboCooldown = _fastComboTimer;
+            _slowComboCooldown = _slowComboTimer;
+        } 
+        */
         _isAttacking = true;
         if(fastFallAttack)
         {

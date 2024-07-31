@@ -28,6 +28,16 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
     [field: SerializeField] public float jumpTimer { get; set; }
     [field: SerializeField] public Vector2 force { get; set; }
     [field: SerializeField] public Vector2 direction { get; set; }
+
+    void Awake()
+    {
+        numberOfPatrolPoints = PatrolPoints.Length;
+        currentPatrolPoint = 0;
+        standingCooldown = standingTime;
+        directionX = (int)Mathf.Sign(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized.x));
+        playerPosition = characterControl.Instance.transform;
+    }
+
     void Start()
     {
         enemyStartingPosition = transform.position;
@@ -83,7 +93,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
             isPatroling = false;
             target = playerPosition.position;
             if(!inRange() && !canAttack) followEnabled = true;// PathFollow();
-            else 
+            else if(inRange())
             {
                 Stand();
                 followEnabled = false;
@@ -124,7 +134,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
         }  
 
         direction = ((Vector2)path.vectorPath[currentWaypoint] - _enemyrb.position).normalized;
-        force = direction * (moveSpeed * 24200) * Time.deltaTime;
+        force = direction * (moveSpeed * 500);
 
         // Jump
         if (jumpEnabled && isGrounded() && target.y > transform.position.y 
@@ -137,9 +147,9 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
         }
 
         // Movement
-        //_enemyrb.AddForce(force);
+        _enemyrb.AddForce(force);
         //force is inconsistent and with some enemies its OK with others its not
-        _enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(transform.localScale.x), 0);
+        //_enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(transform.localScale.x), 0);
 
         // Next Waypoint
         float distance = Vector2.Distance(_enemyrb.position, path.vectorPath[currentWaypoint]);

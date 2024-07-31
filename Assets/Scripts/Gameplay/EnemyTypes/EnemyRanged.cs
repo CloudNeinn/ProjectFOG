@@ -85,7 +85,7 @@ public class EnemyRanged : EnemyBase, IRadSeeable, IAttackable
                 else attackCooldown -= Time.deltaTime;
                 if(!checkIfWall() && checkIfGround()) 
                 {
-                    Walk(getDirectionAwayFromPlayer());
+                    if(isTooClose()) Walk(getDirectionAwayFromPlayer());
                     ChangeDirection(-getDirectionAwayFromPlayer());
                 }
             }
@@ -109,6 +109,11 @@ public class EnemyRanged : EnemyBase, IRadSeeable, IAttackable
             else return false;
         }
         else return false;
+    }
+
+    bool isTooClose()
+    {
+        return Physics2D.OverlapCircle(transform.position, sightRadius * 0.75f, playerLayer);
     }
 
     public void spawnProjectile()

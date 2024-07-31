@@ -71,6 +71,7 @@ public class CorruptFrog : Frog, IRadSeeable, IAttackable, IChaseable, IJumpable
     
     void Start()
     {
+        playerPosition = characterControl.Instance.transform;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
