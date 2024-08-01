@@ -51,7 +51,7 @@ public class checkpoint : MonoBehaviour
         {
             if(characterControl.Instance._use2Input && !menuOpen 
             && isActivated && Time.timeScale != 0) // Input.GetKeyDown(KeyCode.F)
-            {
+            {               
                 menuOpen = true;
                 checkpMenu.SetActive(menuOpen);
             }

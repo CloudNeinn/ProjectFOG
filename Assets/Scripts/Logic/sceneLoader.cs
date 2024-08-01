@@ -12,7 +12,10 @@ public class sceneLoader : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            //SceneManager.LoadSceneAsync(_sceneName, LoadSceneMode.Additive);
+            // AstarPath.active.UpdateGraphs (characterControl.Instance.coll.bounds); updates grapth according to the collider bounds passed in the function
+            // AstarPath.active.Scan(AstarPath.active.data.gridGraph);scans first graph
+            // AstarPath.active.ScanAsync(); only pro version
+            AstarPath.active.Scan();
             LoadScenes();
             UnloadScenes();
         }
