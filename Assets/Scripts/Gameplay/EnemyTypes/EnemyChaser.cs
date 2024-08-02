@@ -41,6 +41,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
     void Start()
     {
         enemyStartingPosition = transform.position;
+        target = enemyStartingPosition;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 

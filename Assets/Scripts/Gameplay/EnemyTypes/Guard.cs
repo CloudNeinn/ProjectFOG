@@ -23,6 +23,7 @@ public class Guard : EnemyChaser, IBlockable
     {
         eneHeaBlo = GetComponent<enemyHealthBlock>();
         enemyStartingPosition = transform.position;
+        target = enemyStartingPosition;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 

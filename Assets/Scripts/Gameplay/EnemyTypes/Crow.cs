@@ -21,6 +21,7 @@ public class Crow : EnemyFlyingChaser
     // Start is called before the first frame update
     void Start()
     {
+        target = enemyStartingPosition;
         CheckCeiling();
     }
 

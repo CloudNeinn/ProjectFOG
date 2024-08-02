@@ -15,7 +15,9 @@ public class sceneLoader : MonoBehaviour
             // AstarPath.active.UpdateGraphs (characterControl.Instance.coll.bounds); updates grapth according to the collider bounds passed in the function
             // AstarPath.active.Scan(AstarPath.active.data.gridGraph);scans first graph
             // AstarPath.active.ScanAsync(); only pro version
-            AstarPath.active.Scan();
+            // AstarPath.active.Scan();
+            // SceneLoading.Instance.UpdatePathfindingGraphs();
+            // AstarPath.active.Scan();
             LoadScenes();
             UnloadScenes();
         }

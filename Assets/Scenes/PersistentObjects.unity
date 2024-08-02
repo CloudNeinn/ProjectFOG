@@ -9292,6 +9292,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actions: {fileID: -944628639613478452, guid: ee0acf17aed07704e98acb7a06e29992, type: 3}
+--- !u!1 &867026079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 867026080}
+  - component: {fileID: 867026081}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &867026080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867026079}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1697225178}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &867026081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867026079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e805c093715f4642a413379dafedf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingScreen: {fileID: 0}
+  loadingBar: {fileID: 0}
+  Grids: []
 --- !u!1 &875020017
 GameObject:
   m_ObjectHideFlags: 0
@@ -16110,6 +16157,7 @@ Transform:
   - {fileID: 1462449662}
   - {fileID: 853361961}
   - {fileID: 47699823}
+  - {fileID: 867026080}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20477,6 +20525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2123388487}
   - component: {fileID: 2123388486}
+  - component: {fileID: 2123388488}
   m_Layer: 0
   m_Name: Pathfinding
   m_TagString: Untagged
@@ -20498,9 +20547,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAQIewszC96fQIAADUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty4jAQ/BVK5w3lB9h4b7uEkD0koUK2cvFFWGOsQpZcegRIin9fSbaxw56i9EzP9PSM+UKUqwYKLeRaUvIkCKCfE+Te6MdkCD7CCe8F39JP6HPeKdGVS8I+5xVrKiweOpoSNWhJi198z1xyYEHDaSlkvSJ7WAqllYVLzBTYkBTasbmFviboZP/cZY5ytq8oda9P+8qCycU+C+Aa5Cg1ms2naZgkSceI02kUhmHS0VqW4QXDdQPEjTCQ40UyzebRvKeGs2kYJwtP4XbQLjuYxoswimeuvWCMqk4s0ufGm7FtKpDg3CAU29m9QGdFBXRfaTfHmPtSlgp0Z4zE53sqrYVtUfRbtL7WWB1apR+YGdcmS7PIS2urPv2XcBf6cClF/dg3DgPXRFe0OLzic4GVHjk/hu+/Kzf8iNkB7xi8V8CfxVoKw4kNamkc1SiI7od/r7MtKygOA95KvQFNM6ygX3S/ZjfDxY9/WjJa77z9sxbYMuH99tcB0i7ojxXsb0d1JSzqVPxV8Ib34yPrAg9UKm1D3ZTcydsJI10qWnnP3DRGL4Xk4OFOdAMcM33e2DL6doc3sVHbm8gDdp9T17yL9V/JDcXDQ34Q3IQ24nhdlqrE8QlU9WI0oxwG0S7wbH1aCs7bExt70tO2Rpa4GNH2hpLvp4XSiEAJcVDi+SJeZOXdPCnLdJ6mGSE7ArMA+duj3M6J2aYV2tljt8aH4tzeWf8rM1lL3PhzJxIf1/SzFiPLKS/FtpAA/KWtcBUO0jaxHydZEWoN2oLWlPt9o68cMVEcgOTXQrmfdHXSEudDlRw19ENoh+Ro6X9WcuTg6y1vJHxQOLrmfbELuvwDUEsDBBQAAAgIAAAQIexlhkuRbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSSuVFKalqqsUFaoqmFsYVlmq6pWVqauam5uWVKSlJKqomBUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAQIewszC96fQIAADUFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAQIexlhkuRbQAAAHgAAAAJACQAAAAAAAAAAAAAAMoCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAggMAAAAA
+    dataString: UEsDBBQAAAgIAAAQIeybeE3GZgIAABsFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzk3HOHEdemuBkB4ITEgnF1+EtcYaZMmjDz6S4b9XK9vYoSfE27e7761W/iRcmhpyq/RCc7ZUDMjPEcEz+Tbqg89wojslN/wDOs47Z7ZEEg2cV2q58vgY04yqwGqe/5I7geTIg07yQulqznYwVcYaDxdUGPAhrSxmSw99jsjJ/9xNMOXsT3GKpw9/mkSjiz/mIC3oAXWcPLbc+6SlNkwnc0GrGhjK7hPiOOlqx0kgSm+p5UTfU4zmSghuWknEnutgeVOXoAE9M069wyADDZfAd6XFisPcVVEYsK19Tc8zrv2gmqLkt2qmV1Gzb7QdqHDYZpJO4iCrqbr8j3A3DuFCq+q5azyOsIkteb5/peecGjuY7xCefVXu5JGKPd0KeC9BvqiFVk4yH7TaYaozEM/6v1dv0xLyfY83Um9AV/dD766zu0z0cAn2T1PBq20Y/UMDbIQK8w47ANpfzh8vOGyIaUt4FFX8NfBGd8NVagNPXBvrQ61LifK2ymmkknmYGbpxdqq0hAC3omuQVNjz2pext3d4Exu0vYk8UXw0bfM21r2Fm5QA9/wougmt1fF6WaZUxyWYcuWs4BJ60Rh48XOaKimbFRvOpEvbOF3QfJC2c5x9XS2SxgwKuI8KmjzeP06Ku+RHUaRJmk4Y2zJ4iEjYPS69TyrWjdB2PP7WZF9c+j3rviWjhaZ1WHem6XHBPyo1GDmXhdrkGkCumgpX4aB9E/8w2ZxxP6ANWMtluG/ymRGh8j2w7FooC07nJ6tp1lfJSM0PyiKSkWn4eGQE4esurzUcOByxeVfsQi7/AFBLAwQUAAAICAAAECHsZYZLkW0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0krlRSmpaqrFBWqKphbGFZZquqVlamrmpubllSkpSSqqJgVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAECHsm3hNxmYCAAAbBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAECHsZYZLkW0AAAB4AAAACQAkAAAAAAAAAAAAAACzAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGsDAAAAAA==
     upgradeData: 
-    file_cachedStartup: {fileID: 0}
+    file_cachedStartup: {fileID: 4900000, guid: f0f857921b7354e4ca7e9d2d621314bb, type: 3}
     data_cachedStartup: 
     cacheStartup: 0
   showNavGraphs: 1
@@ -20511,7 +20560,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 1
+  logPathResults: 4
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -20554,6 +20603,22 @@ Transform:
   m_Father: {fileID: 653252732}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2123388488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123388485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a634230476dc478b88eceac73b1c8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  updateDistance: 10
+  target: {fileID: 57661489}
+  graphIndex: 0
 --- !u!1 &2130783188
 GameObject:
   m_ObjectHideFlags: 0

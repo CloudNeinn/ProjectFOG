@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using Pathfinding;
 
 public class SceneLoading : MonoBehaviour
 {
     public static SceneLoading Instance;
+    public GameObject loadingScreen;
+    public Image loadingBar;
+    [field: SerializeField] public List<GameObject> Grids;
     void Awake()
     {
         if(Instance == null)
@@ -14,8 +19,13 @@ public class SceneLoading : MonoBehaviour
             Instance = this;
         }
     }
-    public GameObject loadingScreen;
-    public Image loadingBar;
+    
+    void Start()
+    {
+        Grids = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Grid").ToList();
+        AstarPath.active.Scan();
+        //UpdatePathfindingGraphs();
+    }
 
     public void LoadScene(int sceneID, bool isAdditive = false)
     {
@@ -36,4 +46,25 @@ public class SceneLoading : MonoBehaviour
             yield return null;
         }
     }
+
+    // Function is not used because another solution for the pathfinding problem was found
+    // public void UpdatePathfindingGraphs()
+    // {
+    //     for(int i = 0; i < Grids.Count; i++)
+    //     {
+    //         for(int j = 0; j < Grids[i].transform.childCount; j++)
+    //         {
+    //             // AstarPath.active.UpdateGraphs(Grids[i].transform.GetChild(j).GetComponent<CompositeCollider2D>().bounds);
+    //             CompositeCollider2D collider = Grids[i].transform.GetChild(j).GetComponent<CompositeCollider2D>();
+    //             if (collider != null)
+    //             {
+    //                 AstarPath.active.UpdateGraphs(collider.bounds);
+    //             }
+    //             // else
+    //             // {
+    //             //     Debug.LogWarning("CompositeCollider2D not found on " + Grids[i].transform.GetChild(j).name);
+    //             // }
+    //         }
+    //     }
+    // }
 }
