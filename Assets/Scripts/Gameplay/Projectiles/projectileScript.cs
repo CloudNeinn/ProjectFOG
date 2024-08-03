@@ -6,7 +6,7 @@ public class projectileScript : MonoBehaviour
 {
     public float damage;
     public float speed;
-    public playerHealthManager pHM;
+    //public playerHealthManager pHM;
     public bool canDamagePlayer;
     public bool canDamageEnemy;
     public Rigidbody2D rigid;
@@ -24,15 +24,15 @@ public class projectileScript : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("enemy"), true);
         canDamagePlayer = true;
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        //pHM = GameObject.FindObjectOfType<playerHealthManager>();
         rigid.velocity = getVector() * speed;
         movementVector = getVector();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player" && pHM != null && canDamagePlayer) pHM.getDamage(damage, 0, 0);
-        else if(collision.gameObject.tag == "Player" && pHM != null && !canDamagePlayer) pHM.getDamage(0, 0, 0);
+        if (collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && canDamagePlayer) playerHealthManager.Instance.getDamage(damage, 0, 0);
+        else if(collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && !canDamagePlayer) playerHealthManager.Instance.getDamage(0, 0, 0);
         if (collision.gameObject.tag == "enemy") collision.gameObject.GetComponent<enemyHealth>().Damage(20);
         Destroy(gameObject);
     }

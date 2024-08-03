@@ -16,8 +16,6 @@ public class SunBeam : EnemyFlyingBase
     private float additionRadians;
     private Vector2 rayVector;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         hits = new RaycastHit2D[numberOfRays];
@@ -28,13 +26,11 @@ public class SunBeam : EnemyFlyingBase
         flyDirection = ((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized);
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckIfHits();
         Rotate();
-        //if is hit then death or damage
-        //or instead is hit death or damage
+        if(isHit) playerHealthManager.Instance.getDamage(5, 0, 0, false);
     }
 
     void CalculateRadians()
@@ -56,4 +52,5 @@ public class SunBeam : EnemyFlyingBase
         }  
         isHit = playerHit;
     }
+
 }

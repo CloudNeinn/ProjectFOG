@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class gameplayUI : MonoBehaviour
 {
-    public playerHealthManager pHM;
+    //public playerHealthManager pHM;
     public GameObject pauseMenu;
     public GameObject pauseButton;
     public GameObject deathScreen;
@@ -20,7 +20,7 @@ public class gameplayUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pHM  = GameObject.FindObjectOfType<playerHealthManager>();
+        //pHM  = GameObject.FindObjectOfType<playerHealthManager>();
         charRigid = characterControl.Instance.gameObject.GetComponent<Rigidbody2D>();
         dataPerMan = GameObject.FindObjectOfType<DataPersistanceManager>();
         camFade = GameObject.FindObjectOfType<cameraFade>();
@@ -42,15 +42,15 @@ public class gameplayUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(pHM.playerDead)
+        if(playerHealthManager.Instance.playerDead)
         {
             deathScreenMenu();
         }
-        if(pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && !(pHM.playerDead))
+        if(pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && !(playerHealthManager.Instance.playerDead))
         {
             turnOffPause();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !(pHM.playerDead) 
+        else if (Input.GetKeyDown(KeyCode.Escape) && !(playerHealthManager.Instance.playerDead) 
         && !(map.activeSelf) && !(checkpointMenu.activeSelf))
         {
             Pause();
@@ -97,7 +97,7 @@ public class gameplayUI : MonoBehaviour
         eneBehs = GameObject.FindObjectsOfType<enemyBehaviour>();
         camFade.doFade();
         DataPersistanceManager.Instance.LoadGame();
-        pHM.playerDead = false;
+        playerHealthManager.Instance.playerDead = false;
         if(spawnMan != null) spawnMan.Spawn();
         if(eneBehs != null)
         {
@@ -108,10 +108,10 @@ public class gameplayUI : MonoBehaviour
             }
         }
         //characterControl.Instance.transform.position = checkpManage.currentCheckpointPosition;
-        pHM.healthAmount = pHM.maxHealth;
+        playerHealthManager.Instance.healthAmount = playerHealthManager.Instance.maxHealth;
         charRigid.bodyType = RigidbodyType2D.Dynamic;
         deathScreen.SetActive(false);
-        pHM.healthBar.fillAmount = pHM.healthAmount / pHM.maxHealth;
+        playerHealthManager.Instance.healthBar.fillAmount = playerHealthManager.Instance.healthAmount / playerHealthManager.Instance.maxHealth;
         turnOffPause();
     }
 

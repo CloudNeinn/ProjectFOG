@@ -49,6 +49,7 @@ public class DataManager : MonoBehaviour, IDataPersistance
         characterControl.Instance.constDJI = data.constDJI;
         CurrencyManager.Instance.totalCurrency = data.totalCurrency;
         Debug.Log(data.playerPosition);
+        CurrencyManager.Instance.SetCurrency();
         //Debug.Log(camMov.transform.position.x);
         //Debug.Log(checkpManage.currentCheckpointPosition.x);
         Debug.Log("Data Loaded");

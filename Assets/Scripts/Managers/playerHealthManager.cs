@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class playerHealthManager : MonoBehaviour
 {
+    public static playerHealthManager Instance;
     public Image healthBar;
     public float healthAmount;
     public float maxHealth;
@@ -26,6 +27,15 @@ public class playerHealthManager : MonoBehaviour
     public float barrierCooldownTimer;
     public float barrierCooldownCounter;
     private Vector2 force;
+
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,12 +62,12 @@ public class playerHealthManager : MonoBehaviour
         //-------------------------------
     }
     
-    public void getDamage(float damage, float knockbackStrengthX, float knockbackStrengthY)
+    public void getDamage(float damage, float knockbackStrengthX, float knockbackStrengthY, bool stopTime = true)
     {   
         if(isDamageable && !barrierActive)
         {
             canMove = false;
-            StartCoroutine(slowTimeInvincible());
+            StartCoroutine(slowTimeInvincible(stopTime));
             healthAmount -= damage;
             if(enemy != null)
             {
@@ -114,12 +124,12 @@ public class playerHealthManager : MonoBehaviour
             barrierTimeCounter = barrierTimer;
         }
     }
-    IEnumerator slowTimeInvincible()
+    IEnumerator slowTimeInvincible(bool stopTime)
     {
         isDamageable = false;
-        Time.timeScale = 0.6f;
+        if(stopTime) Time.timeScale = 0.6f;
         yield return new WaitForSeconds(invincibilityTimer);
-        Time.timeScale = 1f;
+        if(stopTime) Time.timeScale = 1f;
         isDamageable = true;
         
     }

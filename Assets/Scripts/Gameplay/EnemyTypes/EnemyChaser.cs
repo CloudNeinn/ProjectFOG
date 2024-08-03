@@ -55,6 +55,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
     void FixedUpdate()
     {
         if(followEnabled) PathFollow();
+        if(isPatroling && canPatrol) Patrol();
     }
 
     public new void Attack()
@@ -62,6 +63,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
         if(inSight()) 
         {
             isAlert = true;
+            followEnabled = true;
             forgetCooldown = forgetTime;
         }
 
@@ -70,22 +72,20 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
             isAlert = true;
         }
 
-    
         /*if(!isAlert && (( canPatrol &&
         (LeftPoint.transform.position.x - 0.5f >= transform.position.x || 
         RightPoint.transform.position.x + 0.5f <= transform.position.x) && 
         (LeftPoint.transform.position.y + 1.5f <= transform.position.y || 
         RightPoint.transform.position.y - 1.5f >= transform.position.y)) || */// ) 
-        if(!isAlert && !canPatrol && Vector2.Distance(transform.position, enemyStartingPosition) >= 3f)
+        if(!isAlert && !isPatroling && Vector2.Distance(transform.position, enemyStartingPosition) >= 3f)
         {
             target = enemyStartingPosition;
-            isPatroling = false;
-            followEnabled = true;//PathFollow();
+            followEnabled = true;
         }
         else if(!isAlert) 
         {
             followEnabled = false;
-            isPatroling = true; //Patrol();
+            isPatroling = true;
         }
 
         if(isAlert) 
@@ -93,7 +93,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
             moveSpeed = attackSpeed;
             isPatroling = false;
             target = playerPosition.position;
-            if(!inRange() && !canAttack) followEnabled = true;// PathFollow();
+            if(!inRange() && !canAttack) followEnabled = true;
             else if(inRange())
             {
                 Stand();

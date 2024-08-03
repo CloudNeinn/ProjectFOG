@@ -13,7 +13,7 @@ public class homingProjectileScript : projectileScript
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("enemy"), true);
         if(!canDamageEnemy) Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemyProjectile"), LayerMask.NameToLayer("enemy"), true);
         canDamagePlayer = true;
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        //pHM = GameObject.FindObjectOfType<playerHealthManager>();
         //rigid.velocity = getVector() * speed;
         //movementVector = getVector();
     }

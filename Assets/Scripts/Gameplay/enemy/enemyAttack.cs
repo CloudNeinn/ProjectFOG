@@ -13,7 +13,7 @@ public class enemyAttack : MonoBehaviour
 
     [Header ("Condition check")]
     public bool canDamagePlayer;
-    public playerHealthManager pHM;
+    //public playerHealthManager pHM;
     private enemyHealth eneHea;
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class enemyAttack : MonoBehaviour
     {
         canDamagePlayer = true;
         eneHea = GetComponentInParent<enemyHealth>();//transform.parent.
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();  
+        //pHM = GameObject.FindObjectOfType<playerHealthManager>();  
     }
 
     IEnumerator OnTriggerEnter2D(Collider2D collision) //maybe OnTriggerStay2D
@@ -29,13 +29,13 @@ public class enemyAttack : MonoBehaviour
         if (collision.gameObject.tag == "BlockShield") canDamagePlayer = false;
         if (collision.gameObject.tag == "Player")
         {   
-            if(pHM != null && eneHea != null) 
+            if(playerHealthManager.Instance != null && eneHea != null) 
             {
-                pHM.enemy = eneHea;
+                playerHealthManager.Instance.enemy = eneHea;
                 yield return new WaitForSeconds(0.1f);
-                //pHM.canMove = false;
-                if(canDamagePlayer) pHM.getDamage(damage, knockStrengthX, knockStrengthY);
-                else  pHM.getDamage(0, blockKnockStrengthX, blockKnockStrengthY);
+                //playerHealthManager.Instance.canMove = false;
+                if(canDamagePlayer) playerHealthManager.Instance.getDamage(damage, knockStrengthX, knockStrengthY);
+                else  playerHealthManager.Instance.getDamage(0, blockKnockStrengthX, blockKnockStrengthY);
 
             }
             

@@ -28,7 +28,7 @@ public class enemyHealth : MonoBehaviour
     public enemyPatrol enePat;
     public enemyVision eneVis;
     public enemyBehaviour eneBeh;
-    public playerHealthManager pHM;
+    //public playerHealthManager pHM;
 
     public float knockbackStrengthX;
     public float knockbackStrengthY;
@@ -42,7 +42,7 @@ public class enemyHealth : MonoBehaviour
         enePat = gameObject.GetComponent<enemyPatrol>();
         eneVis = gameObject.GetComponent<enemyVision>();
         eneBeh = gameObject.GetComponent<enemyBehaviour>();
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        //pHM = GameObject.FindObjectOfType<playerHealthManager>();
         vulTimer = 0;
         vulnerable = true;
         currentHealth = maxHealth;
@@ -109,7 +109,7 @@ public class enemyHealth : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            //pHM.enemy = GetComponent<enemyHealth>();
+            //playerHealthManager.Instance.enemy = GetComponent<enemyHealth>();
         }
     }
 

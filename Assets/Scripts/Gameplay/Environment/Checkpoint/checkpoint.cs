@@ -8,7 +8,7 @@ public class checkpoint : MonoBehaviour
     public GameObject popUpSave;
     public GameObject popUpMenu;
     public bool isActivated;
-    public playerHealthManager pHM;
+    //public playerHealthManager pHM;
     public DataPersistanceManager dataPerMan;
     private gameplayUI gameUI;
     public Vector3 checkPosition;
@@ -21,7 +21,7 @@ public class checkpoint : MonoBehaviour
     {
         popUpSave = transform.GetChild(0).gameObject;
         popUpMenu = transform.GetChild(1).gameObject;
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        //pHM = GameObject.FindObjectOfType<playerHealthManager>();
         dataPerMan = GameObject.FindObjectOfType<DataPersistanceManager>();
         checkpMenu = GameObject.Find("CheckpointMenu");
         gameUI = GameObject.FindObjectOfType<gameplayUI>(); 

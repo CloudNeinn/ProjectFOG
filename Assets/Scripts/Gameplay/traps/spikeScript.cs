@@ -5,7 +5,7 @@ using UnityEngine;
 public class spikeScript : MonoBehaviour
 {
 
-    private playerHealthManager pHM;
+    //private playerHealthManager pHM;
     public Rigidbody2D charRigid;
     public float damage;
     public float knockbackX;
@@ -14,7 +14,7 @@ public class spikeScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        //pHM = GameObject.FindObjectOfType<playerHealthManager>();
     }
 
     // Update is called once per frame
@@ -44,12 +44,12 @@ public class spikeScript : MonoBehaviour
             if(isVertical)
             {
                 charRigid.velocity = new Vector2(knockbackX * knockbackDirectionX() * -1, charRigid.velocity.y);
-                pHM.getDamage(damage, 0, 0);
+                playerHealthManager.Instance.getDamage(damage, 0, 0);
             }
             else
             {
                 charRigid.velocity = new Vector2(charRigid.velocity.x, knockbackY * knockbackDirectionY() * -1);
-                pHM.getDamage(damage, 0, 0);                
+                playerHealthManager.Instance.getDamage(damage, 0, 0);                
             }
 
         }

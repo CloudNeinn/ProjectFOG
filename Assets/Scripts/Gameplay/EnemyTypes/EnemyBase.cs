@@ -31,7 +31,8 @@ public class EnemyBase : MonoBehaviour, IWalkable, IPatrolable
 
     public void Walk(int direction)
     {
-        _enemyrb.velocity = new Vector2(moveSpeed * direction, _enemyrb.velocity.y);
+        //_enemyrb.velocity = new Vector2(moveSpeed * direction, _enemyrb.velocity.y);
+        _enemyrb.AddForce(Vector2.right * moveSpeed * 500 * direction);
     }
 
     public void Stand() 

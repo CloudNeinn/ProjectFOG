@@ -72,7 +72,7 @@ public class characterControl: MonoBehaviour
     public PolygonCollider2D collCrouch;
     public Animator anim;
     private GameObject currentOneWayPlatform;
-    private playerHealthManager pHM;
+    // private playerHealthManager pHM;
     private cameraMovement camMov;
     private cameraFade camFade;
     #endregion
@@ -86,6 +86,7 @@ public class characterControl: MonoBehaviour
     [Header ("Dashing")]
     public float dashSpeed;
     public float dashTime;
+    public float dashInvincibilityTime;
     public bool canDash = true;
     public float dashCooldownTime;
     #endregion
@@ -179,7 +180,7 @@ public class characterControl: MonoBehaviour
 
     void Start()
     {
-        pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        // pHM = GameObject.FindObjectOfType<playerHealthManager>();
         canDash = true;
         doubleJumpIndex = constDJI;
         camMov = GameObject.FindObjectOfType<cameraMovement>();
@@ -229,7 +230,7 @@ public class characterControl: MonoBehaviour
         else coyoteTimeCounter -= Time.deltaTime;
 
         //---TODO: figure out if this works or not, if i even need this
-        if(_moveInput.x != 0 && !isWalled() && pHM.canMove) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * Mathf.Sign(_moveInput.x), transform.localScale.y);
+        if(_moveInput.x != 0 && !isWalled() && playerHealthManager.Instance.canMove) transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * Mathf.Sign(_moveInput.x), transform.localScale.y);
         else if(myrigidbody.velocity.x != 0) Rotate();
         //-------------------------------------------------------------
 
@@ -270,7 +271,7 @@ public class characterControl: MonoBehaviour
         distanceJoint.distance = hookCurrentDistance;
         hookCurrentDistance = Mathf.Clamp(hookCurrentDistance + Input.GetAxisRaw("Vertical") * hookMoveSpeed * Time.fixedDeltaTime, 0, hookMaxDistance);
         
-        if(pHM.canMove) Move();
+        if(playerHealthManager.Instance.canMove) Move();
         if(_isDashing) myrigidbody.velocity = new Vector2(transform.localScale.normalized.x * (dashSpeed + Mathf.Abs(myrigidbody.velocity.x)/8), 0);
         if(_isSliding) Slide();
     }
@@ -335,7 +336,7 @@ public class characterControl: MonoBehaviour
         if ((UserInput.Instance._jumpAction.WasPressedThisFrame() && isGrounded() 
         || UserInput.Instance._jumpAction.WasPressedThisFrame() && doubleJumpIndex > 0 
         || UserInput.Instance._jumpAction.WasPressedThisFrame() && coyoteTimeCounter > 0) 
-        && !_isSliding && pHM.canMove)
+        && !_isSliding && playerHealthManager.Instance.canMove)
         {
             if (myrigidbody.velocity.y > 0)
                 force -= myrigidbody.velocity.y;
@@ -352,7 +353,7 @@ public class characterControl: MonoBehaviour
             //Vector2 wallJumpForce = new Vector2(jumpForce/3 * -Mathf.Sign(transform.localScale.x)/* * 30*/ * 1f, jumpForce * 1.2f/* * 50*/);
             Vector2 wallJumpForce = new Vector2(jumpForce * _wallJumpModifierX * -Mathf.Sign(transform.localScale.x), jumpForce * _wallJumpModifierY);
             //Vector2 wallJumpForce = new Vector2(0, jumpForce * 2);
-            pHM.canMove = false;
+            playerHealthManager.Instance.canMove = false;
 
             //if (Mathf.Sign(myrigidbody.velocity.x) != Mathf.Sign(wallJumpForce.x))
             //    wallJumpForce.x -= myrigidbody.velocity.x;
@@ -368,7 +369,7 @@ public class characterControl: MonoBehaviour
             //myrigidbody.velocity = new Vector2(wallJumpForce.x, wallJumpForce.y + Time.deltaTime * 400);
             movementLocked = true;
             wallJumpWait = true;
-            //pHM.canMove = true;
+            //playerHealthManager.Instance.canMove = true;
         }
 
         if(UserInput.Instance._jumpAction.WasPressedThisFrame()) coyoteTimeCounter = 0;
@@ -393,7 +394,7 @@ public class characterControl: MonoBehaviour
             waitToUnlockMovement -= Time.deltaTime;
             if(waitToUnlockMovement < 0) 
             {
-                pHM.canMove = true;
+                playerHealthManager.Instance.canMove = true;
                 waitToUnlockMovement = 0.3f;
                 movementLocked = false;
             }
@@ -404,7 +405,7 @@ public class characterControl: MonoBehaviour
             wallJumpCooldown -= Time.deltaTime;
             if(wallJumpCooldown < 0) 
             {
-                pHM.canMove = true;
+                playerHealthManager.Instance.canMove = true;
                 wallJumpCooldown = wallJumpTime;
                 wallJumpWait = false;
             }
@@ -484,10 +485,10 @@ public class characterControl: MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         playerToMouseDirection = (mousePos - transform.position).normalized;        
-        if(_hookInput)
+        if(_hookInput && !_isCrouching)
         {
             distanceJoint.enabled = false;
-            hookHit = Physics2D.Raycast(transform.position, playerToMouseDirection, hookMaxDistance, hookableLayers);
+            hookHit = Physics2D.Raycast(transform.position/* - Vector3.up * 0.5f*/, playerToMouseDirection, hookMaxDistance, hookableLayers);
             hookHitMovingTarget = Physics2D.Raycast(transform.position, playerToMouseDirection, hookMaxDistance, hookableMovingLayers);
             if(hookHitMovingTarget.collider != null)
             {  
@@ -508,7 +509,7 @@ public class characterControl: MonoBehaviour
                 doubleJumpIndex = constDJI + 1;
             }
         }
-        if((_jumpInput || _isDashing || Input.GetKeyDown(KeyCode.LeftControl) || pHM.playerDead) && distanceJoint.enabled) distanceJoint.enabled = false;
+        if((_jumpInput || _isDashing || Input.GetKeyDown(KeyCode.LeftControl) || playerHealthManager.Instance.playerDead) && distanceJoint.enabled) distanceJoint.enabled = false;
         if(distanceJoint.enabled) 
         {
             lineRenderer.SetPosition(0, transform.position);
@@ -533,7 +534,7 @@ public class characterControl: MonoBehaviour
         }
 
         displayWhereHit = Physics2D.Raycast(transform.position, playerToMouseDirection, hookMaxDistance * 100, hookableLayers);
-        if(displayWhereHit.distance > hookMaxDistance) displayHitSprite.color = Color.red;
+        if(displayWhereHit.distance > hookMaxDistance || _isCrouching) displayHitSprite.color = Color.red;
         else displayHitSprite.color = Color.white;
         if(displayWhereHit.collider != null)
         {   
@@ -546,7 +547,7 @@ public class characterControl: MonoBehaviour
         float speedDif = slideSpeed - myrigidbody.velocity.y;	
 		float movement = speedDif * slideAccel;
 		movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
-		if(pHM.canMove) myrigidbody.AddForce(movement * Vector2.up);
+		if(playerHealthManager.Instance.canMove) myrigidbody.AddForce(movement * Vector2.up);
     }
     public void Glide()
     {
@@ -630,9 +631,10 @@ public class characterControl: MonoBehaviour
         _isDashing = false;
         //TODO: figure out which is better to stop player after a dash or not
         //myrigidbody.velocity = Vector2.zero;
+        yield return new WaitForSeconds(dashInvincibilityTime - dashTime);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("enemyProjectile"), false);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("enemy"), false);
-        yield return new WaitForSeconds(dashCooldownTime);
+        yield return new WaitForSeconds(dashCooldownTime - (dashInvincibilityTime - dashTime));
         canDash = true;
     }    
 

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
-  speed: 10
+  speed: 7
   pHM: {fileID: 0}
   canDamagePlayer: 0
   canDamageEnemy: 0
@@ -141,12 +141,11 @@ MonoBehaviour:
   movementVector: {x: 0, y: 0}
   eneRan: {fileID: 0}
   eneHea: {fileID: 0}
-  charCon: {fileID: 0}
   canBeBlocked: 1
   canBeRedirected: 1
   projectileVector: {x: 0, y: 0}
   timeUntilHoming: 0.5
-  homingDelayTime: 0.5
+  homingDelayTime: 0.2
   homingDelayCooldown: 0
 --- !u!50 &1035740275872128597
 Rigidbody2D:
