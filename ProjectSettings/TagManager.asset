@@ -12,6 +12,7 @@ TagManager:
   - wall
   - ladder
   - attackTrigger
+  - storeMenu
   layers:
   - Default
   - TransparentFX

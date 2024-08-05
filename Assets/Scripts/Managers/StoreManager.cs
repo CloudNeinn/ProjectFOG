@@ -10,7 +10,7 @@ public class StoreManager : MonoBehaviour
 
     public StoreScript currentStore;
     public StoreScript[] checkIfStoreActive;
-    private GameObject _storeMenu;
+    [field: SerializeField] public GameObject _storeMenu {get; private set;}
 
     void Awake()
     {
@@ -20,7 +20,6 @@ public class StoreManager : MonoBehaviour
     void Start()
     {
         checkIfStoreActive = FindObjectsOfType<StoreScript>();
-        _storeMenu = GameObject.Find("StoreMenu");
         UnloadPickedItem();
     }
 

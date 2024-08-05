@@ -17,21 +17,19 @@ public class StoreScript : MonoBehaviour
     private int _maxInventorySize;
     public bool storeActive;
     private Item _itemTransfer;
-    [SerializeField] public List<Item> inventoryItems = new List<Item>();// { get; private set;}
+    [SerializeField] public List<Item> inventoryItems = new List<Item>();
 
-    // Start is called before the first frame update
     void Start()
     {
         _storeActive = false;
         _wasInRange = false;
-        _storeMenu = GameObject.Find("StoreMenu");
+        _storeMenu = StoreManager.Instance._storeMenu;
         _storeInventory = _storeMenu.gameObject.transform.GetChild(0).gameObject;
         _storeInventoryContent = _storeMenu.gameObject.transform.GetChild(0).GetChild(0).gameObject;
         _maxInventorySize = _storeInventoryContent.transform.childCount;
         _storeMenu.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(checkIfInRange() && characterControl.Instance._use2Input && !_storeActive)
