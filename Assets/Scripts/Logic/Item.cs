@@ -8,5 +8,6 @@ public class Item : ScriptableObject
     public string description;
     public int value;
     public Sprite icon;
-    public bool isActive;
+    public bool isEquipped;
+    public InventoryManager.Type type;
 }

@@ -17,4 +17,5 @@ MonoBehaviour:
   description: 
   value: 120
   icon: {fileID: -237687488, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isActive: 0
+  isEquipped: 0
+  type: 0

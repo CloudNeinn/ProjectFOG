@@ -10,6 +10,13 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private List<Item> inventoryItems = new List<Item>();
     [field: SerializeField] public GameObject _checkpointInventoryMenu { get; private set; }
+    public enum Type 
+    {
+        Passive,
+        Active
+    }
+    private int _passiveItemCount = 0;
+    private int _activeItemCount = 0;
 
     void Awake()
     {
@@ -30,11 +37,22 @@ public class InventoryManager : MonoBehaviour
     {
         for(int i = 0; i < inventoryItems.Count; i++)
         {
-            if(inventoryItems[i].itemName == null) return;
-            _checkpointInventoryMenu.transform.GetChild(3).GetChild(i).gameObject.SetActive(true);
-            _checkpointInventoryMenu.transform.GetChild(3).GetChild(i).gameObject.SetActive(true);
-            _checkpointInventoryMenu.transform.GetChild(3).GetChild(i).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemName;
-            _checkpointInventoryMenu.transform.GetChild(3).GetChild(i).GetChild(1).gameObject.GetComponent<Image>().sprite = inventoryItems[i].icon;
+            if(inventoryItems[i].itemName == null || inventoryItems.Count <= _activeItemCount + _passiveItemCount) return;
+            if(inventoryItems[i].type == Type.Active)
+            {
+                _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).gameObject.SetActive(true);
+                _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemName;
+                _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).GetChild(1).gameObject.GetComponent<Image>().sprite = inventoryItems[i].icon;
+                _activeItemCount++;
+            }
+            else 
+            {
+                _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).gameObject.SetActive(true);
+                _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemName;
+                _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).GetChild(1).gameObject.GetComponent<Image>().sprite = inventoryItems[i].icon;
+                _passiveItemCount++;
+            }
+
         }
     }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
+  m_Name: crown_of_stars
+  m_EditorClassIdentifier: 
+  id: 5
+  itemName: Crown of Stars
+  description: Seven star-like motes of light appear and orbit your head until the
+    spell ends. You can use a bonus action to send one of the motes streaking toward
+    one creature or object within 120 feet of you. When you do so, make a ranged
+    spell attack. On a hit, the target takes 4d12 radiant damage. Whether you hit
+    or miss, the mote is expended. The spell ends early if you expend the last mote.
+    If you have four or more motes remaining, they shed bright light in a 30-foot
+    radius and dim light for an additional 30 feet. If you have one to three motes
+    remaining, they shed dim light in a 30-foot radius.
+  value: 250
+  icon: {fileID: 21300000, guid: 99dc578328fdc034e8e4fe6edd1361f3, type: 3}
+  isEquipped: 0
+  type: 1

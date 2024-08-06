@@ -1755,6 +1755,7 @@ MonoBehaviour:
   inventoryItems:
   - {fileID: 11400000, guid: 39e23497f9833254e852a752497f78d3, type: 2}
   - {fileID: 11400000, guid: 7a33dd6326a75e547a2a71548f27fe6d, type: 2}
+  - {fileID: 11400000, guid: 27234ae38e6cdf94f82397c908c3d383, type: 2}
   <_checkpointInventoryMenu>k__BackingField: {fileID: 1819153702}
 --- !u!1 &52193861
 GameObject:
@@ -39172,7 +39173,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
