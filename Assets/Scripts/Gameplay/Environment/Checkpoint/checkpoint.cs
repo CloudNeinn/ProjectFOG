@@ -36,7 +36,7 @@ public class checkpoint : MonoBehaviour
             checkpointIsSaved = true;
             dataPerMan.SaveGame();
         }
-        popUpMenu.SetActive(false);
+        //popUpMenu.SetActive(false);
         //checkpMenu.SetActive(false);
     }
 
@@ -50,8 +50,9 @@ public class checkpoint : MonoBehaviour
         && characterControl.Instance.transform.position.y >= transform.position.y - 4)
         {
             if(characterControl.Instance._use2Input && !menuOpen 
-            && isActivated && Time.timeScale != 0) // Input.GetKeyDown(KeyCode.F)
-            {               
+            /*&& isActivated*/ && Time.timeScale != 0) // Input.GetKeyDown(KeyCode.F)
+            {
+                InventoryManager.Instance.SetInventory();               
                 menuOpen = true;
                 checkpMenu.SetActive(menuOpen);
             }
@@ -92,7 +93,7 @@ public class checkpoint : MonoBehaviour
         && characterControl.Instance.transform.position.y >= transform.position.y - 8)
         {
             popUpSave.SetActive(true);
-            if(isActivated) popUpMenu.SetActive(true);;
+            /*if(isActivated)*/ popUpMenu.SetActive(true);
         }
         else 
         {
