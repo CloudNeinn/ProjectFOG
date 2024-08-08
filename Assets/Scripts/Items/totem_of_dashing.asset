@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
-  m_Name: totem_of_jumping 3
+  m_Name: totem_of_dashing
   m_EditorClassIdentifier: 
   id: 4
   itemName: totem_of_dashing
+  itemDisplayName: Totem of dashing
   description: 
   value: 10
   icon: {fileID: -749569060, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isActive: 0
+  isEquipped: 0
+  type: 0

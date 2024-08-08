@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    [SerializeField] private List<Item> inventoryItems = new List<Item>();
+    [field: SerializeField] public List<Item> inventoryItems { get; private set; }
     [field: SerializeField] public GameObject _checkpointInventoryMenu { get; private set; }
     public enum Type 
     {
@@ -33,6 +34,31 @@ public class InventoryManager : MonoBehaviour
         inventoryItems.Remove(item);
     }
 
+    public void GetEquipped()
+    {
+        if (inventoryItems.FirstOrDefault(item => item.itemName == "totem_of_jumping" && item.isEquipped) != null)
+        {
+            characterControl.Instance.addConstDJI = 1;
+        }
+        else characterControl.Instance.addConstDJI = 0;
+
+        if (inventoryItems.FirstOrDefault(item => item.itemName == "totem_of_speed" && item.isEquipped) != null)
+        {
+            characterControl.Instance.runSpeed = 14;
+            characterControl.Instance.maxRunSpeed = 17;
+        }
+        else 
+        {
+            characterControl.Instance.runSpeed = 10;
+            characterControl.Instance.maxRunSpeed = 13;
+        }
+    }
+
+    public void SetEquipped(ScriptableObject itemName)
+    {
+
+    }
+
     public void SetInventory()
     {
         for(int i = 0; i < inventoryItems.Count; i++)
@@ -41,14 +67,16 @@ public class InventoryManager : MonoBehaviour
             if(inventoryItems[i].type == Type.Active)
             {
                 _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).gameObject.SetActive(true);
-                _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemName;
+                _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).gameObject.name = inventoryItems[i].itemName;
+                _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemDisplayName;
                 _checkpointInventoryMenu.transform.GetChild(1).GetChild(_activeItemCount).GetChild(1).gameObject.GetComponent<Image>().sprite = inventoryItems[i].icon;
                 _activeItemCount++;
             }
             else 
             {
                 _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).gameObject.SetActive(true);
-                _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemName;
+                _checkpointInventoryMenu.transform.GetChild(3).GetChild(_activeItemCount).gameObject.name = inventoryItems[i].itemName;
+                _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = inventoryItems[i].itemDisplayName;
                 _checkpointInventoryMenu.transform.GetChild(3).GetChild(_passiveItemCount).GetChild(1).gameObject.GetComponent<Image>().sprite = inventoryItems[i].icon;
                 _passiveItemCount++;
             }

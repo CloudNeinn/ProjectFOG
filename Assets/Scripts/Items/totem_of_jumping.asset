@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   itemName: totem_of_jumping
+  itemDisplayName: Totem of jumping
   description: 
   value: 250
   icon: {fileID: -1022240639, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isActive: 0
+  isEquipped: 1
+  type: 0

@@ -50,6 +50,15 @@ public class DataManager : MonoBehaviour, IDataPersistance
         CurrencyManager.Instance.totalCurrency = data.totalCurrency;
         Debug.Log(data.playerPosition);
         CurrencyManager.Instance.SetCurrency();
+        foreach (var checkpoint in CheckpointManager.Instance.checkIfSaved)
+        {
+            if (checkpoint.id == data.currentCheckpointID)
+            {
+                CheckpointManager.Instance.currentCheckpoint = checkpoint;
+                checkpoint.isActivated = true;
+                break;
+            }
+        }
         //Debug.Log(camMov.transform.position.x);
         //Debug.Log(checkpManage.currentCheckpointPosition.x);
         Debug.Log("Data Loaded");
@@ -66,6 +75,7 @@ public class DataManager : MonoBehaviour, IDataPersistance
         data.hasDash = characterControl.Instance.hasDash;
         data.hasWallJump = characterControl.Instance.hasWallJump;
         data.constDJI = characterControl.Instance.constDJI;
+        data.currentCheckpointID = CheckpointManager.Instance.currentCheckpoint.id;
         data.saveSceneIDs = GetLoadedSceneIDs();
         data.totalCurrency = CurrencyManager.Instance.totalCurrency;
     }

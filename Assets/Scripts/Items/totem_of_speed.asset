@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
-  m_Name: totem_of_jumping 2
+  m_Name: totem_of_speed
   m_EditorClassIdentifier: 
   id: 3
-  itemName: totem_of_flying
+  itemName: totem_of_speed
+  itemDisplayName: Totem of speed
   description: 
   value: 150
   icon: {fileID: 175669265, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isActive: 0
+  isEquipped: 1
+  type: 0

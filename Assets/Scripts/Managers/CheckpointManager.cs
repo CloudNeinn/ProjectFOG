@@ -20,6 +20,7 @@ public class CheckpointManager : MonoBehaviour
     void Start()
     {
         checkIfSaved = FindObjectsOfType<checkpoint>();
+        if(currentCheckpoint != null) currentCheckpoint.isActivated = true;
     }
 
     void Update()

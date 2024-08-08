@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: power_word_kill
   m_EditorClassIdentifier: 
   id: 0
-  itemName: 'PW: Kill'
+  itemName: pw_kill
+  itemDisplayName: 'PW: Kill'
   description: 
   value: 120
   icon: {fileID: -237687488, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}

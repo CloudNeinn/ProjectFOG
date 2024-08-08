@@ -94,7 +94,7 @@ public class StoreScript : MonoBehaviour
 
     public void BuyObject(GameObject ItemNameObject)
     {
-        _itemTransfer = inventoryItems.Find(obj => obj.itemName == ItemNameObject.GetComponent<TextMeshProUGUI>().text);
+        _itemTransfer = inventoryItems.Find(obj => obj.itemDisplayName == ItemNameObject.GetComponent<TextMeshProUGUI>().text);
         RemoveItem(_itemTransfer);
         InventoryManager.Instance.AddItem(_itemTransfer);
         _itemTransfer = null;

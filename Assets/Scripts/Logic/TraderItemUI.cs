@@ -42,7 +42,7 @@ public class TraderItemUI : MonoBehaviour
 
     void SetItemInfo()
     {
-        this.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = _item.itemName;
+        this.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = _item.itemDisplayName;
         this.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = _item.icon;
     }
 
@@ -55,7 +55,7 @@ public class TraderItemUI : MonoBehaviour
     public void PickThisItem()
     {
         if(_item == null) return;
-        _name.text = _item.itemName;
+        _name.text = _item.itemDisplayName;
         _image.sprite = _item.icon;
         _description.text = _item.description;
         if(_item.value <= CurrencyManager.Instance.totalCurrency) _button.interactable = true;

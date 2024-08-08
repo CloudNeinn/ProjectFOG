@@ -11,6 +11,7 @@ public class characterControl: MonoBehaviour
     public float jumpForce;
     public int jumpIndex;
     public int constDJI;
+    public int addConstDJI;
     public int doubleJumpIndex;
     public float coyoteTime;
     public float coyoteTimeCounter;
@@ -182,7 +183,7 @@ public class characterControl: MonoBehaviour
     {
         // pHM = GameObject.FindObjectOfType<playerHealthManager>();
         canDash = true;
-        doubleJumpIndex = constDJI;
+        doubleJumpIndex = constDJI + addConstDJI;
         camMov = GameObject.FindObjectOfType<cameraMovement>();
         camFade = GameObject.FindObjectOfType<cameraFade>();
         displayHitSprite = displayHitSpriteObject.GetComponent<SpriteRenderer>();
@@ -242,7 +243,7 @@ public class characterControl: MonoBehaviour
         if(hasDoubleJump) 
         {
             jumpIndex = 0;
-            constDJI = 1;
+            //constDJI = 1;
         }
         if(_dashInput && canDash && hasDash && !isGliding && !isCrouching() && !isWalled())
         {
@@ -376,7 +377,7 @@ public class characterControl: MonoBehaviour
 
         if ((isGrounded() || isWalled() && _isSliding) && !distanceJoint.enabled)
         {
-            doubleJumpIndex = constDJI;
+            doubleJumpIndex = constDJI + addConstDJI;
         }
 
         //---Variable height part of the jump
@@ -497,7 +498,7 @@ public class characterControl: MonoBehaviour
                 distanceJoint.enabled = true;
                 distanceJoint.connectedBody = hookHit.rigidbody;
                 distanceJoint.connectedAnchor = Vector2.zero;
-                doubleJumpIndex = constDJI + 1;
+                doubleJumpIndex = constDJI + 1 + addConstDJI;
             }
             else if(hookHit.collider != null)
             {   
@@ -506,7 +507,7 @@ public class characterControl: MonoBehaviour
                 distanceJoint.enabled = true;
                 distanceJoint.connectedBody = null;
                 distanceJoint.connectedAnchor = hookHit.point;
-                doubleJumpIndex = constDJI + 1;
+                doubleJumpIndex = constDJI + 1 + addConstDJI;
             }
         }
         if((_jumpInput || _isDashing || Input.GetKeyDown(KeyCode.LeftControl) || playerHealthManager.Instance.playerDead) && distanceJoint.enabled) distanceJoint.enabled = false;
@@ -641,7 +642,7 @@ public class characterControl: MonoBehaviour
     IEnumerator CheckWallJump()
     {
         yield return new WaitForSeconds(0.3f);
-        if(doubleJumpIndex != constDJI && !distanceJoint.enabled) doubleJumpIndex = constDJI;
+        if(doubleJumpIndex != constDJI && !distanceJoint.enabled) doubleJumpIndex = constDJI + addConstDJI;
     }
     #endregion
     #region Gizmos

@@ -10,7 +10,6 @@ public class DataPersistanceManager : MonoBehaviour
     private GameData gameData;
     
     private List<IDataPersistance> dataPersistenceObjects;
-    
     private FileDataHandler dataHandler;
     public static DataPersistanceManager Instance {get; private set; }
 
@@ -19,6 +18,7 @@ public class DataPersistanceManager : MonoBehaviour
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
+        InventoryManager.Instance.GetEquipped();
     }
     private void Awake()
     {

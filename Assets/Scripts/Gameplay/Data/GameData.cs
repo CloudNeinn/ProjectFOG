@@ -16,6 +16,7 @@ public class GameData
     public Vector3 playerPosition;
     public int[] saveSceneIDs;
     public int totalCurrency;
+    public string currentCheckpointID;
     public SerializableDictionary<string, bool> doorCondition;
 
     // values defined in the construcor will be the initial values for the game

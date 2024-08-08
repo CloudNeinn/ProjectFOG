@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class checkpoint : MonoBehaviour
 {
+    [field: SerializeField] public string id { get; private set; }
+    
+    [ContextMenu("Generate checkpoint id")]
+    private void GenerateGuid()
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
     public bool checkpointIsSaved;
     public GameObject popUpSave;
     public GameObject popUpMenu;
@@ -55,6 +62,7 @@ public class checkpoint : MonoBehaviour
                 InventoryManager.Instance.SetInventory();               
                 menuOpen = true;
                 checkpMenu.SetActive(menuOpen);
+                InventoryManager.Instance.GetEquipped();
             }
             else if(characterControl.Instance._use2Input && menuOpen) // Input.GetKeyDown(KeyCode.F)
             {
@@ -79,7 +87,7 @@ public class checkpoint : MonoBehaviour
             }
             
         }
-        else if(checkpointIsSaved)
+        else if(isActivated)
         {
             checkpointIsSaved = false;
             isHealed = false;
