@@ -17,7 +17,7 @@ public class StoreScript : MonoBehaviour
     private int _maxInventorySize;
     public bool storeActive;
     private Item _itemTransfer;
-    [SerializeField] public List<Item> inventoryItems = new List<Item>();
+    [SerializeField] public List<Item> _inventoryItems = new List<Item>();
 
     void Start()
     {
@@ -78,8 +78,8 @@ public class StoreScript : MonoBehaviour
         StoreManager.Instance.currentStore = this;
         for(int i = 0; i < _maxInventorySize; i++)
         {
-            if(i >= inventoryItems.Count) break;
-            _storeInventoryContent.transform.GetChild(i).gameObject.GetComponent<TraderItemUI>().item = inventoryItems[i];
+            if(i >= _inventoryItems.Count) break;
+            _storeInventoryContent.transform.GetChild(i).gameObject.GetComponent<TraderItemUI>().item = _inventoryItems[i];
         }
     }
 
@@ -94,7 +94,7 @@ public class StoreScript : MonoBehaviour
 
     public void BuyObject(GameObject ItemNameObject)
     {
-        _itemTransfer = inventoryItems.Find(obj => obj.itemDisplayName == ItemNameObject.GetComponent<TextMeshProUGUI>().text);
+        _itemTransfer = _inventoryItems.Find(obj => obj.itemDisplayName == ItemNameObject.GetComponent<TextMeshProUGUI>().text);
         RemoveItem(_itemTransfer);
         InventoryManager.Instance.AddItem(_itemTransfer);
         _itemTransfer = null;
@@ -104,11 +104,11 @@ public class StoreScript : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        inventoryItems.Add(item);
+        _inventoryItems.Add(item);
     }
 
     public void RemoveItem(Item item)
     {
-        inventoryItems.Remove(item);
+        _inventoryItems.Remove(item);
     }
 }
