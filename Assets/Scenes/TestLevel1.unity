@@ -90093,16 +90093,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f0128a280bdff47a9b3e538bff56f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 93b04e2e-15ee-4f88-86f5-72de0bc12346
   _storeRange: 2.5
   _inRange: 0
   _playerLayer:
     serializedVersion: 2
     m_Bits: 128
   storeActive: 0
-  inventoryItems:
-  - {fileID: 11400000, guid: 7a33dd6326a75e547a2a71548f27fe6d, type: 2}
-  - {fileID: 11400000, guid: 2a78a5d9bd079594a9e63dc7876efc2c, type: 2}
-  - {fileID: 11400000, guid: 514c977ed9638e34a88b9b2576bd2abb, type: 2}
+  _shopItems: []
+  _shopItemsID: []
 --- !u!212 &1240862289
 SpriteRenderer:
   m_ObjectHideFlags: 0

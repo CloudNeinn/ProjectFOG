@@ -50,6 +50,9 @@ public class DataManager : MonoBehaviour, IDataPersistance
         CurrencyManager.Instance.totalCurrency = data.totalCurrency;
         Debug.Log(data.playerPosition);
         CurrencyManager.Instance.SetCurrency();
+        InventoryManager.Instance._inventoryItemsID = data.inventoryItemsID;
+        InventoryManager.Instance._equippedItemsActiveID = data.equippedItemsActiveID;
+        InventoryManager.Instance._equippedItemsPassiveID = data.equippedItemsPassiveID;
         foreach (var checkpoint in CheckpointManager.Instance.checkIfSaved)
         {
             if (checkpoint.id == data.currentCheckpointID)
@@ -59,6 +62,7 @@ public class DataManager : MonoBehaviour, IDataPersistance
                 break;
             }
         }
+        InventoryManager.Instance.SetInventoryByID();
         //Debug.Log(camMov.transform.position.x);
         //Debug.Log(checkpManage.currentCheckpointPosition.x);
         Debug.Log("Data Loaded");
@@ -78,6 +82,9 @@ public class DataManager : MonoBehaviour, IDataPersistance
         data.currentCheckpointID = CheckpointManager.Instance.currentCheckpoint.id;
         data.saveSceneIDs = GetLoadedSceneIDs();
         data.totalCurrency = CurrencyManager.Instance.totalCurrency;
+        data.inventoryItemsID = InventoryManager.Instance._inventoryItemsID;
+        data.equippedItemsActiveID = InventoryManager.Instance._equippedItemsActiveID;
+        data.equippedItemsPassiveID = InventoryManager.Instance._equippedItemsPassiveID;
     }
 
     int[] GetLoadedSceneIDs()

@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
-public class StoreScript : MonoBehaviour
+public class StoreScript : MonoBehaviour, IDataPersistance
 {
+    [SerializeField] private string id;
+
+    [ContextMenu("Generate enemy id")]
+    private void GenerateGuid()
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
     [SerializeField] private float _storeRange;
     [SerializeField] private bool _inRange;
     [SerializeField] private LayerMask _playerLayer;
@@ -17,10 +25,36 @@ public class StoreScript : MonoBehaviour
     private int _maxInventorySize;
     public bool storeActive;
     private Item _itemTransfer;
-    [SerializeField] public List<Item> _inventoryItems = new List<Item>();
+    [SerializeField] public List<Item> _shopItems = new List<Item>();
+    public List<string> _shopItemsID;// = new List<string>();
+
+    public void LoadData(GameData data)
+    {
+        if (data.storeItems.TryGetValue(id, out _shopItemsID))
+        {
+            Debug.Log($"Loaded {_shopItemsID.Count} items for store {id}");
+        }
+        else
+        {
+            Debug.LogWarning($"No items found for store {id}");
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if(data.storeItems.ContainsKey(id))
+        {
+            data.storeItems.Remove(id);
+        }
+        data.storeItems.Add(id, _shopItemsID);
+    }
 
     void Start()
     {
+        //foreach (var item in _inventoryItems)
+        //{
+        //    _inventoryItemsID.Add(item.id);
+        //}
         _storeActive = false;
         _wasInRange = false;
         _storeMenu = StoreManager.Instance._storeMenu;
@@ -74,12 +108,13 @@ public class StoreScript : MonoBehaviour
 
     void LoadStore()
     {
+        SetInventoryByID();
         StoreManager.Instance.updateStore();
         StoreManager.Instance.currentStore = this;
         for(int i = 0; i < _maxInventorySize; i++)
         {
-            if(i >= _inventoryItems.Count) break;
-            _storeInventoryContent.transform.GetChild(i).gameObject.GetComponent<TraderItemUI>().item = _inventoryItems[i];
+            if(i >= _shopItems.Count) break;
+            _storeInventoryContent.transform.GetChild(i).gameObject.GetComponent<TraderItemUI>().item = _shopItems[i];
         }
     }
 
@@ -94,7 +129,7 @@ public class StoreScript : MonoBehaviour
 
     public void BuyObject(GameObject ItemNameObject)
     {
-        _itemTransfer = _inventoryItems.Find(obj => obj.itemDisplayName == ItemNameObject.GetComponent<TextMeshProUGUI>().text);
+        _itemTransfer = _shopItems.Find(obj => obj.itemDisplayName == ItemNameObject.GetComponent<TextMeshProUGUI>().text);
         RemoveItem(_itemTransfer);
         InventoryManager.Instance.AddItem(_itemTransfer);
         _itemTransfer = null;
@@ -104,11 +139,27 @@ public class StoreScript : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        _inventoryItems.Add(item);
+        _shopItems.Add(item);
+        _shopItemsID.Remove(item.id);
     }
 
     public void RemoveItem(Item item)
     {
-        _inventoryItems.Remove(item);
+        _shopItems.Remove(item);
+        _shopItemsID.Remove(item.id);
+    }
+
+    public void SetInventoryByID()
+    {
+        _shopItems.Clear();
+
+        foreach (string id in _shopItemsID)
+        {
+            Item item = InventoryManager.Instance._allItems.FirstOrDefault(i => i.id == id);
+            if (item != null)
+            {
+                _shopItems.Add(item);
+            }
+        }
     }
 }

@@ -1093,22 +1093,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15679e04b2ba4f1b9ccb9363d649a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <_inventoryItems>k__BackingField:
+  _inventoryItems:
   - {fileID: 11400000, guid: 2a78a5d9bd079594a9e63dc7876efc2c, type: 2}
   - {fileID: 11400000, guid: f7b69862492424f35b737f6e699547ad, type: 2}
   - {fileID: 11400000, guid: 27234ae38e6cdf94f82397c908c3d383, type: 2}
-  <_equippedItemsActive>k__BackingField:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  <_equippedItemsPassive>k__BackingField:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _equippedItemsActive: []
+  _equippedItemsPassive: []
+  _inventoryItemsID: []
+  _equippedItemsActiveID: []
+  _equippedItemsPassiveID: []
   <_checkpointInventoryMenu>k__BackingField: {fileID: 1819153702}
   <_equippedInventoryMenu>k__BackingField: {fileID: 224671485}
   <_maxEquippedActive>k__BackingField: 3
   <_maxEquippedPassive>k__BackingField: 3
+  <_allItems>k__BackingField:
+  - {fileID: 11400000, guid: 27234ae38e6cdf94f82397c908c3d383, type: 2}
+  - {fileID: 11400000, guid: 39e23497f9833254e852a752497f78d3, type: 2}
+  - {fileID: 11400000, guid: 7a33dd6326a75e547a2a71548f27fe6d, type: 2}
+  - {fileID: 11400000, guid: 514c977ed9638e34a88b9b2576bd2abb, type: 2}
+  - {fileID: 11400000, guid: f7b69862492424f35b737f6e699547ad, type: 2}
+  - {fileID: 11400000, guid: 2a78a5d9bd079594a9e63dc7876efc2c, type: 2}
 --- !u!1 &52256703
 GameObject:
   m_ObjectHideFlags: 0
@@ -19638,6 +19642,17 @@ MonoBehaviour:
     doorCondition:
       keys: []
       values: 
+    inventoryItemsID: []
+    equippedItemsActiveID:
+    - 
+    - 
+    - 
+    equippedItemsPassiveID:
+    - 
+    - 
+    - 
+    storeItems:
+      keys: []
   camMov: {fileID: 519420033}
   hasToRespawn: 0
 --- !u!4 &1209723844
@@ -26551,6 +26566,17 @@ MonoBehaviour:
     doorCondition:
       keys: []
       values: 
+    inventoryItemsID: []
+    equippedItemsActiveID:
+    - 
+    - 
+    - 
+    equippedItemsPassiveID:
+    - 
+    - 
+    - 
+    storeItems:
+      keys: []
   totalCurrency: 0
 --- !u!1 &1800752786
 GameObject:
@@ -32502,6 +32528,34 @@ PrefabInstance:
     - target: {fileID: 9097691864188614265, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasDash
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasBarrier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasHighJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasWallJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasDoubleJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasSpecialAttack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasDeflectProjectile
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}

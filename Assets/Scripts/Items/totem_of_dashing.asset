@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
   m_Name: totem_of_dashing
   m_EditorClassIdentifier: 
-  id: 4
+  id: f4340b71-6b68-41c7-92b4-7c123fed3768
   itemName: totem_of_dashing
   itemDisplayName: Totem of dashing
   description: 

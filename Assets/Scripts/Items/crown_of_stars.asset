@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
   m_Name: crown_of_stars
   m_EditorClassIdentifier: 
-  id: 5
+  id: bb6c4685-d0b3-4e28-b4bb-eff4c38b42f3
   itemName: crown_of_stars
   itemDisplayName: Crown of Stars
   description: Seven star-like motes of light appear and orbit your head until the
@@ -25,5 +25,5 @@ MonoBehaviour:
     remaining, they shed dim light in a 30-foot radius.
   value: 250
   icon: {fileID: 21300000, guid: 99dc578328fdc034e8e4fe6edd1361f3, type: 3}
-  isEquipped: 0
+  isEquipped: 1
   type: 1

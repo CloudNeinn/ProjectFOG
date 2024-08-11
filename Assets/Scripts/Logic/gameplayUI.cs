@@ -96,7 +96,8 @@ public class gameplayUI : MonoBehaviour
         DataManager.Instance.hasToRespawn = true;
         eneBehs = GameObject.FindObjectsOfType<enemyBehaviour>();
         camFade.doFade();
-        DataPersistanceManager.Instance.LoadGame();
+        //because scenes are reloaded game is loaded automatically since loading of the game is done at Start() of DataPersistanceManager
+        //DataPersistanceManager.Instance.LoadGame();
         playerHealthManager.Instance.playerDead = false;
         if(spawnMan != null) spawnMan.Spawn();
         if(eneBehs != null)

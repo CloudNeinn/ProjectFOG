@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
   m_Name: power_word_kill
   m_EditorClassIdentifier: 
-  id: 0
+  id: 28b7a68e-af16-45f4-af51-fc58de915088
   itemName: pw_kill
   itemDisplayName: 'PW: Kill'
   description: 

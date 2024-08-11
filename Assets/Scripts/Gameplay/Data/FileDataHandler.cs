@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json; // Import the Newtonsoft.Json namespace
 using System;
 using System.IO;
 
 public class FileDataHandler
 {
-    private string dataDirPath = "";
-
-    private string dataFileName = "";
+    private string dataDirPath;
+    private string dataFileName;
 
     public FileDataHandler(string dataDirPath, string dataFileName)
     {
@@ -20,17 +20,12 @@ public class FileDataHandler
     {
         string fullPath = Path.Combine(dataDirPath, dataFileName);
         GameData loadedData = null;
-        if(File.Exists(fullPath))
+        if (File.Exists(fullPath))
         {
             try
             {
-                // create directory where save file will be written
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-
-                // serialize game data object to json
-                string dataToLoad = "";
-
-                //write serialiezd data to the file 
+                // Read serialized data from the file
+                string dataToLoad;
                 using (FileStream stream = new FileStream(fullPath, FileMode.Open))
                 {
                     using (StreamReader reader = new StreamReader(stream))
@@ -38,13 +33,13 @@ public class FileDataHandler
                         dataToLoad = reader.ReadToEnd();
                     }
                 }
-                // deserialize data from json to game data
 
-                loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
+                // Deserialize data from JSON to GameData
+                loadedData = JsonConvert.DeserializeObject<GameData>(dataToLoad);
             }
             catch (Exception e)
             {
-                Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
+                Debug.LogError("Error occurred when trying to load data from file: " + fullPath + "\n" + e);
             }
         }
         return loadedData;
@@ -55,13 +50,20 @@ public class FileDataHandler
         string fullPath = Path.Combine(dataDirPath, dataFileName);
         try
         {
-            // create directory where save file will be written
+            // Create directory where save file will be written
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            // serialize game data object to json
-            string dataToStore = JsonUtility.ToJson(data, true);
+            // Configure JsonSerializerSettings to handle self-referencing loops
+            var settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
 
-            //write serialiezd data to the file 
+            // Serialize game data object to JSON using Newtonsoft.Json
+            string dataToStore = JsonConvert.SerializeObject(data, settings);
+
+            // Write serialized data to the file
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
                 using (StreamWriter writer = new StreamWriter(stream))
@@ -69,12 +71,12 @@ public class FileDataHandler
                     writer.Write(dataToStore);
                 }
             }
-            Debug.Log(fullPath);
+            Debug.Log("Saved data to " + fullPath);
         }
         catch (Exception e)
         {
-            Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
+            Debug.LogError("Error occurred when trying to save data to file: " + fullPath + "\n" + e);
         }
     }
-}
 
+}

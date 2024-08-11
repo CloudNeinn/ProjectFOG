@@ -18,6 +18,10 @@ public class GameData
     public int totalCurrency;
     public string currentCheckpointID;
     public SerializableDictionary<string, bool> doorCondition;
+    public List<string> inventoryItemsID;
+    public List<string> equippedItemsActiveID;
+    public List<string> equippedItemsPassiveID;
+    public SerializableDictionary<string, List<string>> storeItems;
 
     // values defined in the construcor will be the initial values for the game
     public GameData()
@@ -31,7 +35,12 @@ public class GameData
         hasBarrier = false;
         hasDeflectProjectile = false;
         constDJI = 0;
-        saveSceneIDs = new int[] { 2, 3};
+        saveSceneIDs = new int[] {2, 3};
         totalCurrency = 0;
+        //inventoryItemsID = new List<string>();
+        //equippedItemsActiveID = new List<string> {null, null, null};
+        //equippedItemsPassiveID = new List<string> {null, null, null};
+        storeItems = new SerializableDictionary<string, List<string>>();
+
     }
 }

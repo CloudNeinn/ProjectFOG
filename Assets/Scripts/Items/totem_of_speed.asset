@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
   m_Name: totem_of_speed
   m_EditorClassIdentifier: 
-  id: 3
+  id: ef8dfcdc-ba94-4d30-bdb8-438c872c9426
   itemName: totem_of_speed
   itemDisplayName: Totem of speed
   description: 
   value: 150
   icon: {fileID: 175669265, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isEquipped: 0
+  isEquipped: 1
   type: 0

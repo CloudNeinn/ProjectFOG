@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
   m_Name: totem_of_jumping
   m_EditorClassIdentifier: 
-  id: 1
+  id: 502abe89-472e-46ae-add4-ac95450d0218
   itemName: totem_of_jumping
   itemDisplayName: Totem of jumping
   description: 
   value: 250
   icon: {fileID: -1022240639, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isEquipped: 0
+  isEquipped: 1
   type: 0
