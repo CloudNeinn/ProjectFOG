@@ -90094,7 +90094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 93b04e2e-15ee-4f88-86f5-72de0bc12346
-  _storeRange: 2.5
+  _storeRange: 5
   _inRange: 0
   _playerLayer:
     serializedVersion: 2

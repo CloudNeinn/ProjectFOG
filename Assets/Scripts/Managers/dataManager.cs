@@ -63,6 +63,7 @@ public class DataManager : MonoBehaviour, IDataPersistance
             }
         }
         InventoryManager.Instance.SetInventoryByID();
+        InventoryManager.Instance.DisplayEquipped();
         //Debug.Log(camMov.transform.position.x);
         //Debug.Log(checkpManage.currentCheckpointPosition.x);
         Debug.Log("Data Loaded");
