@@ -31,8 +31,8 @@ public class projectileScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && canDamagePlayer) playerHealthManager.Instance.getDamage(damage, 0, 0);
-        else if(collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && !canDamagePlayer) playerHealthManager.Instance.getDamage(0, 0, 0);
+        if (collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && canDamagePlayer) playerHealthManager.Instance.getDamage(damage);
+        else if(collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && !canDamagePlayer) playerHealthManager.Instance.getDamage(0);
         if (collision.gameObject.tag == "enemy") collision.gameObject.GetComponent<enemyHealth>().Damage(20);
         Destroy(gameObject);
     }

@@ -108,7 +108,7 @@ public class gameplayUI : MonoBehaviour
                 eneBeh.transform.position = eneBeh.enemyStartingPosition;
             }
         }
-        //characterControl.Instance.transform.position = checkpManage.currentCheckpointPosition;
+        characterControl.Instance.transform.position = CheckpointManager.Instance.currentCheckpoint.transform.position + Vector3.up;
         playerHealthManager.Instance.healthAmount = playerHealthManager.Instance.maxHealth;
         charRigid.bodyType = RigidbodyType2D.Dynamic;
         deathScreen.SetActive(false);

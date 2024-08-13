@@ -44,12 +44,12 @@ public class spikeScript : MonoBehaviour
             if(isVertical)
             {
                 charRigid.velocity = new Vector2(knockbackX * knockbackDirectionX() * -1, charRigid.velocity.y);
-                playerHealthManager.Instance.getDamage(damage, 0, 0);
+                playerHealthManager.Instance.getDamage(damage);
             }
             else
             {
                 charRigid.velocity = new Vector2(charRigid.velocity.x, knockbackY * knockbackDirectionY() * -1);
-                playerHealthManager.Instance.getDamage(damage, 0, 0);                
+                playerHealthManager.Instance.getDamage(damage);                
             }
 
         }

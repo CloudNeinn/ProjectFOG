@@ -61,7 +61,32 @@ public class playerHealthManager : MonoBehaviour
             }*/
         //-------------------------------
     }
-    
+        
+    public void getDamage(float damage, bool stopTime = true)
+    {   
+        if(isDamageable && !barrierActive)
+        {
+            //canMove = false;
+            StartCoroutine(slowTimeInvincible(stopTime));
+            healthAmount -= damage;
+
+            healthBar.fillAmount = healthAmount / maxHealth;
+            if(healthAmount <= 0)
+            {
+                // you died scene
+                playerDead = true;
+                charRigid.bodyType = RigidbodyType2D.Static;
+            }
+            
+        }
+        else if(isDamageable && barrierActive)
+        {
+            barrierAmount -= damage;
+            //barrierBar.fillAmount = barrierAmount / maxBarrier;
+            if(barrierAmount <= 0) barrierActive = false;
+        }
+    }
+
     public void getDamage(float damage, float knockbackStrengthX, float knockbackStrengthY, bool stopTime = true)
     {   
         if(isDamageable && !barrierActive)

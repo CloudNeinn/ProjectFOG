@@ -30,7 +30,7 @@ public class SunBeam : EnemyFlyingBase
     {
         CheckIfHits();
         Rotate();
-        if(isHit) playerHealthManager.Instance.getDamage(5, 0, 0, false);
+        if(isHit) playerHealthManager.Instance.getDamage(5, false);
     }
 
     void CalculateRadians()
