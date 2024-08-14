@@ -20,7 +20,7 @@ public class projectileScript : MonoBehaviour
     private Vector3 enemyPosition;
     
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("enemy"), true);
         canDamagePlayer = true;
@@ -34,7 +34,7 @@ public class projectileScript : MonoBehaviour
         if (collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && canDamagePlayer) playerHealthManager.Instance.getDamage(damage);
         else if(collision.gameObject.tag == "Player" && playerHealthManager.Instance != null && !canDamagePlayer) playerHealthManager.Instance.getDamage(0);
         if (collision.gameObject.tag == "enemy") collision.gameObject.GetComponent<enemyHealth>().Damage(20);
-        Destroy(gameObject);
+        ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

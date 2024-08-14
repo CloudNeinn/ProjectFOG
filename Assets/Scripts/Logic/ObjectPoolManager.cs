@@ -9,11 +9,13 @@ public class ObjectPoolManager : MonoBehaviour
 
     private static GameObject _bloodCoinObjectEmpty;
     private static GameObject _trapProjectileObjectEmpty;
+    private static GameObject _enemyProjectileObjectEmpty;
 
     public enum PoolType
     {
         BloodCoinObjects,
         TrapProjectileObjects,
+        EnemyProjectileObjects,
         None
     }
 
@@ -31,6 +33,9 @@ public class ObjectPoolManager : MonoBehaviour
 
         _trapProjectileObjectEmpty = new GameObject("TrapProjectileObjects");
         _trapProjectileObjectEmpty.transform.SetParent(this.transform);
+
+        _enemyProjectileObjectEmpty = new GameObject("EnemyProjectileObjects");
+        _enemyProjectileObjectEmpty.transform.SetParent(this.transform);
     }
     
     public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPosition, Quaternion spawnRotation, PoolType poolType = PoolType.None)
@@ -117,6 +122,8 @@ public class ObjectPoolManager : MonoBehaviour
                 return _bloodCoinObjectEmpty;
             case PoolType.TrapProjectileObjects:
                 return _trapProjectileObjectEmpty;
+            case PoolType.EnemyProjectileObjects:
+                return _enemyProjectileObjectEmpty;
             case PoolType.None:
                 return null;
             default:

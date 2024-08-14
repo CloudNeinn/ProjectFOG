@@ -118,8 +118,8 @@ public class EnemyRanged : EnemyBase, IRadSeeable, IAttackable
 
     public void spawnProjectile()
     {
-        Instantiate(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
-         transform.position.y, transform.position.z), Quaternion.identity);
+        ObjectPoolManager.SpawnObject(projectile, new Vector3(transform.position.x + 0.9f * transform.localScale.x,
+            transform.position.y, transform.position.z), Quaternion.identity, ObjectPoolManager.PoolType.EnemyProjectileObjects);
     }
 
     public bool inRange()
