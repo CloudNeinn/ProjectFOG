@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Pathfinding;
 
 public class sceneLoader : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class sceneLoader : MonoBehaviour
                 SceneManager.LoadSceneAsync(_scenesToLoad[i], LoadSceneMode.Additive);
             }
         }
+        AstarPath.active.Scan();
     }
 
     void UnloadScenes()
