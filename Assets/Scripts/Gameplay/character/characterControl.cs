@@ -201,8 +201,8 @@ public class characterControl: MonoBehaviour
             camMov.virtualCamera.enabled = false;
             myrigidbody.bodyType = RigidbodyType2D.Static;
             camFade.doFade();
-            if(inOtherWorld) transform.position = new Vector2(transform.position.x, transform.position.y - 160);
-            else transform.position = new Vector2(transform.position.x, transform.position.y + 160);
+            if(inOtherWorld) transform.position = new Vector2(transform.position.x, transform.position.y - 510);
+            else transform.position = new Vector2(transform.position.x, transform.position.y + 510);
             camMov.virtualCamera.enabled = true;
             inOtherWorld = !inOtherWorld;
         }
