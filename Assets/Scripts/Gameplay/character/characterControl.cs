@@ -102,6 +102,9 @@ public class characterControl: MonoBehaviour
     public bool hasBarrier;
     public bool hasDeflectProjectile;
     public bool hasWallJump;
+    public bool hasGlider;
+    public bool hasTeleport;
+    public bool hasHook;
     #endregion
 
     [Header ("Fall Atack")]
@@ -114,7 +117,20 @@ public class characterControl: MonoBehaviour
 
     [Header ("Glider")]
     public bool isGliding;
-    
+    public bool flyUpwards;
+
+    [Header ("Teleport")]
+    [SerializeField] private float _checkCollisionRadius;
+    [SerializeField] private float _findFreeSpaceRadius;
+    private Vector2 _teleportPosition;
+    [SerializeField] private LayerMask _collisionLayer;
+    public Collider2D[] hitColliders;
+    private bool _inOtherWorld;
+    [SerializeField] private float _teleportTimer;
+    [SerializeField] private float _teleportTimerCooldown;
+    [SerializeField] private float _searchStep;
+    [SerializeField] private int _maxSearchAttempts;
+    private float _searchRadius;
     #region Grappling Hook Variables
     [Header ("Grappling hook")]
     public DistanceJoint2D distanceJoint;
@@ -140,9 +156,6 @@ public class characterControl: MonoBehaviour
     public float LastOnGroundTime;
     private float force;
 
-    private bool inOtherWorld;
-    public float teleportTimer;
-    public float teleportTimerCooldown;
     
     private float vertical;
     [SerializeField] private Vector2 speed;
@@ -195,34 +208,39 @@ public class characterControl: MonoBehaviour
         speed = myrigidbody.velocity;
         GetInput();
         //---Teleportation to other world
-        if(_switchRealmsInput)
+        if(hasTeleport)
         {
-            distanceJoint.enabled = false;
-            camMov.virtualCamera.enabled = false;
-            myrigidbody.bodyType = RigidbodyType2D.Static;
-            camFade.doFade();
-            if(inOtherWorld) transform.position = new Vector2(transform.position.x, transform.position.y - 510);
-            else transform.position = new Vector2(transform.position.x, transform.position.y + 510);
-            camMov.virtualCamera.enabled = true;
-            inOtherWorld = !inOtherWorld;
-        }
-        if(myrigidbody.bodyType == RigidbodyType2D.Static) teleportTimerCooldown -= Time.deltaTime;
-        if(teleportTimerCooldown <= 0)
-        {
-            myrigidbody.bodyType = RigidbodyType2D.Dynamic;
-            teleportTimerCooldown = teleportTimer;
+            if(_switchRealmsInput)
+            {
+                distanceJoint.enabled = false;
+                camMov.virtualCamera.enabled = false;
+                myrigidbody.bodyType = RigidbodyType2D.Static;
+                camFade.doFade();
+                if(_inOtherWorld) _teleportPosition = new Vector2(transform.position.x, transform.position.y - 510);
+                else _teleportPosition = new Vector2(transform.position.x, transform.position.y + 510);
+                transform.position = CheckCollisionOnTeleport(_teleportPosition);
+                camMov.virtualCamera.enabled = true;
+                _inOtherWorld = !_inOtherWorld;
+            }
+            if(myrigidbody.bodyType == RigidbodyType2D.Static) _teleportTimerCooldown -= Time.deltaTime;
+            if(_teleportTimerCooldown <= 0)
+            {
+                myrigidbody.bodyType = RigidbodyType2D.Dynamic;
+                _teleportTimerCooldown = _teleportTimer;
+            }
         }
         //-------------------------------
 
-        Hook();
-        Glide();
+        if(hasHook) Hook();
+        if(hasGlider) Glide();
         ToggleNoClip();
-        //---TODO: figure out if this works or not, if i even need this
-        if(myrigidbody.velocity.x > 60 || myrigidbody.velocity.x < -60) 
-        {
-            myrigidbody.velocity = new Vector2(40, myrigidbody.velocity.y);
-            Debug.Log("Player had large horizontal velocity spike-------------------------------------------------------------------------");
-        }
+        //---TODO: figure out if this works or not, if i even need this 
+        //---EDIT: YOLO
+        // if(myrigidbody.velocity.x > 60 || myrigidbody.velocity.x < -60) 
+        // {
+        //     myrigidbody.velocity = new Vector2(40, myrigidbody.velocity.y);
+        //     Debug.Log("Player had large horizontal velocity spike-------------------------------------------------------------------------");
+        // }
         //-------------------------------------------------------------
 
         if(Input.GetKey(KeyCode.P)) GiveAllSkills();
@@ -552,8 +570,41 @@ public class characterControl: MonoBehaviour
     }
     public void Glide()
     {
-        if(UserInput.Instance._glideAction.IsPressed() && !distanceJoint.enabled) myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -3.5f);
+        if(UserInput.Instance._glideAction.IsPressed() && !distanceJoint.enabled)
+        {
+            if(flyUpwards) myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, 5.5f);
+            else myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -3.5f);
+        }
     }
+    public Vector3 CheckCollisionOnTeleport(Vector3 TeleportPosition)
+    {
+        Debug.Log("Check collision on teleport");
+        FindFreeSpaceOnTeleport(TeleportPosition);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(TeleportPosition, _checkCollisionRadius, _collisionLayer);
+        hitColliders = colliders;
+        if(colliders.Length > 0) TeleportPosition = FindFreeSpaceOnTeleport(TeleportPosition);
+        return TeleportPosition;
+    }
+
+    public Vector3 FindFreeSpaceOnTeleport(Vector3 TeleportPosition)
+    {
+        Debug.Log("Finding free space for teleport");
+        _searchRadius = _findFreeSpaceRadius;
+
+        for (int i = 0; i < _maxSearchAttempts; i++)
+        {
+            _searchRadius += _searchStep;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(TeleportPosition, _searchRadius, _collisionLayer);
+            if (colliders.Length == 0)
+            {
+                return TeleportPosition;
+            }
+
+            TeleportPosition += Random.insideUnitSphere * _searchStep;
+        }
+        return TeleportPosition;
+    }
+    
     #endregion
     #region Conditions
     private bool isJumping()
@@ -645,13 +696,37 @@ public class characterControl: MonoBehaviour
         if(doubleJumpIndex != constDJI && !distanceJoint.enabled) doubleJumpIndex = constDJI + addConstDJI;
     }
     #endregion
+    
+    #region Triggers
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.tag == "UpwardsWind")
+        {
+            flyUpwards = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.tag == "UpwardsWind")
+        {
+            flyUpwards = false;
+        }
+    }
+    #endregion
+    
     #region Gizmos
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(coll.bounds.center - transform.up * maxDistance, boxSize + new Vector3(1f,0,0));
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(coll.bounds.center - transform.right * maxDistance * Mathf.Sign(transform.localScale.x) * -1, wallBoxSize);
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, _checkCollisionRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _findFreeSpaceRadius);
     }
     #endregion
     void GetInput()
@@ -669,6 +744,7 @@ public class characterControl: MonoBehaviour
         _use2Input = UserInput.Instance.Use2Input;
         _menuToggleInput = UserInput.Instance.MenuToggleInput; 
     }
+
     #region Testing Functionality
     private void GiveAllSkills()
     {
@@ -679,7 +755,10 @@ public class characterControl: MonoBehaviour
         hasBarrier = true;
         hasDeflectProjectile = true;
         hasWallJump = true;
+        hasGlider = true;
+        hasTeleport = true;
     }
+
     void ToggleNoClip()
     {   
         if(Input.GetKeyDown(KeyCode.BackQuote))
@@ -703,6 +782,7 @@ public class characterControl: MonoBehaviour
         myrigidbody.isKinematic = true;
         noClipOn = true;
     }
+
     void EnableCollision()
     {
         myrigidbody.isKinematic = false;

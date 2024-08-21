@@ -9180,7 +9180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -846.0802, y: 656.4889, z: -10}
+  m_LocalPosition: {x: -679.7802, y: -90.61111, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31761,7 +31761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116653090}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -846.0802, y: 656.4889, z: -10}
+  m_LocalPosition: {x: -679.7802, y: -90.61111, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32491,11 +32491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614265, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -846.1
+      value: -679.8
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614265, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 655
+      value: -92.1
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614265, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32534,11 +32534,27 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasHook
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasGlider
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: hasBarrier
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _searchStep
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: hasHighJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: hasTeleport
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
@@ -32554,8 +32570,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _maxSearchAttempts
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _findFreeSpaceRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
       propertyPath: hasDeflectProjectile
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _checkCollisionRadius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097691864188614267, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}
+      propertyPath: _collisionLayer.m_Bits
+      value: 1088
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0c42ccc09dbc434c8d889c3868d928f, type: 3}

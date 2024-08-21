@@ -12,7 +12,10 @@ public class abilityAltarScript : MonoBehaviour
         specialAttack,
         barrier,
         deflectProjectile,
-        wallJump
+        wallJump,
+        glider,
+        teleport,
+        hook
     }
 
     [SerializeField] private AbilityToGet abilityToChange;
@@ -38,6 +41,9 @@ public class abilityAltarScript : MonoBehaviour
         else if (abilityToChange == AbilityToGet.barrier && characterControl.Instance.hasBarrier == true) abilityObtained = true;
         else if (abilityToChange == AbilityToGet.deflectProjectile && characterControl.Instance.hasDeflectProjectile == true) abilityObtained = true;
         else if (abilityToChange == AbilityToGet.wallJump && characterControl.Instance.hasWallJump == true) abilityObtained = true;
+        else if (abilityToChange == AbilityToGet.glider && characterControl.Instance.hasGlider == true) abilityObtained = true;
+        else if (abilityToChange == AbilityToGet.teleport && characterControl.Instance.hasTeleport == true) abilityObtained = true;
+        else if (abilityToChange == AbilityToGet.hook && characterControl.Instance.hasHook == true) abilityObtained = true;
         /*
         const abilityMap = {
             AbilityToGet.doubleJump: 'hasDoubleJump',
@@ -79,6 +85,15 @@ public class abilityAltarScript : MonoBehaviour
                     break;
                 case AbilityToGet.wallJump:
                     characterControl.Instance.hasWallJump = true;
+                    break;
+                case AbilityToGet.glider:
+                    characterControl.Instance.hasGlider = true;
+                    break;
+                case AbilityToGet.teleport:
+                    characterControl.Instance.hasTeleport = true;
+                    break;
+                case AbilityToGet.hook:
+                    characterControl.Instance.hasHook = true;
                     break;
             }
         }

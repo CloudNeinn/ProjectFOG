@@ -13,6 +13,7 @@ TagManager:
   - ladder
   - attackTrigger
   - storeMenu
+  - UpwardsWind
   layers:
   - Default
   - TransparentFX
