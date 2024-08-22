@@ -48,7 +48,7 @@ public class playerHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Barrier();
+        //Barrier();
         //for testing purposes-----------
             /*if(Input.GetKeyUp(KeyCode.L))
             {
@@ -82,7 +82,7 @@ public class playerHealthManager : MonoBehaviour
         else if(isDamageable && barrierActive)
         {
             barrierAmount -= damage;
-            //barrierBar.fillAmount = barrierAmount / maxBarrier;
+            barrierBar.fillAmount = barrierAmount / maxBarrier;
             if(barrierAmount <= 0) barrierActive = false;
         }
     }
@@ -131,23 +131,23 @@ public class playerHealthManager : MonoBehaviour
 
     public void Barrier()
     {
-        if(!barrierActive && barrierCooldownCounter > 0) barrierCooldownCounter -= Time.deltaTime;
-        if(barrierActive)
-        {
-            barrierTimeCounter -= Time.deltaTime;
-            if(barrierTimeCounter <= 0) 
-            {
-                barrierAmount = 0;
-                barrierActive = false;
-            }
-        }
-        if(characterControl.Instance.hasBarrier && Input.GetKeyDown(KeyCode.B) && !barrierActive && barrierCooldownCounter <= 0)
-        {
-            barrierActive = true;
-            barrierCooldownCounter = barrierCooldownTimer;
-            barrierAmount = maxBarrier;
-            barrierTimeCounter = barrierTimer;
-        }
+        //if(!barrierActive && barrierCooldownCounter > 0) barrierCooldownCounter -= Time.deltaTime;
+        //if(barrierActive)
+        //{
+        //    barrierTimeCounter -= Time.deltaTime;
+        //    if(barrierTimeCounter <= 0) 
+        //    {
+        //        barrierAmount = 0;
+        //        barrierActive = false;
+        //    }
+        //}
+        //if(characterControl.Instance.hasBarrier && Input.GetKeyDown(KeyCode.B) && !barrierActive && barrierCooldownCounter <= 0)
+        //{
+        //    barrierActive = true;
+        //    barrierCooldownCounter = barrierCooldownTimer;
+        //    barrierAmount = maxBarrier;
+        //    barrierTimeCounter = barrierTimer;
+        //}
     }
     IEnumerator slowTimeInvincible(bool stopTime)
     {

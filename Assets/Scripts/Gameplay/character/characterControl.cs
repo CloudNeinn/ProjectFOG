@@ -175,6 +175,7 @@ public class characterControl: MonoBehaviour
     public bool _use1Input {get; private set;}
     public bool _use2Input {get; private set;}
     public bool _menuToggleInput {get; private set;}
+    public bool _activeItem1Input {get; private set;}
     #endregion
     
     //--------------------------------------------------------------------------------------//
@@ -743,6 +744,7 @@ public class characterControl: MonoBehaviour
         _use1Input = UserInput.Instance.Use1Input;
         _use2Input = UserInput.Instance.Use2Input;
         _menuToggleInput = UserInput.Instance.MenuToggleInput; 
+        _activeItem1Input = UserInput.Instance.ActiveItem1Input;
     }
 
     #region Testing Functionality

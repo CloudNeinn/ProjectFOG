@@ -19,6 +19,7 @@ public class UserInput : MonoBehaviour
     [field: SerializeField] public bool Use1Input { get; private set; }
     [field: SerializeField] public bool Use2Input { get; private set; }
     [field: SerializeField] public bool MenuToggleInput { get; private set; }
+    [field: SerializeField] public bool ActiveItem1Input { get; private set; }
 
 
     public PlayerInput _playerInput { get; private set; }
@@ -34,6 +35,7 @@ public class UserInput : MonoBehaviour
     public InputAction _use1Action { get; private set; }
     public InputAction _use2Action { get; private set; }
     public InputAction _menuToggleAction { get; private set; }
+    public InputAction _activeItem1Action { get; private set; }
 
     private void Awake()
     {
@@ -57,6 +59,7 @@ public class UserInput : MonoBehaviour
         _use1Action = _playerInput.actions["Use1"];
         _use2Action = _playerInput.actions["Use2"];
         _menuToggleAction = _playerInput.actions["MenuToggle"];
+        _activeItem1Action = _playerInput.actions["ActiveItem1"];
     
     }
 
@@ -81,5 +84,6 @@ public class UserInput : MonoBehaviour
         Use1Input = _use1Action.WasPressedThisFrame();
         Use2Input = _use2Action.WasPressedThisFrame();
         MenuToggleInput = _menuToggleAction.WasPressedThisFrame();
+        ActiveItem1Input = _activeItem1Action.WasPressedThisFrame();
     }
 }

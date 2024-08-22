@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Create new item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "Item/Create default item")]
 public class Item : ScriptableObject
 {
     public string id;
@@ -17,4 +17,5 @@ public class Item : ScriptableObject
     public Sprite icon;
     public bool isEquipped;
     public InventoryManager.Type type;
+    public virtual void Execute() {}
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9097691864188614271}
   - component: {fileID: 9097691864188614266}
   - component: {fileID: 9097691864188614267}
+  - component: {fileID: 7413328414418047518}
   - component: {fileID: 9097691864188614256}
   - component: {fileID: 9097691864188614269}
   - component: {fileID: 9097691864188614257}
@@ -211,6 +212,7 @@ MonoBehaviour:
   jumpForce: 25
   jumpIndex: 0
   constDJI: 1
+  addConstDJI: 0
   doubleJumpIndex: 0
   coyoteTime: 0.2
   coyoteTimeCounter: 0.3
@@ -276,6 +278,9 @@ MonoBehaviour:
   hasBarrier: 0
   hasDeflectProjectile: 0
   hasWallJump: 0
+  hasGlider: 0
+  hasTeleport: 0
+  hasHook: 0
   fallAttackActive: 0
   fallStartingHeight: 0
   fallEndingHeight: 0
@@ -283,6 +288,17 @@ MonoBehaviour:
   gonnaAttack: 0
   heightToDealDamage: 3
   isGliding: 0
+  flyUpwards: 0
+  _checkCollisionRadius: 0
+  _findFreeSpaceRadius: 0
+  _collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  hitColliders: []
+  _teleportTimer: 0
+  _teleportTimerCooldown: 0
+  _searchStep: 0
+  _maxSearchAttempts: 0
   distanceJoint: {fileID: 9097691864188614257}
   mousePos: {x: 0, y: 0, z: 0}
   hookHitStatic: 0
@@ -303,10 +319,20 @@ MonoBehaviour:
   actualHookDistance: 0
   LastOnWallTime: 0
   LastOnGroundTime: 0
-  teleportTimer: 0.5
-  teleportTimerCooldown: 0
   speed: {x: 0, y: 0}
   <_moveInput>k__BackingField: {x: 0, y: 0}
+--- !u!114 &7413328414418047518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097691864188614245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d11979cb35a4c047a44973acb1c2000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9097691864188614256
 MonoBehaviour:
   m_ObjectHideFlags: 0
