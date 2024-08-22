@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc02641135f6f9469c8f041832f2806, type: 3}
   m_Name: barrier
   m_EditorClassIdentifier: 
-  id: 
-  itemName: 
-  itemDisplayName: 
+  id: a4ce64bd-4d44-4abf-8a0a-6966100edb2d
+  itemName: barrier
+  itemDisplayName: Barrier
   description: 
-  value: 0
-  icon: {fileID: 0}
-  isEquipped: 0
-  type: 0
-  activeAbility: {fileID: 0}
+  value: 120
+  icon: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
+  isEquipped: 1
+  type: 1
