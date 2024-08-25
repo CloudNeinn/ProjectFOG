@@ -19,7 +19,7 @@ public class BarrierItem : Item
             }
             //playerHealthManager.Instance.barrierBar.fillAmount = playerHealthManager.Instance.barrierAmount / playerHealthManager.Instance.maxBarrier;
         }
-        if(characterControl.Instance.hasBarrier && characterControl.Instance._activeItem1Input/*Input.GetKeyDown(KeyCode.B)*/ && !playerHealthManager.Instance.barrierActive && playerHealthManager.Instance.barrierCooldownCounter <= 0)
+        if(characterControl.Instance.hasBarrier && /*characterControl.Instance._activeItem1Input*/Input.GetKeyDown(KeyCode.B) && !playerHealthManager.Instance.barrierActive && playerHealthManager.Instance.barrierCooldownCounter <= 0)
         {
             playerHealthManager.Instance.barrierActive = true;
             playerHealthManager.Instance.barrierCooldownCounter = playerHealthManager.Instance.barrierCooldownTimer;

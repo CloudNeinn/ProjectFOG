@@ -15,6 +15,7 @@ public class spikeScript : MonoBehaviour
     void Start()
     {
         //pHM = GameObject.FindObjectOfType<playerHealthManager>();
+        charRigid = characterControl.Instance.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -37,20 +38,22 @@ public class spikeScript : MonoBehaviour
         if(characterControl.Instance.transform.position.y < transform.position.y) return 1;
         else return -1;
     }
-    void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            if(isVertical)
-            {
-                charRigid.velocity = new Vector2(knockbackX * knockbackDirectionX() * -1, charRigid.velocity.y);
-                playerHealthManager.Instance.getDamage(damage);
-            }
-            else
-            {
-                charRigid.velocity = new Vector2(charRigid.velocity.x, knockbackY * knockbackDirectionY() * -1);
-                playerHealthManager.Instance.getDamage(damage);                
-            }
+            charRigid.velocity = new Vector2(knockbackX * characterCollisionDirection.Instance.GetKnockbackVector().x, knockbackY * characterCollisionDirection.Instance.GetKnockbackVector().y);
+            playerHealthManager.Instance.getDamage(damage);
+            //if(isVertical)
+            //{
+            //    charRigid.velocity = new Vector2(knockbackX * knockbackDirectionX() * -1, charRigid.velocity.y);
+            //    playerHealthManager.Instance.getDamage(damage);
+            //}
+            //else
+            //{
+            //    charRigid.velocity = new Vector2(charRigid.velocity.x, knockbackY * knockbackDirectionY() * -1);
+            //    playerHealthManager.Instance.getDamage(damage);                
+            //}
 
         }
     }

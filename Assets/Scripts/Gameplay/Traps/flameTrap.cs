@@ -13,7 +13,7 @@ public class flameTrap : MonoBehaviour
 
     void Start()
     {
-        _cooldown = _timer;
+        //_cooldown = _timer;
     }
 
     void Update()
