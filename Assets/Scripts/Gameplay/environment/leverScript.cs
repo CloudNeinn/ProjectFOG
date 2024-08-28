@@ -69,11 +69,8 @@ public class leverScript : MonoBehaviour, IDataPersistance
         doorIsOpen = isOpen;
         if(isOpen)
         {
-            if(direction > 0) Door.transform.position = 
-            new Vector3(Door.transform.position.x, 
-            startingPosition.y + howHighToOpen, Door.transform.position.z);            else if(direction < 0) Door.transform.position = 
-            new Vector3(Door.transform.position.x, 
-            startingPosition.y - howHighToOpen, Door.transform.position.z);
+            if(direction > 0) Door.transform.position = new Vector3(Door.transform.position.x, startingPosition.y + howHighToOpen, Door.transform.position.z);            
+            else if(direction < 0) Door.transform.position = new Vector3(Door.transform.position.x, startingPosition.y - howHighToOpen, Door.transform.position.z);
             isOpen = false;
         }
     }

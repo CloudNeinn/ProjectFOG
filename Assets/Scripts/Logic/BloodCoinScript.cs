@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BloodCoinScript : MonoBehaviour
 {
-    [SerializeField] private int _coinValue;
+    [SerializeField] public int _coinValue { get; private set; }
     [SerializeField] private float _flySpeed;
     [SerializeField] private float _flyRadius;
     [SerializeField] private LayerMask _playerLayer;
