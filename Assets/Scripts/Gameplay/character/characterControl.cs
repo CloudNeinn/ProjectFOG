@@ -107,7 +107,7 @@ public class characterControl: MonoBehaviour
     public bool hasHook;
     #endregion
 
-    [Header ("Fall Atack")]
+    [Header ("Fall Attack")]
     public bool fallAttackActive;
     public double fallStartingHeight;
     public double fallEndingHeight;
@@ -447,16 +447,21 @@ public class characterControl: MonoBehaviour
         }
         else if(UserInput.Instance._crouchAction.IsPressed())
         {
-            fallAttackActive = true;
-            fallStartingHeight = transform.position.y;
-            if(fallSpeedBeforeCTRL == 0) fallSpeedBeforeCTRL = myrigidbody.velocity.y;
+            // ------- fall attack item
+            //
+            //  fallAttackActive = true;
+            //  fallStartingHeight = transform.position.y;
+            //  if(fallSpeedBeforeCTRL == 0) fallSpeedBeforeCTRL = myrigidbody.velocity.y;
+            //
+            // -------
+            //
             //myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, -15);
             myrigidbody.AddForce(new Vector2(0, -15));
         }
         // if(UserInput.Instance._crouchAction.WasReleasedThisFrame() && !isGrounded())
         // {
         //     fallAttackActive = false;
-        //     myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, fallSpeedBeforeCTRL);
+        //     myrigidbody.velocity = new Vector2(myrigidbody.velocity.x, fall SpeedBeforeCTRL);
         // }
         if(!UserInput.Instance._crouchAction.IsPressed() && !isUnderTerrain() || isJumping())
         {
@@ -464,19 +469,25 @@ public class characterControl: MonoBehaviour
             collCrouch.enabled = false;
             coll.enabled = true;
         }
-        if(isGrounded() && fallAttackActive)
-        {
-            fallSpeedBeforeCTRL = 0;
-            fallEndingHeight = transform.position.y;
-            fallHeight = fallStartingHeight - fallEndingHeight;
-        }
-        else fallHeight = 0;
-        if(fallHeight >= heightToDealDamage && isGrounded() && isCrouching())
-        {
-            fastFallAttack();
-            gonnaAttack = true;
-        }
-        else gonnaAttack = false;
+        //
+        // ------- fall attack item
+        //
+        // if(isGrounded() && fallAttackActive)
+        // {
+        //     fallSpeedBeforeCTRL = 0;
+        //     fallEndingHeight = transform.position.y;
+        //     fallHeight = fallStartingHeight - fallEndingHeight;
+        // }
+        // else fallHeight = 0;
+        // if(fallHeight >= heightToDealDamage && isGrounded() && isCrouching())
+        // {
+        //     fastFallAttack();
+        //     gonnaAttack = true;
+        // }
+        // else gonnaAttack = false;
+        //
+        // -------
+        //
     }
     private bool movingWithoutInput()
     {

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: totem_of_dashing
   itemDisplayName: Totem of dashing
   description: 
-  value: 10
+  value: 150
   icon: {fileID: -749569060, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
   isEquipped: 0
   type: 0

@@ -15,6 +15,7 @@ public class doorScript : MonoBehaviour, IDataPersistance
     [SerializeField] private int _openDir;
     void Start()
     {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("door"), LayerMask.NameToLayer("ground"), true);
         EventManager.openDoorEvent += Open;
     }
 
@@ -41,6 +42,10 @@ public class doorScript : MonoBehaviour, IDataPersistance
 
     public void SaveData(ref GameData data)
     {
-        data.doorCondition.Add(_doorID, activate);
+        if(data.doorCondition.ContainsKey(_doorID))
+        {
+            data.doorCondition.Remove(_doorID);
+        }
+        data.doorCondition.Add(_doorID, isOpen);
     }
 }

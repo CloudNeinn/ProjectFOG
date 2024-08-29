@@ -41,6 +41,9 @@ public class GameData
         //equippedItemsActiveID = new List<string> {null, null, null};
         //equippedItemsPassiveID = new List<string> {null, null, null};
         storeItems = new SerializableDictionary<string, List<string>>();
+        storeItems.Add("93b04e2e-15ee-4f88-86f5-72de0bc12346", new List<string> { "ef8dfcdc-ba94-4d30-bdb8-438c872c9426", "a4ce64bd-4d44-4abf-8a0a-6966100edb2d", "0edde7ac-b749-4c95-8fbc-4f4fc1cccde0"}); // flying island --- tote of speed --- barrier --- fall attack
+        storeItems.Add("12a30e5c-e41f-4815-a0d0-928cf4720192", new List<string> { "28b7a68e-af16-45f4-af51-fc58de915088", "f4340b71-6b68-41c7-92b4-7c123fed3768"}); // main world third scene --- magic missle --- totem of dashing
+        storeItems.Add("3798d47a-3478-4061-b908-7f8fe656aa72", new List<string> { "502abe89-472e-46ae-add4-ac95450d0218", "bb6c4685-d0b3-4e28-b4bb-eff4c38b42f3"}); // other world spawn scene --- totem of jumping -- crown of stars
 
     }
 }

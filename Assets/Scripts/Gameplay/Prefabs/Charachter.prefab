@@ -331,7 +331,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9097691864188614245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d11979cb35a4c047a44973acb1c2000, type: 3}
+  m_Script: {fileID: 11500000, guid: 2560ae1968610b046bb738acb08c30b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1249560527951738735
@@ -353,10 +353,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 1088
-  _hitTop: {fileID: 0}
-  _hitRight: {fileID: 0}
-  _hitLeft: {fileID: 0}
-  _hitBottom: {fileID: 0}
+  _knockbackVector: {x: 0, y: 0}
 --- !u!114 &9097691864188614256
 MonoBehaviour:
   m_ObjectHideFlags: 0

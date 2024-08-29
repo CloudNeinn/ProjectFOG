@@ -79,9 +79,11 @@ public class characterAttack : MonoBehaviour
         // }
     }
 
-    public void specialAttack()
+    public void fallAttackHitEnemies()
     {
-        
+        StartCoroutine(hitEnemies());
+        fastFallAttack = true;
+        Debug.Log("fall attack activated");
     }
 
     public IEnumerator hitEnemies()

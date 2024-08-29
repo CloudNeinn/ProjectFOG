@@ -20,7 +20,7 @@ public class buttonOpenDoor : MonoBehaviour
     }
     
     void OpenDoor()
-    {
+    { 
         EventManager.OpenDoor(_doorID);
     }
 }

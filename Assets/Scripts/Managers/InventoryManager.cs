@@ -95,6 +95,17 @@ public class InventoryManager : MonoBehaviour
             characterControl.Instance.runSpeed = 10;
             characterControl.Instance.maxRunSpeed = 13;
         }
+
+        if (_inventoryItems.FirstOrDefault(item => item.itemName == "totem_of_dashing" && item.isEquipped) != null)
+        {
+            characterControl.Instance.dashSpeed = 50;
+            characterControl.Instance.dashCooldownTime = 0;
+        }
+        else 
+        {
+            characterControl.Instance.dashSpeed = 42;
+            characterControl.Instance.dashCooldownTime = 3;
+        }
     }
 
     public void SetEquipped(Item item)

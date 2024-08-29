@@ -12,6 +12,12 @@ public class enemyOpenDoor : MonoBehaviour
     }
     void Update()
     {
-        if(!_enemyHealth.isAlive) EventManager.OpenDoor(_doorID);
+        if(!_enemyHealth.isAlive) 
+        {
+            //foreach(string doorID in _doorID)
+            //{
+                EventManager.OpenDoor(_doorID);
+            //}
+        }
     }
 }
