@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 6256272161264021519}
   - component: {fileID: 6256272161264021518}
   - component: {fileID: 6256272161264021505}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: largeGuardBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

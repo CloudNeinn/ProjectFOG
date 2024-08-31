@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 7896753455455580177}
   - component: {fileID: 7896753455455580178}
   - component: {fileID: 7896753455455580179}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: rangeEnemyBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2818253338779022133}
   - component: {fileID: 2818253338779022132}
   - component: {fileID: 2818253338779022134}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: stupidEnemyBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

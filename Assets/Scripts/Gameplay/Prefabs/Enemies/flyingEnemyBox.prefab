@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4496059892268723236}
   - component: {fileID: 4496059892268723235}
   - component: {fileID: 4496059892268723237}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: flyingEnemyBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

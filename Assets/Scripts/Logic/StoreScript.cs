@@ -30,14 +30,15 @@ public class StoreScript : MonoBehaviour, IDataPersistance
 
     public void LoadData(GameData data)
     {
-        if (data.storeItems.TryGetValue(id, out _shopItemsID))
-        {
-            Debug.Log($"Loaded {_shopItemsID.Count} items for store {id}");
-        }
-        else
-        {
-            Debug.LogWarning($"No items found for store {id}");
-        }
+        data.storeItems.TryGetValue(id, out _shopItemsID);
+        // if (data.storeItems.TryGetValue(id, out _shopItemsID))
+        // {
+        //     Debug.Log($"Loaded {_shopItemsID.Count} items for store {id}");
+        // }
+        // else
+        // {
+        //     Debug.LogWarning($"No items found for store {id}");
+        // }
     }
 
     public void SaveData(ref GameData data)

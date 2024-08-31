@@ -568,7 +568,7 @@ GameObject:
   - component: {fileID: 8100410156018436639}
   - component: {fileID: 8100410156018436704}
   - component: {fileID: 8100410156018436705}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: crowBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

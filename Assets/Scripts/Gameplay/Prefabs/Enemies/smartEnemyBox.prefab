@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 5272846619340716782}
   - component: {fileID: 5272846619340716785}
   - component: {fileID: 5272846619340716784}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: smartEnemyBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

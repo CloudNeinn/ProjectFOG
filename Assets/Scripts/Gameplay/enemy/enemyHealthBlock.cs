@@ -12,7 +12,7 @@ public class enemyHealthBlock : enemyHealth
         //if(isBlocked && !attacked) isBlocked = false;
     }
 
-    public override void Damage(int amount)
+    public override void Damage(int amount, bool knockback = true)
     {
         if(currentHealth > 0 && vulnerable)
         {
@@ -27,7 +27,7 @@ public class enemyHealthBlock : enemyHealth
                 currentHealth -= amount;
                 knockbackForce.Set(knockbackStrengthX * attackDirection(), knockbackStrengthY); // used to be new Vector2
             }
-            enemyRigidBody.AddForce(knockbackForce);
+            if(knockback) enemyRigidBody.AddForce(knockbackForce);
             //enemyRigidBody.velocity = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
             //enemyRigidBody.AddForce(new Vector2(200 * attackDirection(), 150), ForceMode2D.Impulse);    
             if (currentHealth <= 0)

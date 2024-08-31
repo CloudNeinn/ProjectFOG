@@ -56,7 +56,7 @@ public class enemyHealth : MonoBehaviour
         //else knockbackStrength = 3;
     }
    
-    public virtual void Damage(int amount)
+    public virtual void Damage(int amount, bool knockback = true)
     {
         if(currentHealth > 0 && vulnerable)
         {   
@@ -65,7 +65,7 @@ public class enemyHealth : MonoBehaviour
             currentHealth -= amount;
             attacked = true;
             knockbackForce.Set(knockbackStrengthX * attackDirection(), knockbackStrengthY); // used to be new Vector2
-            enemyRigidBody.AddForce(knockbackForce);
+            if(knockback) enemyRigidBody.AddForce(knockbackForce);
             //enemyRigidBody.velocity = new Vector2(knockbackStrengthX * attackDirection(), knockbackStrengthY);
             //enemyRigidBody.AddForce(new Vector2(200 * attackDirection(), 150), ForceMode2D.Impulse);    
             if (currentHealth <= 0)

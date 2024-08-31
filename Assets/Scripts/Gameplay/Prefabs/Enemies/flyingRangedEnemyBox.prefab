@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5994040132521533061}
   - component: {fileID: 5994040132521533060}
   - component: {fileID: 5994040132521533063}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: flyingRangedEnemyBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

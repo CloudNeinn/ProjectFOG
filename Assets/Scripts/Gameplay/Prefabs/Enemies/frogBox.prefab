@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4874191303734626249}
   - component: {fileID: 4874191303734626248}
   - component: {fileID: 4874191303734626251}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: frogBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

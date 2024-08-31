@@ -9,14 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 241ec196062ee445baa542eefd82cd85, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c1dc72a318dc849b978e6f9ed4e02c, type: 3}
   m_Name: magic_missiles
   m_EditorClassIdentifier: 
   id: 28b7a68e-af16-45f4-af51-fc58de915088
   itemName: magic_missiles
   itemDisplayName: Magic Missiles
   description: 
-  value: 280
-  icon: {fileID: -237687488, guid: e311b0cb258707e43b436878c0c4ace1, type: 3}
-  isEquipped: 0
+  value: 0
+  icon: {fileID: 21300000, guid: 79a8d3b6b1600ad4ea230a5f4a423027, type: 3}
+  isEquipped: 1
   type: 1
+  magicMissilesPrefab: {fileID: 6970031838854230147, guid: 3ce6524ca18bf5246a4216e68e3a3b92, type: 3}
+  _shoot: 0
+  _numberOfProjectiles: 5
+  _timerBetweenProjectiles: 0.1
+  _cooldownBetweenProjectiles: 0.1
+  _timerAbilityUsage: 5
+  _cooldownAbilityUsage: -0.011188227

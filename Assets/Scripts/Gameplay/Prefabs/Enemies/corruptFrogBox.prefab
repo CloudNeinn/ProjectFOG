@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 582616336703731446}
   - component: {fileID: 582616336703731447}
   - component: {fileID: 582616336703731444}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: corruptFrogBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}

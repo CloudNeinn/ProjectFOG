@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class SerializableDictionary<TKey, Tvalue> : Dictionary<TKey, Tvalue>, ISerializationCallbackReceiver
 {
-    [SerializeField] public List<TKey> keys = new List<TKey>();
+    public List<TKey> keys = new List<TKey>();
 
-    [SerializeField] public List<Tvalue> values = new List<Tvalue>();
+    public List<Tvalue> values = new List<Tvalue>();
 
     public void OnBeforeSerialize()
     {
@@ -27,6 +26,11 @@ public class SerializableDictionary<TKey, Tvalue> : Dictionary<TKey, Tvalue>, IS
         if(keys.Count != values.Count)
         {
             Debug.LogError("Amount of keys: " + keys.Count + " not equal to amout of values:" + values.Count);
+            Debug.LogError("Key: " + keys[0]);
+            Debug.LogError("Key: " + keys[1]);
+            Debug.LogError("Key: " + keys[2]);
+            Debug.LogError("Key: " + keys[3]);
+            Debug.LogError("Key: " + keys[4]);
         }
 
         for(int i = 0; i < keys.Count; i++)

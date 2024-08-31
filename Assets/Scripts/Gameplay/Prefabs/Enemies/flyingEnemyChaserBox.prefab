@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 4878804896454353817}
   - component: {fileID: 4878804896454353816}
   - component: {fileID: 4878804896454353815}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: flyingEnemyChaserBox
   m_TagString: Respawn
   m_Icon: {fileID: 0}
