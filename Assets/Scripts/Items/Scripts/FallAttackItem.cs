@@ -11,7 +11,7 @@ public class FallAttackItem : Item
     private double fallStartingHeight;
     private double fallEndingHeight;
     private double fallHeight;
-    private bool gonnaAttack;
+    //private bool gonnaAttack;
     public double heightToDealDamage;
     public override void Execute()
     {
@@ -31,9 +31,9 @@ public class FallAttackItem : Item
         if(fallHeight >= heightToDealDamage && characterControl.Instance.isGrounded() && characterControl.Instance.isCrouching())
         {
             fastFallAttack();
-            gonnaAttack = true;
+            //gonnaAttack = true;
         }
-        else gonnaAttack = false;
+        //else gonnaAttack = false;
     }
 
     public void fastFallAttack()

@@ -16,7 +16,6 @@ public class gameplayUI : MonoBehaviour
     public enemyBehaviour[] eneBehs;
     public cameraFade camFade;
     private spawnManager spawnMan;
-    private GameObject map;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +33,6 @@ public class gameplayUI : MonoBehaviour
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
         deathScreen.SetActive(false);
-        map = GameObject.Find("Map");
-        map.SetActive(false);
         checkpointMenu.SetActive(false);
     }
 
@@ -51,7 +48,7 @@ public class gameplayUI : MonoBehaviour
             turnOffPause();
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && !(playerHealthManager.Instance.playerDead) 
-        && !(map.activeSelf) && !(checkpointMenu.activeSelf))
+        && !(MapManager.Instance.mapIsActive) && !(checkpointMenu.activeSelf))
         {
             Pause();
         }
@@ -132,20 +129,20 @@ public class gameplayUI : MonoBehaviour
 
     public void triggerMap()
     {
-        if(Input.GetKeyDown(KeyCode.M) && !(map.activeSelf))
+        if(characterControl.Instance._mapInput && !(MapManager.Instance.mapIsActive))
         {
             CHB.SetActive(false);
             pauseButton.SetActive(false);
             Time.timeScale = 0f;
-            map.SetActive(true);
+            MapManager.Instance.OpenMap();
         }
-        else if(Input.GetKeyDown(KeyCode.M) && map.activeSelf || 
-        Input.GetKeyDown(KeyCode.Escape) && map.activeSelf)
+        else if(characterControl.Instance._mapInput && MapManager.Instance.mapIsActive || 
+        Input.GetKeyDown(KeyCode.Escape) && MapManager.Instance.mapIsActive)
         {
             CHB.SetActive(true);
             pauseButton.SetActive(true);
             Time.timeScale = 1f;
-            map.SetActive(false);
+            MapManager.Instance.CloseMap();
         }
     }
 }

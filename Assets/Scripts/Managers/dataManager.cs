@@ -46,6 +46,9 @@ public class DataManager : MonoBehaviour, IDataPersistance
         characterControl.Instance.hasBarrier = data.hasBarrier;
         characterControl.Instance.hasDash = data.hasDash;
         characterControl.Instance.hasWallJump = data.hasWallJump;
+        characterControl.Instance.hasGlider = data.hasGlider;
+        characterControl.Instance.hasTeleport = data.hasTeleport;
+        characterControl.Instance.hasHook = data.hasHook;
         characterControl.Instance.constDJI = data.constDJI;
         CurrencyManager.Instance.totalCurrency = data.totalCurrency;
         Debug.Log(data.playerPosition);
@@ -64,6 +67,9 @@ public class DataManager : MonoBehaviour, IDataPersistance
         }
         InventoryManager.Instance.SetInventoryByID();
         InventoryManager.Instance.DisplayEquipped();
+        MapManager.Instance.mainWorldVisitedScenes = data.mainWorldVisitedScenes;
+        MapManager.Instance.otherWorldVisitedScenes = data.otherWorldVisitedScenes;
+        //MapManager.Instance.DrawMap();
         //Debug.Log(camMov.transform.position.x);
         //Debug.Log(checkpManage.currentCheckpointPosition.x);
         Debug.Log("Data Loaded");
@@ -79,6 +85,9 @@ public class DataManager : MonoBehaviour, IDataPersistance
         data.hasBarrier = characterControl.Instance.hasBarrier;
         data.hasDash = characterControl.Instance.hasDash;
         data.hasWallJump = characterControl.Instance.hasWallJump;
+        data.hasGlider = characterControl.Instance.hasGlider;
+        data.hasTeleport = characterControl.Instance.hasTeleport;
+        data.hasHook = characterControl.Instance.hasHook;
         data.constDJI = characterControl.Instance.constDJI;
         data.currentCheckpointID = CheckpointManager.Instance.currentCheckpoint.id;
         data.saveSceneIDs = GetLoadedSceneIDs();
@@ -86,6 +95,8 @@ public class DataManager : MonoBehaviour, IDataPersistance
         data.inventoryItemsID = InventoryManager.Instance._inventoryItemsID;
         data.equippedItemsActiveID = InventoryManager.Instance._equippedItemsActiveID;
         data.equippedItemsPassiveID = InventoryManager.Instance._equippedItemsPassiveID;
+        data.mainWorldVisitedScenes = MapManager.Instance.mainWorldVisitedScenes;
+        data.otherWorldVisitedScenes = MapManager.Instance.otherWorldVisitedScenes;
     }
 
     int[] GetLoadedSceneIDs()

@@ -12,6 +12,7 @@ public class SceneLoading : MonoBehaviour
     public GameObject loadingScreen;
     public Image loadingBar;
     [field: SerializeField] public List<GameObject> Grids;
+    [SerializeField] private LayerMask _detectColliderMask;
     void Awake()
     {
         if(Instance == null)
@@ -47,6 +48,17 @@ public class SceneLoading : MonoBehaviour
         }
     }
 
+    public int GetCurrentSceneID()
+    {
+        Collider2D collider = Physics2D.OverlapCircle(characterControl.Instance.transform.position, 10f, _detectColliderMask);
+        return collider.gameObject.scene.buildIndex;
+    }
+
+    public string GetCurrentSceneName()
+    {
+        Collider2D collider = Physics2D.OverlapCircle(characterControl.Instance.transform.position, 10f, _detectColliderMask);
+        return collider.gameObject.scene.name;
+    }
     // Function is not used because another solution for the pathfinding problem was found
     // public void UpdatePathfindingGraphs()
     // {

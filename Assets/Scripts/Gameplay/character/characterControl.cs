@@ -125,7 +125,7 @@ public class characterControl: MonoBehaviour
     private Vector2 _teleportPosition;
     [SerializeField] private LayerMask _collisionLayer;
     public Collider2D[] hitColliders;
-    private bool _inOtherWorld;
+    public bool _inOtherWorld {get; private set;}
     [SerializeField] private float _teleportTimer;
     [SerializeField] private float _teleportTimerCooldown;
     [SerializeField] private float _searchStep;
@@ -176,6 +176,7 @@ public class characterControl: MonoBehaviour
     public bool _use2Input {get; private set;}
     public bool _menuToggleInput {get; private set;}
     public bool _activeItem1Input {get; private set;}
+    public bool _mapInput {get; private set;}
     #endregion
     
     //--------------------------------------------------------------------------------------//
@@ -756,6 +757,7 @@ public class characterControl: MonoBehaviour
         _use2Input = UserInput.Instance.Use2Input;
         _menuToggleInput = UserInput.Instance.MenuToggleInput; 
         _activeItem1Input = UserInput.Instance.ActiveItem1Input;
+        _mapInput = UserInput.Instance.MapInput;
     }
 
     #region Testing Functionality
