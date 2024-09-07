@@ -2412,6 +2412,7 @@ MonoBehaviour:
   <Use2Input>k__BackingField: 0
   <MenuToggleInput>k__BackingField: 0
   <ActiveItem1Input>k__BackingField: 0
+  <MapInput>k__BackingField: 0
 --- !u!114 &100415870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21243,6 +21244,9 @@ MonoBehaviour:
     hasBarrier: 0
     hasDeflectProjectile: 0
     hasWallJump: 0
+    hasGlider: 0
+    hasTeleport: 0
+    hasHook: 0
     constDJI: 0
     playerPosition: {x: -56, y: 39.1, z: 1.8}
     saveSceneIDs: 0200000003000000
@@ -28820,6 +28824,9 @@ MonoBehaviour:
     hasBarrier: 0
     hasDeflectProjectile: 0
     hasWallJump: 0
+    hasGlider: 0
+    hasTeleport: 0
+    hasHook: 0
     constDJI: 0
     playerPosition: {x: -56, y: 39.1, z: 1.8}
     saveSceneIDs: 0200000003000000
@@ -29144,7 +29151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 300
+    m_Left: 754
     m_Right: 0
     m_Top: 230
     m_Bottom: 200
