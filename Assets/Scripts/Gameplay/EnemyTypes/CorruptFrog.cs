@@ -75,6 +75,7 @@ public class CorruptFrog : Frog, IRadSeeable, IAttackable, IChaseable, IJumpable
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
+    
     void Update()
     {
         //if(isStanding) Stand();

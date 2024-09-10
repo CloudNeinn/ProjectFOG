@@ -131,6 +131,7 @@ public class characterControl: MonoBehaviour
     [SerializeField] private float _searchStep;
     [SerializeField] private int _maxSearchAttempts;
     private float _searchRadius;
+
     #region Grappling Hook Variables
     [Header ("Grappling hook")]
     public DistanceJoint2D distanceJoint;
@@ -218,11 +219,15 @@ public class characterControl: MonoBehaviour
                 camMov.virtualCamera.enabled = false;
                 myrigidbody.bodyType = RigidbodyType2D.Static;
                 camFade.doFade();
-                if(_inOtherWorld) _teleportPosition = new Vector2(transform.position.x, transform.position.y - 510);
-                else _teleportPosition = new Vector2(transform.position.x, transform.position.y + 510);
-                transform.position = CheckCollisionOnTeleport(_teleportPosition);
+                
+                //change this to event invoke
+                // if(_inOtherWorld) _teleportPosition = new Vector2(transform.position.x, transform.position.y - 510);
+                // else _teleportPosition = new Vector2(transform.position.x, transform.position.y + 510);
+                // transform.position = CheckCollisionOnTeleport(_teleportPosition);
+                //---------------------------
+                EventManager.SwithcEnemyPlane();
+
                 camMov.virtualCamera.enabled = true;
-                _inOtherWorld = !_inOtherWorld;
             }
             if(myrigidbody.bodyType == RigidbodyType2D.Static) _teleportTimerCooldown -= Time.deltaTime;
             if(_teleportTimerCooldown <= 0)

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7413328414418047518}
   - component: {fileID: 1249560527951738735}
   - component: {fileID: 9097691864188614256}
+  - component: {fileID: 1805405899509018675}
   - component: {fileID: 9097691864188614269}
   - component: {fileID: 9097691864188614257}
   - component: {fileID: 9097691864188614258}
@@ -368,6 +369,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentOneWayPlatform: {fileID: 0}
   colliderForEnemy: {fileID: 0}
+--- !u!114 &1805405899509018675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097691864188614245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea240906487c45fdaec503946959934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _switchDelay: 0
+  _switchDelayTimer: 0
+  _checkCollisionRadius: 0.2
+  _findFreeSpaceRadius: 20
+  _collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1088
+  hitColliders: []
+  _teleportTimer: 0
+  _teleportTimerCooldown: 0
+  _searchStep: 0.5
+  _maxSearchAttempts: 200
 --- !u!95 &9097691864188614269
 Animator:
   serializedVersion: 5
