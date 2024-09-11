@@ -8,45 +8,48 @@ public class planeSwitch : MonoBehaviour
     [SerializeField] private float _switchDelay;
     [SerializeField] private float _switchDelayTimer;
 
-    [SerializeField] private float _checkCollisionRadius;
-    [SerializeField] private float _findFreeSpaceRadius;
-    private Vector2 _teleportPosition;
-    [SerializeField] private LayerMask _collisionLayer;
-    public Collider2D[] hitColliders;
-    public bool _inOtherWorld {get; private set;}
     [SerializeField] private float _teleportTimer;
     [SerializeField] private float _teleportTimerCooldown;
     [SerializeField] private float _searchStep;
     [SerializeField] private int _maxSearchAttempts;
+    [SerializeField] private float _checkCollisionRadius;
+    [SerializeField] private float _findFreeSpaceRadius;
+    [SerializeField] private LayerMask _collisionLayer;
+    [SerializeField] private bool _switchPlane;
+    private Vector2 _teleportPosition;
+    public Collider2D[] hitColliders;
     private float _searchRadius;
+    public bool _inOtherWorld {get; private set;}
 
-    // Start is called before the first frame update
     void Start()
     {
+        _switchPlane = false;
         EventManager.swithcEnemyPlaneEvent += SwitchPlane;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(_switchPlane)
+        {
+            if(_switchDelayTimer <= 0)
+            {
+                if(_inOtherWorld) _teleportPosition = new Vector2(transform.position.x, transform.position.y - 510);
+                else _teleportPosition = new Vector2(transform.position.x, transform.position.y + 510);
+                transform.position = CheckCollisionOnTeleport(_teleportPosition);
+                _inOtherWorld = !_inOtherWorld;
+                _switchDelayTimer = _switchDelay;
+                _switchPlane = false;
+            }
+            else
+            {
+                _switchDelayTimer -= Time.deltaTime;
+            }
+        }
     }
 
     public void SwitchPlane()
     {
-        //switch plane
-        if(_switchDelayTimer <= 0)
-        {
-            if(_inOtherWorld) _teleportPosition = new Vector2(transform.position.x, transform.position.y - 510);
-            else _teleportPosition = new Vector2(transform.position.x, transform.position.y + 510);
-            transform.position = CheckCollisionOnTeleport(_teleportPosition);
-            _inOtherWorld = !_inOtherWorld;
-            _switchDelayTimer = _switchDelay;
-        }
-        else
-        {
-            _switchDelayTimer -= Time.deltaTime;
-        }
+        _switchPlane = true;
     }
 
     public Vector3 CheckCollisionOnTeleport(Vector3 TeleportPosition)

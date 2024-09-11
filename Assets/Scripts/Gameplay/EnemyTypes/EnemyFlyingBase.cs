@@ -59,7 +59,6 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
         }
         else 
         {
-            //Debug.Log("Standing");
             standingCooldown -= Time.deltaTime;
             Stand();
         }
@@ -92,7 +91,6 @@ public class EnemyFlyingBase : MonoBehaviour, IFlyable, IPatrolable
     {
         _enemyrb = GetComponent<Rigidbody2D>();
         _enemycol = GetComponent<CircleCollider2D>();
-        //currentPatrolPoint = 0;
         numberOfPatrolPoints = PatrolPoints.Length;
         flyDirection = ((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized);
     }

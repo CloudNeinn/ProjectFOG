@@ -219,14 +219,7 @@ public class characterControl: MonoBehaviour
                 camMov.virtualCamera.enabled = false;
                 myrigidbody.bodyType = RigidbodyType2D.Static;
                 camFade.doFade();
-                
-                //change this to event invoke
-                // if(_inOtherWorld) _teleportPosition = new Vector2(transform.position.x, transform.position.y - 510);
-                // else _teleportPosition = new Vector2(transform.position.x, transform.position.y + 510);
-                // transform.position = CheckCollisionOnTeleport(_teleportPosition);
-                //---------------------------
-                EventManager.SwithcEnemyPlane();
-
+                EventManager.SwitchEnemyPlane();
                 camMov.virtualCamera.enabled = true;
             }
             if(myrigidbody.bodyType == RigidbodyType2D.Static) _teleportTimerCooldown -= Time.deltaTime;

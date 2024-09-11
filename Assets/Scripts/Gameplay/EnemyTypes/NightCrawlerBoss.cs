@@ -54,7 +54,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [field: SerializeField] public Vector2 direction { get; set; }
 
     [field: Header ("Different attack range options")]
-    public float[] differentAttackRanges { get; set; }
+    [field: SerializeField] public float[] differentAttackRanges { get; set; }
 
     [field: Header ("Check Box Options")]
     [field: SerializeField] public float sightRadius { get; set; }
@@ -98,8 +98,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [field: SerializeField] public float parryTime { get; set;}
 
     void Start()
-    {   
-        
+    {  
+        _playerPosition = characterControl.Instance.transform.position;
+        target = _playerPosition;
+        enemyStartingPosition = transform.position;
+        InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
 
     void Update()
@@ -135,10 +138,9 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Parry()
     {
-
+        Block();
+        playerHealthManager.Instance.getDamage(damage, 200, 200);
     }
-
-
 
     public void Walk(int direction)
     {

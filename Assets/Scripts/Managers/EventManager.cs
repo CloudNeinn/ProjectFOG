@@ -24,7 +24,7 @@ public class EventManager : MonoBehaviour
         openDoorEvent?.Invoke(doorID);
     }
 
-    public static void SwithcEnemyPlane()
+    public static void SwitchEnemyPlane()
     {
         swithcEnemyPlaneEvent?.Invoke();
     }
