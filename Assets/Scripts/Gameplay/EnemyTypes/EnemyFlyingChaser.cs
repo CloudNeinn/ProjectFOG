@@ -13,12 +13,12 @@ public class EnemyFlyingChaser : EnemyFlyingAttacker, IChaseable
 
     [field: SerializeField] public Transform playerPosition { get; set; } 
     [field: SerializeField] public Vector3 enemyStartingPosition { get; set; } 
-    [field: SerializeField] public float activateDistance { get; set; } //50f
-    [field: SerializeField] public float pathUpdateSeconds { get; set; } //0.5f
+    [field: SerializeField] public float activateDistance { get; set; } // 50f
+    [field: SerializeField] public float pathUpdateSeconds { get; set; } // 0.5f
  
     [field: SerializeField] public bool followEnabled { get; set; } 
-    [field: SerializeField] public float nextWaypointDistance { get; set; } //3f
-    [field: SerializeField] public float speed { get; set; } //200f
+    [field: SerializeField] public float nextWaypointDistance { get; set; } // 3f
+    [field: SerializeField] public float speed { get; set; } // 200f
     [field: SerializeField] public Vector2 force { get; set; }
     [field: SerializeField] public Vector2 direction { get; set; }
     [field: SerializeField] public float forceMultiplier { get; set; } 

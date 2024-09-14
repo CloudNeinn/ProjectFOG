@@ -17,6 +17,7 @@ public class doorScript : MonoBehaviour, IDataPersistance
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("door"), LayerMask.NameToLayer("ground"), true);
         EventManager.openDoorEvent += Open;
+        EventManager.closeDoorEvent += Close;
     }
 
     void Update()
@@ -30,7 +31,20 @@ public class doorScript : MonoBehaviour, IDataPersistance
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y * 0.75f * _openDir, transform.position.z);
             EventManager.openDoorEvent -= Open;
+            EventManager.closeDoorEvent += Close;
             isOpen = true;
+            activate = false;
+        }
+    }
+
+    void Close(string DoorID)
+    {
+        if(_doorID == DoorID && isOpen)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y * -0.75f * _openDir, transform.position.z);
+            EventManager.openDoorEvent += Open;
+            EventManager.closeDoorEvent -= Close;
+            isOpen = false;
             activate = false;
         }
     }

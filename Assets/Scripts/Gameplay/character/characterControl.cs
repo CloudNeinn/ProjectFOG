@@ -219,7 +219,7 @@ public class characterControl: MonoBehaviour
                 camMov.virtualCamera.enabled = false;
                 myrigidbody.bodyType = RigidbodyType2D.Static;
                 camFade.doFade();
-                EventManager.SwitchEnemyPlane();
+                EventManager.SwitchPlane();
                 camMov.virtualCamera.enabled = true;
             }
             if(myrigidbody.bodyType == RigidbodyType2D.Static) _teleportTimerCooldown -= Time.deltaTime;

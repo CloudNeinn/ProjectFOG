@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class enemyOpenDoor : MonoBehaviour
 {
-    [SerializeField] private string _doorID;
+    [field:SerializeField] public string _doorID {get; private set;} 
     private enemyHealth _enemyHealth;
     void Start()
     {

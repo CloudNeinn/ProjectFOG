@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class planeSwitch : MonoBehaviour
 {
-    // this is most likely for enemies only
+    // this is most likely for non player objects
     [SerializeField] private float _switchDelay;
     [SerializeField] private float _switchDelayTimer;
-
+    //-------------------------------------------
     [SerializeField] private float _teleportTimer;
     [SerializeField] private float _teleportTimerCooldown;
     [SerializeField] private float _searchStep;

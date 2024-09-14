@@ -54,7 +54,9 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [field: SerializeField] public Vector2 direction { get; set; }
 
     [field: Header ("Different attack range options")]
-    [field: SerializeField] public float[] differentAttackRanges { get; set; }
+    [field: SerializeField] public float longAttackRange { get; set; }
+    [field: SerializeField] public float mediumAttackRange { get; set; }
+    [field: SerializeField] public float closeAttackRange { get; set; }
 
     [field: Header ("Check Box Options")]
     [field: SerializeField] public float sightRadius { get; set; }
@@ -100,17 +102,37 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     void Start()
     {  
         _playerPosition = characterControl.Instance.transform.position;
-        target = _playerPosition;
+        //target = _playerPosition;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
 
     void Update()
     {
-        
+        if(inSight())
+        {
+            isAlert = true;
+            target = _playerPosition;
+            EventManager.CloseDoor(GetComponent<enemyOpenDoor>()._doorID);
+        }
     }
 
     public void Attack()
+    {
+
+    }
+
+    public void longAttack()
+    {
+
+    }
+
+    public void mediumAttack()
+    {
+
+    }
+
+    public void closeAttack()
     {
 
     }
@@ -283,5 +305,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         _enemyrb.AddForce(Vector2.up * speed * jumpStrength);
         jumpEnabled = false;
         jumpTimer = jumpCooldown;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, sightRadius); 
     }
 }

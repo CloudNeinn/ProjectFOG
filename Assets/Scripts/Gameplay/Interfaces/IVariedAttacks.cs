@@ -4,5 +4,10 @@ using UnityEngine;
 
 public interface IVariedAttacks
 {
-    float[] differentAttackRanges { get; set; }
+    float longAttackRange { get; set; }
+    float mediumAttackRange { get; set; }
+    float closeAttackRange { get; set; }
+    void longAttack();
+    void mediumAttack();
+    void closeAttack();
 }

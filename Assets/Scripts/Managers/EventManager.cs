@@ -7,6 +7,7 @@ public class EventManager : MonoBehaviour
 {
     public static event Action<int> shootTrapEvent; 
     public static event Action<string> openDoorEvent; 
+    public static event Action<string> closeDoorEvent; 
     public static event Action swithcEnemyPlaneEvent; 
 
     void Update()
@@ -24,7 +25,12 @@ public class EventManager : MonoBehaviour
         openDoorEvent?.Invoke(doorID);
     }
 
-    public static void SwitchEnemyPlane()
+    public static void CloseDoor(string doorID)
+    {
+        closeDoorEvent?.Invoke(doorID);
+    }
+
+    public static void SwitchPlane()
     {
         swithcEnemyPlaneEvent?.Invoke();
     }
