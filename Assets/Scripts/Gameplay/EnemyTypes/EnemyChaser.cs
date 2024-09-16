@@ -143,7 +143,7 @@ public class EnemyChaser : EnemyAttacker, IJumpableChase, IChaseable
 
         if(!jumpEnabled)
         {
-            jumpTimer -= Time.deltaTime;
+            jumpTimer -= Time.fixedDeltaTime;
             if(jumpTimer <= 0) jumpEnabled = true;
         }
 

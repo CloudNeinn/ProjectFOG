@@ -101,7 +101,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     void Start()
     {  
-        _playerPosition = characterControl.Instance.transform.position;
+        playerPosition = characterControl.Instance.transform;
         //target = _playerPosition;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
@@ -109,12 +109,21 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     void Update()
     {
+        Rotate();
         if(inSight())
         {
             isAlert = true;
-            target = _playerPosition;
+            target = playerPosition.position;
             EventManager.CloseDoor(GetComponent<enemyOpenDoor>()._doorID);
         }
+
+        if(isAlert) followEnabled = true;
+        if(followEnabled) PathFollow();
+    }
+
+    void FixedUpdate()
+    {
+        
     }
 
     public void Attack()
@@ -238,8 +247,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public bool isGrounded()
     {
-        return false;
-    }
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x, _enemycol.bounds.center.y - isGroundedDistance), isGroundedBox, 0, checkGroundLayer);
+    }   
 
     public void PathFollow() 
     {
@@ -268,7 +277,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         }
 
         // Movement
-        _enemyrb.AddForce(force);
+        if(isGrounded()) _enemyrb.AddForce(force);
+        else _enemyrb.AddForce(new Vector2(force.x, 0));
         //force is inconsistent and with some enemies its OK with others its not
         //_enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(transform.localScale.x), 0);
 
@@ -302,7 +312,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Jump(float jumpStrength) 
     {
-        _enemyrb.AddForce(Vector2.up * speed * jumpStrength);
+        _enemyrb.AddForce(Vector2.up * speed * jumpStrength * 1.2f);
         jumpEnabled = false;
         jumpTimer = jumpCooldown;
     }
@@ -311,5 +321,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, sightRadius); 
+        Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * isGroundedDistance, isGroundedBox);  
     }
 }
