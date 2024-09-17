@@ -98,6 +98,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [field: Header ("Parrying")]
     [field: SerializeField] public bool isParrying { get; set;}
     [field: SerializeField] public float parryTime { get; set;}
+    public Vector2 aboveBoxSize;
+    public float aboveBoxOffset;
 
     void Start()
     {  
@@ -113,12 +115,21 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         if(inSight())
         {
             isAlert = true;
-            target = playerPosition.position;
             EventManager.CloseDoor(GetComponent<enemyOpenDoor>()._doorID);
         }
 
-        if(isAlert) followEnabled = true;
+        if(isAlert) target = playerPosition.position;
+
+        if(Vector2.Distance(transform.position, playerPosition.position) < closeAttackRange)
+        {
+            Stand();
+            followEnabled = false;
+        }
+        else if(isAlert) followEnabled = true; 
+
         if(followEnabled) PathFollow();
+
+        //if(checkIfPlayerAbove()) Debug.Log("Player is above");
     }
 
     void FixedUpdate()
@@ -209,6 +220,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * direction, transform.localScale.y);
     }
 
+    public bool checkIfPlayerAbove()
+    {
+        return Physics2D.OverlapBox(new Vector2(_enemycol.bounds.center.x, _enemycol.bounds.center.y - aboveBoxOffset), aboveBoxSize, 0, playerLayer);
+    }
+
     public bool inSight()
     {        
         if(inRange()) 
@@ -263,12 +279,12 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
             return;
         }  
 
-        direction = ((Vector2)path.vectorPath[currentWaypoint] - _enemyrb.position).normalized;
+        direction = ((Vector2)path.vectorPath[currentWaypoint] - (_enemyrb.position - Vector2.up * 0.25f)).normalized;
         force = direction * (moveSpeed * 500);
 
         // Jump
         if (jumpEnabled && isGrounded() && target.y > transform.position.y 
-         && direction.y > jumpNodeHeightRequirement) Jump(getJumpModifier());
+         && direction.y > jumpNodeHeightRequirement && !checkIfPlayerAbove()) Jump(getJumpModifier());
 
         if(!jumpEnabled)
         {
@@ -322,5 +338,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, sightRadius); 
         Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * isGroundedDistance, isGroundedBox);  
+        Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * aboveBoxOffset, aboveBoxSize);  
     }
 }
