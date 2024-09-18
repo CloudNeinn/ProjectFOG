@@ -54,9 +54,15 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [field: SerializeField] public Vector2 direction { get; set; }
 
     [field: Header ("Different attack range options")]
-    [field: SerializeField] public float longAttackRange { get; set; }
-    [field: SerializeField] public float mediumAttackRange { get; set; }
-    [field: SerializeField] public float closeAttackRange { get; set; }
+    [field: Header ("Long attack")]
+    [field: SerializeField] public Vector2 longAttackRangeBox { get; set; }
+    [field: SerializeField] public Vector2 longAttackRange { get; set; }
+    [field: Header ("Medium attack")]
+    [field: SerializeField] public Vector2 mediumAttackRangeBox { get; set; }
+    [field: SerializeField] public Vector2 mediumAttackRange { get; set; }
+    [field: Header ("Close attack")]
+    [field: SerializeField] public Vector2 closeAttackRangeBox { get; set; }
+    [field: SerializeField] public Vector2 closeAttackRange { get; set; }
 
     [field: Header ("Check Box Options")]
     [field: SerializeField] public float sightRadius { get; set; }
@@ -104,7 +110,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     void Start()
     {  
         playerPosition = characterControl.Instance.transform;
-        //target = _playerPosition;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
@@ -120,7 +125,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
         if(isAlert) target = playerPosition.position;
 
-        if(Vector2.Distance(transform.position, playerPosition.position) < closeAttackRange)
+        if(inCloseAttackRange())
         {
             Stand();
             followEnabled = false;
@@ -128,8 +133,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         else if(isAlert) followEnabled = true; 
 
         if(followEnabled) PathFollow();
-
-        //if(checkIfPlayerAbove()) Debug.Log("Player is above");
     }
 
     void FixedUpdate()
@@ -140,6 +143,21 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     public void Attack()
     {
 
+    }
+
+    public bool inLongAttackRange()
+    {
+        return Physics2D.OverlapBox(transform.position + (Vector3)longAttackRange * Mathf.Sign(transform.localScale.x), longAttackRangeBox, 0, playerLayer);
+    }
+
+    public bool inMediumAttackRange()
+    {
+        return Physics2D.OverlapBox(transform.position + (Vector3)mediumAttackRange * Mathf.Sign(transform.localScale.x), mediumAttackRangeBox, 0, playerLayer);
+    }
+
+    public bool inCloseAttackRange()
+    {
+        return Physics2D.OverlapBox(transform.position + (Vector3)closeAttackRange * Mathf.Sign(transform.localScale.x), closeAttackRangeBox, 0, playerLayer);
     }
 
     public void longAttack()
@@ -186,7 +204,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Walk(int direction)
     {
-        //_enemyrb.velocity = new Vector2(moveSpeed * direction, _enemyrb.velocity.y);
         _enemyrb.AddForce(Vector2.right * moveSpeed * 500 * direction);
     }
 
@@ -197,11 +214,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Rotate()
     {
-        /*if (_enemyrb.velocity.x == 0f)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        }
-        else */
         if (_enemyrb.velocity.x >= 0.25f)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -210,8 +222,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         {
             transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-         
-        //directionX = (int)Mathf.Sign(((PatrolPoints[currentPatrolPoint].transform.position - transform.position).normalized.x));
     }
 
     public void ChangeDirection(float direction)
@@ -273,7 +283,6 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
             return;
         }
 
-        // Reached end of path
         if (currentWaypoint >= path.vectorPath.Count)
         {
             return;
@@ -282,9 +291,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         direction = ((Vector2)path.vectorPath[currentWaypoint] - (_enemyrb.position - Vector2.up * 0.25f)).normalized;
         force = direction * (moveSpeed * 500);
 
-        // Jump
         if (jumpEnabled && isGrounded() && target.y > transform.position.y 
-         && direction.y > jumpNodeHeightRequirement && !checkIfPlayerAbove()) Jump(getJumpModifier());
+         && direction.y > jumpNodeHeightRequirement && !checkIfPlayerAbove() && characterControl.Instance.isGrounded()) Jump(getJumpModifier());
 
         if(!jumpEnabled)
         {
@@ -292,13 +300,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
             if(jumpTimer <= 0) jumpEnabled = true;
         }
 
-        // Movement
         if(isGrounded()) _enemyrb.AddForce(force);
         else _enemyrb.AddForce(new Vector2(force.x, 0));
         //force is inconsistent and with some enemies its OK with others its not
         //_enemyrb.velocity = new Vector2(moveSpeed * Mathf.Sign(transform.localScale.x), 0);
 
-        // Next Waypoint
         float distance = Vector2.Distance(_enemyrb.position, path.vectorPath[currentWaypoint]);
         if (distance < nextWaypointDistance)
         {
@@ -339,5 +345,14 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         Gizmos.DrawWireSphere(transform.position, sightRadius); 
         Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * isGroundedDistance, isGroundedBox);  
         Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * aboveBoxOffset, aboveBoxSize);  
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(_enemycol.bounds.center + (Vector3)longAttackRange * Mathf.Sign(transform.localScale.x), longAttackRangeBox); 
+
+        Gizmos.color = Color.yellow; 
+        Gizmos.DrawWireCube(_enemycol.bounds.center + (Vector3)mediumAttackRange * Mathf.Sign(transform.localScale.x), mediumAttackRangeBox); 
+
+        Gizmos.color = Color.green; 
+        Gizmos.DrawWireCube(_enemycol.bounds.center + (Vector3)closeAttackRange * Mathf.Sign(transform.localScale.x), closeAttackRangeBox);  
     }
 }
