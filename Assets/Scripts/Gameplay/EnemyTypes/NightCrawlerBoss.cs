@@ -106,6 +106,9 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [field: SerializeField] public float parryTime { get; set;}
     public Vector2 aboveBoxSize;
     public float aboveBoxOffset;
+    [SerializeField] private bool _teleportationAttack;
+    [SerializeField] private float _teleportationAttackTime;
+    [SerializeField] private float _teleportationAttackCooldown;
 
     void Start()
     {  
@@ -125,14 +128,25 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
         if(isAlert) target = playerPosition.position;
 
-        if(inCloseAttackRange())
+        if(inCloseAttackRange() && !_teleportationAttack)
         {
             Stand();
             followEnabled = false;
         }
-        else if(isAlert) followEnabled = true; 
+        else if(isAlert && !_teleportationAttack) followEnabled = true; 
 
         if(followEnabled) PathFollow();
+
+        if(!inRange() && isAlert) 
+        {
+            followEnabled = false;
+            _teleportationAttack = true;
+            transform.position = new Vector2(characterControl.Instance.transform.position.x + Mathf.Sign(characterControl.Instance.transform.localScale.x) * -2f, characterControl.Instance.transform.position.y + 3f);
+            transform.localScale = new Vector2(Mathf.Sign(characterControl.Instance.transform.localScale.x) * Mathf.Abs(transform.localScale.y), transform.localScale.y);
+            _enemyrb.bodyType = RigidbodyType2D.Static;
+        } 
+        
+        if(_teleportationAttack) teleportAttack();
     }
 
     void FixedUpdate()
@@ -143,6 +157,25 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     public void Attack()
     {
 
+    }
+
+    public void teleportAttack()
+    {
+        //
+        if(_teleportationAttackCooldown > 0) _teleportationAttackCooldown -= Time.deltaTime;
+        else if(_enemyrb.bodyType == RigidbodyType2D.Static)
+        {
+            _enemyrb.bodyType = RigidbodyType2D.Kinematic;
+            _enemyrb.velocity = getVector() * moveSpeed * 6;
+        }
+
+        if(isGrounded() && _enemyrb.bodyType == RigidbodyType2D.Kinematic) 
+        {
+            _enemyrb.bodyType = RigidbodyType2D.Dynamic;
+            _teleportationAttackCooldown = _teleportationAttackTime;
+            _teleportationAttack = false;
+            followEnabled = true;
+        }
     }
 
     public bool inLongAttackRange()
