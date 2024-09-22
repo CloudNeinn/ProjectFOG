@@ -109,9 +109,15 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [SerializeField] private bool _teleportationAttack;
     [SerializeField] private float _teleportationAttackTime;
     [SerializeField] private float _teleportationAttackCooldown;
+    [SerializeField] private float _shootingTime;
+    [SerializeField] private float _shootingCooldown;
+    [SerializeField] private float _shootingDelayTime;
+    [SerializeField] private float _shootingDelayCooldown;
+    [SerializeField] private GameObject projectilePrefab;
 
     void Start()
     {  
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("enemyProjectile"), true);
         playerPosition = characterControl.Instance.transform;
         enemyStartingPosition = transform.position;
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
@@ -147,6 +153,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         } 
         
         if(_teleportationAttack) teleportAttack();
+
+        Attack();
     }
 
     void FixedUpdate()
@@ -156,7 +164,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Attack()
     {
-
+        if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80) longAttack();
     }
 
     public void teleportAttack()
@@ -194,8 +202,26 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     }
 
     public void longAttack()
-    {
-
+    { 
+        if(_shootingCooldown >= 0)
+        {
+            Stand();
+            followEnabled = false;
+            _shootingCooldown -= Time.deltaTime;
+            if(_shootingDelayCooldown <= 0)
+            {
+                ObjectPoolManager.SpawnObject(projectilePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity, ObjectPoolManager.PoolType.PlayerProjectileObjects);
+                _shootingDelayCooldown = _shootingDelayTime;
+            }
+            else _shootingDelayCooldown -= Time.deltaTime;
+        }
+        else 
+        {
+            followEnabled = true;
+            _shootingCooldown = _shootingTime;
+            _shootingDelayCooldown = _shootingDelayTime;
+            canAttack = false;
+        }
     }
 
     public void mediumAttack()

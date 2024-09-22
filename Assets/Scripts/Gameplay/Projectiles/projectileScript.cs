@@ -18,8 +18,7 @@ public class projectileScript : MonoBehaviour
     public Vector2 projectileVector;
     private Vector3 playerPosition;
     private Vector3 enemyPosition;
-    
-    // Start is called before the first frame update
+
     void OnEnable()
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("enemy"), true);
