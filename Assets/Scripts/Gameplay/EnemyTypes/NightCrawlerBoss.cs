@@ -114,6 +114,9 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [SerializeField] private float _shootingDelayTime;
     [SerializeField] private float _shootingDelayCooldown;
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float _rangedAttackTime;
+    [SerializeField] private float _rangedAttackCooldown;
+    [SerializeField] private bool _rangedAttack;
 
     void Start()
     {  
@@ -143,7 +146,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
         if(followEnabled) PathFollow();
 
-        if(!inRange() && isAlert) 
+        if(!inRange() && isAlert && followEnabled) 
         {
             followEnabled = false;
             _teleportationAttack = true;
@@ -155,6 +158,16 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         if(_teleportationAttack) teleportAttack();
 
         Attack();
+
+        if(!canAttack && attackCooldown > 0) attackCooldown -= Time.deltaTime;
+        
+        if(attackCooldown <= 0) 
+        {
+            canAttack = true;
+            attackCooldown = attackTime;
+        }
+
+        if(_rangedAttackCooldown > 0) _rangedAttackCooldown -= Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -164,12 +177,12 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Attack()
     {
-        if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80) longAttack();
+        if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80 && !_rangedAttack && _rangedAttackCooldown <= 0) _rangedAttack = true; 
+        if(_rangedAttack && !_teleportationAttack) longAttack();
     }
 
     public void teleportAttack()
     {
-        //
         if(_teleportationAttackCooldown > 0) _teleportationAttackCooldown -= Time.deltaTime;
         else if(_enemyrb.bodyType == RigidbodyType2D.Static)
         {
@@ -221,6 +234,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
             _shootingCooldown = _shootingTime;
             _shootingDelayCooldown = _shootingDelayTime;
             canAttack = false;
+            _rangedAttack = false;
+            _rangedAttackCooldown = _rangedAttackTime;
         }
     }
 
