@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/cloudnein/workspace/ProjectFOG/Assets/Scripts/Gameplay/Interfaces",
+      "program": "/Users/cloudnein/workspace/ProjectFOG/Assets/Scripts/Gameplay/Interfaces/build/Debug/outDebug"
+    }
+  ]
+}

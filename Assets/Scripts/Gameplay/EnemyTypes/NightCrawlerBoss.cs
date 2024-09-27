@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, IChaseable, IRadSeeable, IParryable, IVariedAttacks, IWalkable
+public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, IChaseable, IRadSeeable, IParryable, IVariedAttacksRadial, IWalkable
 {
     [SerializeField] private Vector3 _playerPosition;
     [SerializeField] private Vector3 _enemyPosition;
@@ -55,14 +55,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     [field: Header ("Different attack range options")]
     [field: Header ("Long attack")]
-    [field: SerializeField] public Vector2 longAttackRangeBox { get; set; }
-    [field: SerializeField] public Vector2 longAttackRange { get; set; }
+    [field: SerializeField] public float longAttackRadius {get; set;}
     [field: Header ("Medium attack")]
-    [field: SerializeField] public Vector2 mediumAttackRangeBox { get; set; }
-    [field: SerializeField] public Vector2 mediumAttackRange { get; set; }
+    [field: SerializeField] public float mediumAttackRadius {get; set;}
     [field: Header ("Close attack")]
-    [field: SerializeField] public Vector2 closeAttackRangeBox { get; set; }
-    [field: SerializeField] public Vector2 closeAttackRange { get; set; }
+    [field: SerializeField] public float shortAttackRadius {get; set;}
 
     [field: Header ("Check Box Options")]
     [field: SerializeField] public float sightRadius { get; set; }
@@ -117,6 +114,10 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [SerializeField] private float _rangedAttackTime;
     [SerializeField] private float _rangedAttackCooldown;
     [SerializeField] private bool _rangedAttack;
+    [SerializeField] private bool _dashAttack;
+    [SerializeField] private float _dashTime;
+    [SerializeField] private float _dashCooldown;
+    [SerializeField] private float _dashMultiplier;
 
     void Start()
     {  
@@ -144,9 +145,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         }
         else if(isAlert && !_teleportationAttack) followEnabled = true; 
 
-        if(followEnabled) PathFollow();
 
-        if(!inRange() && isAlert && followEnabled) 
+        if(!inRange() && isAlert && followEnabled && !_rangedAttack) 
         {
             followEnabled = false;
             _teleportationAttack = true;
@@ -155,7 +155,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
             _enemyrb.bodyType = RigidbodyType2D.Static;
         } 
         
-        if(_teleportationAttack) teleportAttack();
+        if(_teleportationAttack && !_rangedAttack) teleportAttack();
 
         Attack();
 
@@ -168,17 +168,22 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         }
 
         if(_rangedAttackCooldown > 0) _rangedAttackCooldown -= Time.deltaTime;
+
+        if(_dashCooldown > 0 && !inCloseAttackRange()) _dashCooldown -= Time.deltaTime;
     }
 
     void FixedUpdate()
     {
-        
+        if(followEnabled) PathFollow();
     }
 
     public void Attack()
     {
         if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80 && !_rangedAttack && _rangedAttackCooldown <= 0) _rangedAttack = true; 
         if(_rangedAttack && !_teleportationAttack) longAttack();
+
+        if(canAttack && inMediumAttackRange() && _dashCooldown <= 0) _dashAttack = true;
+        if(_dashAttack && !_teleportationAttack) mediumAttack();
     }
 
     public void teleportAttack()
@@ -187,7 +192,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         else if(_enemyrb.bodyType == RigidbodyType2D.Static)
         {
             _enemyrb.bodyType = RigidbodyType2D.Kinematic;
-            _enemyrb.velocity = getVector() * moveSpeed * 6;
+            _enemyrb.velocity = getVector() * moveSpeed * 2;
         }
 
         if(isGrounded() && _enemyrb.bodyType == RigidbodyType2D.Kinematic) 
@@ -201,17 +206,19 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public bool inLongAttackRange()
     {
-        return Physics2D.OverlapBox(transform.position + (Vector3)longAttackRange * Mathf.Sign(transform.localScale.x), longAttackRangeBox, 0, playerLayer);
+        if(inMediumAttackRange() || inCloseAttackRange()) return false;
+        return Physics2D.OverlapCircle(transform.position, longAttackRadius, playerLayer);
     }
 
     public bool inMediumAttackRange()
     {
-        return Physics2D.OverlapBox(transform.position + (Vector3)mediumAttackRange * Mathf.Sign(transform.localScale.x), mediumAttackRangeBox, 0, playerLayer);
+        if(inCloseAttackRange()) return false;
+        return Physics2D.OverlapCircle(transform.position, mediumAttackRadius, playerLayer);
     }
 
     public bool inCloseAttackRange()
     {
-        return Physics2D.OverlapBox(transform.position + (Vector3)closeAttackRange * Mathf.Sign(transform.localScale.x), closeAttackRangeBox, 0, playerLayer);
+        return Physics2D.OverlapCircle(transform.position, shortAttackRadius, playerLayer);
     }
 
     public void longAttack()
@@ -241,7 +248,10 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void mediumAttack()
     {
-
+        Debug.Log(getVector());
+        _dashCooldown = _dashTime;
+        _enemyrb.AddForce(getVector() * _dashMultiplier, ForceMode2D.Impulse);
+        _dashAttack = false;
     }
 
     public void closeAttack()
@@ -421,12 +431,12 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * aboveBoxOffset, aboveBoxSize);  
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(_enemycol.bounds.center + (Vector3)longAttackRange * Mathf.Sign(transform.localScale.x), longAttackRangeBox); 
+        Gizmos.DrawWireSphere(_enemycol.bounds.center, longAttackRadius); 
 
         Gizmos.color = Color.yellow; 
-        Gizmos.DrawWireCube(_enemycol.bounds.center + (Vector3)mediumAttackRange * Mathf.Sign(transform.localScale.x), mediumAttackRangeBox); 
+        Gizmos.DrawWireSphere(_enemycol.bounds.center, mediumAttackRadius); 
 
         Gizmos.color = Color.green; 
-        Gizmos.DrawWireCube(_enemycol.bounds.center + (Vector3)closeAttackRange * Mathf.Sign(transform.localScale.x), closeAttackRangeBox);  
+        Gizmos.DrawWireSphere(_enemycol.bounds.center, shortAttackRadius);  
     }
 }
