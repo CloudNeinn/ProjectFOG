@@ -8,7 +8,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     [SerializeField] private Vector3 _playerPosition;
     [SerializeField] private Vector3 _enemyPosition;
     [SerializeField] private Rigidbody2D _enemyrb;
-    [SerializeField] private CircleCollider2D _enemycol;
+    [SerializeField] private CapsuleCollider2D _enemycol;
 
     [field: Header ("Attack Options")]
     [field: SerializeField] public float attackTime { get; set; }
@@ -179,7 +179,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     public void Attack()
     {
-        if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80 && !_rangedAttack && _rangedAttackCooldown <= 0) _rangedAttack = true; 
+        if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80 && !_rangedAttack && _rangedAttackCooldown <= 0 && eneHeaBlo.currentHealth <= eneHeaBlo.maxHealth * 0.4f) _rangedAttack = true; 
         if(_rangedAttack && !_teleportationAttack) longAttack();
 
         if(canAttack && inMediumAttackRange() && _dashCooldown <= 0) _dashAttack = true;
@@ -259,6 +259,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 
     }
 
+    public void groundSmashAttack()
+    {
+        
+    }
+
     public Vector2 getVector()
     {
         if(!characterControl.Instance) characterControl.Instance = GameObject.FindObjectOfType<characterControl>();
@@ -323,8 +328,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     {        
         if(inRange()) 
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, getVector(), 100.0f, raycastLayer);
-            Debug.DrawRay(transform.position, getVector() * hit.distance, Color.red, 0f);
+            RaycastHit2D hit = Physics2D.Raycast(_enemycol.bounds.center, getVector(), 100.0f, raycastLayer);
+            Debug.DrawRay(_enemycol.bounds.center, getVector() * hit.distance, Color.red, 0f);
             if(hit.collider.name == "Charachter") return true;
             else return false;
         }
@@ -334,8 +339,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     public bool inRange()
     {
         if((transform.localScale.x > 0 && transform.position.x < characterControl.Instance.transform.position.x || 
-        transform.localScale.x < 0 && transform.position.x > characterControl.Instance.transform.position.x) && !isSensing) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
-        else if (isSensing) return Physics2D.OverlapCircle(transform.position, sightRadius, playerLayer);
+        transform.localScale.x < 0 && transform.position.x > characterControl.Instance.transform.position.x) && !isSensing) return Physics2D.OverlapCircle(_enemycol.bounds.center, sightRadius, playerLayer);
+        else if (isSensing) return Physics2D.OverlapCircle(_enemycol.bounds.center, sightRadius, playerLayer);
         else return false;
     }
 
@@ -426,7 +431,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, sightRadius); 
+        Gizmos.DrawWireSphere(_enemycol.bounds.center, sightRadius); 
         Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * isGroundedDistance, isGroundedBox);  
         Gizmos.DrawWireCube(_enemycol.bounds.center - transform.up * aboveBoxOffset, aboveBoxSize);  
 
