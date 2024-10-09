@@ -7,7 +7,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
 {
     [SerializeField] private Vector3 _playerPosition;
     [SerializeField] private Vector3 _enemyPosition;
-    [SerializeField] private Rigidbody2D _enemyrb;
+    [field: SerializeField] public Rigidbody2D _enemyrb {get; private set;}
     [SerializeField] private CapsuleCollider2D _enemycol;
 
     [field: Header ("Attack Options")]
@@ -170,6 +170,7 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         if(_rangedAttackCooldown > 0) _rangedAttackCooldown -= Time.deltaTime;
 
         if(_dashCooldown > 0 && !inCloseAttackRange()) _dashCooldown -= Time.deltaTime;
+        Debug.Log(_enemyrb.velocity);
     }
 
     void FixedUpdate()
@@ -182,8 +183,8 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
         if(canAttack && inLongAttackRange() && Random.Range(0, 100) >= 80 && !_rangedAttack && _rangedAttackCooldown <= 0 && eneHeaBlo.currentHealth <= eneHeaBlo.maxHealth * 0.4f) _rangedAttack = true; 
         if(_rangedAttack && !_teleportationAttack) longAttack();
 
-        if(canAttack && inMediumAttackRange() && _dashCooldown <= 0) _dashAttack = true;
-        if(_dashAttack && !_teleportationAttack) mediumAttack();
+        //if(canAttack && inMediumAttackRange() && _dashCooldown <= 0) _dashAttack = true;
+        //if(_dashAttack && !_teleportationAttack) mediumAttack();
     }
 
     public void teleportAttack()
@@ -305,11 +306,11 @@ public class NightCrawlerBoss : MonoBehaviour, IAttackable, IJumpableChase, ICha
     {
         if (_enemyrb.velocity.x >= 0.25f)
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else if (_enemyrb.velocity.x < -0.25f)
         {
-            transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
 
